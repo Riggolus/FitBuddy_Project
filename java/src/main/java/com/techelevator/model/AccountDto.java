@@ -20,10 +20,10 @@ public class AccountDto {
     //the user's workout goals
     private String goals;
     //day and time the account was created
-    private Date createdAt;
+//    private Date createdAt;
 
     public AccountDto(int userId, String username, String email, String firstName,
-                   String lastName, String profilePicture, String profile, String goals, Date createdAt){
+                   String lastName, String profilePicture, String profile, String goals){
 
         this.userId = userId;
         this.username = username;
@@ -33,7 +33,7 @@ public class AccountDto {
         this.profilePicture=profilePicture;
         this.profile= profile;
         this.goals = goals;
-        this.createdAt = createdAt;
+//        this.createdAt = createdAt;
 
 
     }
@@ -102,13 +102,13 @@ public class AccountDto {
         this.goals = goals;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+//    public Date getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    public void setCreatedAt(Date createdAt) {
+//        this.createdAt = createdAt;
+//    }
 
 
 

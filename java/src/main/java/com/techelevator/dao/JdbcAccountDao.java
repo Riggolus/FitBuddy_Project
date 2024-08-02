@@ -3,34 +3,46 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDto;
+import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
+import java.security.Principal;
+import java.security.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Component
 public class JdbcAccountDao implements AccountDao{
 
 
     private final JdbcTemplate jdbcTemplate;
-
-    public JdbcAccountDao(JdbcTemplate jdbcTemplate){
+    private final JdbcUserDao jdbcUserDao;
+    public JdbcAccountDao(JdbcTemplate jdbcTemplate, JdbcUserDao jdbcUserDao){
         this.jdbcTemplate = jdbcTemplate;
+        this.jdbcUserDao = jdbcUserDao;
     }
 
     @Override
-    public Account createAccount(AccountDto accountDto){
+    public Account createAccount(AccountDto accountDto, Principal principal){
 
-        String sql = "INSERT INTO account (user_id, username, email, first_name, last_name " +
-                "profile_picture, profile, goals, created_at)" +
-                "WHERE values (?,?,?,?,?,?,?,?,?)";
+        User user = jdbcUserDao.getUserByUsername(principal.getName());
+       LocalDateTime date = LocalDateTime.now();
+
+        String sql = "INSERT INTO account (user_id, username, email, first_name, last_name, " +
+                "profile_picture, profile, goals, created_at) " +
+                " values (?,?,?,?,?,?,?,?,?)";
         try {
-            int newAccountId = jdbcTemplate.queryForObject(sql, int.class, accountDto.getUserId(), accountDto.getUsername(),
+             jdbcTemplate.update(sql, user.getId(), user.getUsername(),
                     accountDto.getEmail(), accountDto.getFirstName(), accountDto.getLastName(),
-                    accountDto.getProfilePicture(), accountDto.getProfile(), accountDto.getGoals(), accountDto.getCreatedAt());
-            if (accountDto != null) {
-                sql = "INSERT INTO account (accountId) VALUES (?)";
-                jdbcTemplate.update(sql, newAccountId);
-            }
+                    accountDto.getProfilePicture(), accountDto.getProfile(), accountDto.getGoals(), date);
+//            if (accountDto != null) {
+//                sql = "INSERT INTO account (accountId) VALUES (?)";
+//                jdbcTemplate.update(sql, newAccountId);
+
         }catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to database", e);
         }catch (DataIntegrityViolationException e){
@@ -45,6 +57,67 @@ public class JdbcAccountDao implements AccountDao{
         }
 
         return account;
+    }
+
+    @Override
+    public Account accountByAccountId(int accountId) {
+        try {
+            String sql = "SELECT * FROM account WHERE account_id = ?";
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, accountId);
+
+            if (results.next()) {
+                return mapRowToAccount(results);
+            } else {
+                return null;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to database", e);
+        }
+    }
+
+    @Override
+    public Account accountByUserId(int userId) {
+        try {
+            String sql = "SELECT * FROM account WHERE user_id = ?";
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            if (results.next()) {
+                return mapRowToAccount(results);
+            } else {
+                return null;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to database", e);
+        }
+    }
+
+    @Override
+    public Account accountByUsername(String username) {
+        try {
+            String sql = "SELECT * FROM account WHERE username = ?";
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
+            if (results.next()) {
+                return mapRowToAccount(results);
+            } else {
+                return null;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to database", e);
+        }
+    }
+
+    @Override
+    public Account accountByEmail(String email) {
+        try {
+            String sql = "SELECT * FROM account WHERE email = ?";
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, email);
+            if (results.next()) {
+                return mapRowToAccount(results);
+            } else {
+                return null;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to database", e);
+        }
     }
 
     private Account mapRowToAccount(SqlRowSet rs){
