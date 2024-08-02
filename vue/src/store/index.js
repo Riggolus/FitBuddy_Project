@@ -7,6 +7,7 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {}
     },
+    // Add account Object
     mutations: {
       SET_AUTH_TOKEN(state, token) {
         state.token = token;
