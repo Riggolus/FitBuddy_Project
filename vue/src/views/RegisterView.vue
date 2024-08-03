@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
-      <h1>Create Account</h1>
+      <h1>Register</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -17,8 +17,8 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
-      <button type="submit" >Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <button type="submit" >Register</button>
+      <p><router-link v-bind:to="{ name: 'login' }">Already registered? Log in.</router-link></p>
     </form>
   </div>
 </template>

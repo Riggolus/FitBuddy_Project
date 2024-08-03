@@ -18,17 +18,6 @@ http.interceptors.request.use(config => {
     return Promise.reject(error);
   });
 
-// Optionally handle responses to manage authentication errors globally
-// http.interceptors.response.use(response => {
-//     return response;
-// }, error => {
-//     if (error.response && error.response.status === 401) {
-//         // Handle unauthorized errors, e.g., redirect to login
-//         // store.dispatch('logout'); // Example of handling logout
-//     }
-//     return Promise.reject(error);
-// });
-
 
 
 export default {
