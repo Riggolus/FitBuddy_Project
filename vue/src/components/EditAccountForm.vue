@@ -38,6 +38,8 @@
 </template>
 
 <script>
+console.log(localStorage.getItem('token'));
+
 import AccountService from '../services/AccountService';
 
 export default {
@@ -51,28 +53,33 @@ export default {
     data() {
         return {
             editAccount: {
+                email: this.account.email,
                 firstName: this.account.firstName,
                 lastName: this.account.lastName,
-                email: this.account.email,
-                photo: this.account.photo,
+                profilePicture: this.account.photo,
                 profile: this.account.profile,
-                goal: this.account.goal
+                goals: this.account.goal
             },
             registrationErrors: false,
             registrationErrorMsg: 'There were problems submitting the info.'
         };
     },
     methods: {
+        
         cancelForm() {
             this.$router.push({ name: 'home' });
         },
         submitForm() {
+            console.log("Button works");
+            console.log(this.editAccount);
+            console.log(localStorage.getItem('token')); 
             AccountService
                 .createAccount(this.editAccount)
-                .then((response) => {
-                    if (response.status == 200) {
-                        this.$router.push({ name: 'home' });
-                    }
+                .then(() => {
+                    
+                    console.log("Account Created");
+                    this.$router.push({ name: 'home' });
+                    
                 })
                 .catch((error) => {
                     const response = error.response;

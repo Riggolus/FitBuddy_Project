@@ -12,17 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://127.0.0.1:5173/")
 @RequestMapping("/account")
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class AccountController {
 
+//    @GetMapping("/info")
+//    public ResponseEntity<?> getAccountInfo(Principal principal) {
+//        String username = principal.getName();
+//        return ResponseEntity.ok("Hello, " + username);
+//    }
     private final AccountDao accountDao;
 
     @Autowired
     public AccountController(AccountDao accountDao) {
         this.accountDao = accountDao;
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public Account createAccount(@RequestBody AccountDto accountDto, Principal principal) {

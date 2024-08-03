@@ -1,8 +1,35 @@
 import axios from 'axios';
+import store from '../store';
 
 const http = axios.create({
     baseURL: import.meta.env.VITE_REMOTE_API
   });
+
+// Set default Authorization header for all requests
+http.interceptors.request.use(config => {
+    const token = localStorage.getItem('token');
+    //const token = store.getters.authToken; // Get the token from Vuex store
+    console.log(`Token being used in request: ${token}`); // Log the token
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  }, error => {
+    return Promise.reject(error);
+  });
+
+// Optionally handle responses to manage authentication errors globally
+// http.interceptors.response.use(response => {
+//     return response;
+// }, error => {
+//     if (error.response && error.response.status === 401) {
+//         // Handle unauthorized errors, e.g., redirect to login
+//         // store.dispatch('logout'); // Example of handling logout
+//     }
+//     return Promise.reject(error);
+// });
+
+
 
 export default {
     createAccount(account) {
