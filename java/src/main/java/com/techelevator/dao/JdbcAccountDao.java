@@ -119,6 +119,24 @@ public class JdbcAccountDao implements AccountDao{
             throw new DaoException("Unable to connect to database", e);
         }
     }
+    @Override
+    public boolean editAccount(AccountDto accountDto, Principal principal){
+        int rowsAffected = 0;
+        User user = jdbcUserDao.getUserByUsername(principal.getName());
+        String sql = "UPDATE account SET email = ?, first_name = ?, last_name = ?, profile_picture = ?, profile = ?, goals = ? WHERE user_id = ?";
+        try {
+            rowsAffected = jdbcTemplate.update(sql, accountDto.getEmail(), accountDto.getFirstName(), accountDto.getLastName(), accountDto.getProfilePicture(), accountDto.getProfile(), accountDto.getGoals(), user.getId());
+            if (rowsAffected != 0) {
+                return true;
+            } else
+                return false;
+        }catch(CannotGetJdbcConnectionException e){
+            throw new DaoException("cannot connect to database",e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Violation of data integrity", e);
+        }
+
+    }
 
     private Account mapRowToAccount(SqlRowSet rs){
         Account account = new Account();
