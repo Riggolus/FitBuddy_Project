@@ -25,10 +25,10 @@ export default {
         return http.post('/account', account)
     },
     getAccount(id) {
-        return http.get(`/account/${id}`)
+        return http.get(`/account/id/${id}`)
     },
     updateAccount(id, account) {
-        return http.put(`/account/${id}`, account)
+        return http.put(`/account/update/${id}`, account)
     },
     deleteAccount(id) {
         return http.delete(`/account/${id}`)

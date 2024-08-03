@@ -1,16 +1,14 @@
 <template>
   <div id="homeNav">
-    <button id="editAccount" v-on:click="toAccount">Edit Account</button>
+    <!-- <button id="editAccount" v-on:click="toAccount">Edit Account</button> -->
+<button id="accountProfile" v-on:click="toAccount" >Profile</button>
   </div>
+  
 
   <div class="home">
     <h1>Home</h1>
     <p>You must be authenticated to see this</p>
-    Photo Here**
-    <h2>First Name Last Name</h2>
-    <div>Email here**</div>
-    <div>Profile (bio) here**</div>
-    <div>Goals here**</div>
+    
 
    
     
@@ -31,7 +29,7 @@ export default {
   },
   methods: {
     toAccount() {
-      this.$router.push({ name: 'account' });
+      this.$router.push({ name: 'profile', params: { account: this.account.id } });
     }
   }
 }
