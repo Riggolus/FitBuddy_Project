@@ -41,5 +41,5 @@ export function createStore(currentToken, currentUser) {
 }
 
 // Create a default store instance and export it for use in other parts of the app
-const storeInstance = createStore();
+const storeInstance = createStore(currentToken, currentUser);
 export default storeInstance;

@@ -25,7 +25,7 @@ export default {
         return http.post('/account', account)
     },
     getAccount(id) {
-        return http.get(`/account/id/${id}`)
+        return http.get(`/account/user/${id}`)
     },
     updateAccount(id, account) {
         return http.put(`/account/update/${id}`, account)
