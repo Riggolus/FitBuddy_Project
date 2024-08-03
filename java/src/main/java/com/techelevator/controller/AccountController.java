@@ -59,4 +59,11 @@ public class AccountController {
         boolean account = accountDao.editAccount(accountDto, principal);
         return account;
     }
+    @GetMapping("/myaccount")
+    public Account getMyAccount (Principal principal){
+
+        Account myAccount = accountDao.myAccount(principal);
+        return myAccount;
+    }
+
 }

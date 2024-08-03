@@ -13,4 +13,5 @@ public interface AccountDao {
     Account accountByUsername(String username);
     Account accountByEmail(String email);
     boolean editAccount (AccountDto accountDto, Principal principal);
+    Account myAccount(Principal principal);
 }
