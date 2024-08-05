@@ -1,5 +1,7 @@
 <template>
     test
+    {{ users }}
+    {{ filteredUsers }}
     <table id="users">
         <thead>
             <tr>

@@ -9,6 +9,22 @@ public class UpdateUserRoleDto {
     private int userId;
     @NotEmpty
     private String role;
+    @NotEmpty
+    private String username;
+
+    public UpdateUserRoleDto( int userId, String role, String username){
+        this.userId = userId;
+        this.role = role;
+        this.username = username;
+    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
     public int getUserId() {
         return userId;
