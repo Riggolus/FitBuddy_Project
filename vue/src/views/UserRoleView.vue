@@ -1,7 +1,5 @@
 <template>
     test
-    {{ users }}
-    {{ filteredUsers }}
     <table id="users">
         <thead>
             <tr>
@@ -55,6 +53,12 @@ export default{
                 .toLowerCase()
                 .includes(this.username));
             }
+           if (this.userId){
+            filteredUsers = filteredUsers.filter((user)=> user.userId === this.userId);
+           }
+           if (this.role){
+            filteredUsers = filteredUsers.filter((user)=> user.role.toUpperCase().includes(this.role));
+           }
             return filteredUsers;
         }
     },
@@ -69,5 +73,8 @@ export default{
                 });
         }
     },
+    mounted() {
+        this.getUsers();
+    }
 }
 </script>

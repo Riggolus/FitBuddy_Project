@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.RegisterUserDto;
+import com.techelevator.model.UpdateUserRoleDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,13 +41,13 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT user_id, username, password_hash, role FROM users";
+    public List<UpdateUserRoleDto> getUsers() {
+        List<UpdateUserRoleDto> users = new ArrayList<>();
+        String sql = "SELECT user_id, username, role FROM users";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
-                User user = mapRowToUser(results);
+                UpdateUserRoleDto user = mapRowToUserDto(results);
                 users.add(user);
             }
         } catch (CannotGetJdbcConnectionException e) {
@@ -105,6 +106,13 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+    private UpdateUserRoleDto mapRowToUserDto(SqlRowSet rs){
+        UpdateUserRoleDto userRoleDto= new UpdateUserRoleDto();
+        userRoleDto.setUserId(rs.getInt("user_id"));
+        userRoleDto.setUsername(rs.getString("username"));
+        userRoleDto.setRole(rs.getString("role"));
+        return userRoleDto;
+    }
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));

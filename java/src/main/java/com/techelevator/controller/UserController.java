@@ -23,8 +23,8 @@ public class UserController {
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/all")
-    public List<User> getUsers(){
-        List <User> users = userDao.getUsers();
+    public List<UpdateUserRoleDto> getUsers(){
+        List<UpdateUserRoleDto> users = userDao.getUsers();
         return users;
     }
 

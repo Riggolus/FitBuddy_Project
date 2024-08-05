@@ -12,7 +12,10 @@ public class UpdateUserRoleDto {
     @NotEmpty
     private String username;
 
-    public UpdateUserRoleDto( int userId, String role, String username){
+    public UpdateUserRoleDto (){
+
+    }
+   public UpdateUserRoleDto( int userId, String role, String username){
         this.userId = userId;
         this.role = role;
         this.username = username;

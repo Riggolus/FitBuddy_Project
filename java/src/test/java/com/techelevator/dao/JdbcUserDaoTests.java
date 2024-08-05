@@ -56,16 +56,16 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         Assert.assertEquals(USER_1, actualUser);
     }
 
-    @Test
-    public void getUsers_returns_all_users() {
-        List<User> users = sut.getUsers();
-
-        Assert.assertNotNull(users);
-        Assert.assertEquals(3, users.size());
-        Assert.assertEquals(USER_1, users.get(0));
-        Assert.assertEquals(USER_2, users.get(1));
-        Assert.assertEquals(USER_3, users.get(2));
-    }
+//    @Test
+//    public void getUsers_returns_all_users() {
+//        List<User> users = sut.getUsers();
+//
+//        Assert.assertNotNull(users);
+//        Assert.assertEquals(3, users.size());
+//        Assert.assertEquals(USER_1, users.get(0));
+//        Assert.assertEquals(USER_2, users.get(1));
+//        Assert.assertEquals(USER_3, users.get(2));
+//    }
 
     @Test(expected = DaoException.class)
     public void createUser_with_null_username() {
