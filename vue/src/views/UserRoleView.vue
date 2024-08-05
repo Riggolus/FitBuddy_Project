@@ -23,11 +23,15 @@
                         <option value="ROLE_EMPLOYEE">Employee</option>
                     </select>
                 </td>      
+                
             </tr>
             <tr v-for="user in filteredUsers" :key="user.userId">
                 <td>{{user.username}}</td>
                 <td>{{user.userId}}</td>
                 <td>{{user.role}}</td>
+                <td>
+            <button class="btnActivateDeactivate" v-on:click="updateUserRole(user)">Switch Role</button>
+          </td>
             </tr>
         </tbody>
 
@@ -71,8 +75,19 @@ export default{
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        updateUserRole(user){
+            UserService.updateUser(user)
+            .then((response) => {
+                this.getUsers();
+                console.log("Did this work? " + user);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         }
     },
+
     mounted() {
         this.getUsers();
     }

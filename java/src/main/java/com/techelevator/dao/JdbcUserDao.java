@@ -43,7 +43,8 @@ public class JdbcUserDao implements UserDao {
     @Override
     public List<UpdateUserRoleDto> getUsers() {
         List<UpdateUserRoleDto> users = new ArrayList<>();
-        String sql = "SELECT user_id, username, role FROM users";
+        String sql = "SELECT user_id, username, role FROM users " +
+                "WHERE role != 'ROLE_ADMIN'";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -92,6 +93,11 @@ public class JdbcUserDao implements UserDao {
     @Override
     public boolean updateUserRole(int userId, String role) {
         int rowsAffected = 0;
+        if (role.equals("ROLE_USER")) {
+            role = "ROLE_EMPLOYEE";
+        } else {
+            role = "ROLE_USER";
+        }
         String sql = "UPDATE users SET role = ? WHERE user_id = ?";
         try {
             rowsAffected = jdbcTemplate.update(sql, role.toUpperCase().startsWith("ROLE_") ? role.toUpperCase() : "ROLE_" + role.toUpperCase(), userId);

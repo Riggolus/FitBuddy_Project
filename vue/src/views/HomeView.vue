@@ -9,7 +9,7 @@
     <h1>Home</h1>
     <p>You must be authenticated to see this</p>
     
-    <h1 v-if="isAdmin">Add Employee</h1>
+    <h1 v-if="isAdmin"><router-link v-bind:to="{name: 'userRole'}">Add Employee</router-link></h1>
    
     
   </div>
