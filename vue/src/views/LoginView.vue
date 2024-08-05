@@ -61,10 +61,63 @@ export default {
 </script>
 
 <style scoped>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #6D5BBA, #8D58BF, #DE67B4);
+  color: #333;
+}
+h1 {
+  margin-bottom: 2rem;
+  color: #333;
+}
 .form-input-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 label {
-  margin-right: 0.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #0056B3;
+}
+p {
+  margin-top: 1rem;
+}
+.alert {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+}
+.alert-danger {
+  background-color: #F8D7DA;
+  border-color: #F5C6CB;
+  color: #721C24;
+}
+.alert-success {
+  background-color: #D4EDDA;
+  border-color: #C3E6CB;
+  color: #155724;
 }
 </style>
