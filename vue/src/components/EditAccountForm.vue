@@ -15,7 +15,7 @@
         <!-- Type should be 'file' but v-model doesn't support it -->
         <div>
             <label for="photo">Photo</label>
-            <input type="text" id="photo" v-model="editAccount.photo"/>
+            <input type="text" id="photo" v-model="editAccount.profilePicture"/>
         </div>
         <!--**************************************************************-->
 
@@ -56,7 +56,7 @@ export default {
                 email: this.account.email,
                 firstName: this.account.firstName,
                 lastName: this.account.lastName,
-                profilePicture: this.account.photo,
+                profilePicture: this.account.profilePicture,
                 profile: this.account.profile,
                 goals: this.account.goals
             },

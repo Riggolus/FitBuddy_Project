@@ -13,7 +13,7 @@
         <!-- Type should be 'file' but v-model doesn't support it -->
         <div>
             <label for="photo">Photo</label>
-            <input type="text" id="photo" v-model="editAccount.photo"/>
+            <input type="text" id="photo" v-model="editAccount.profilePicture"/>
         </div>
         <!--**************************************************************-->
 
@@ -51,7 +51,7 @@
                 email: this.account.email,
                 firstName: this.account.firstName,
                 lastName: this.account.lastName,
-                profilePicture: this.account.photo,
+                profilePicture: this.account.profilePicture,
                 profile: this.account.profile,
                 goals: this.account.goals
             },
@@ -67,11 +67,13 @@
         submitForm() {
             console.log("Button works");
             console.log(this.editAccount);
+            console.log(this.editAccount.profilePicture);
             console.log(localStorage.getItem('token')); 
 
             AccountService.createAccount(this.editAccount)
                 .then(() => {
                     console.log("Account Created");
+                    console.log("after account services" + this.editAccount.profilePicture);
                     this.$router.push({ name: 'home' });
                 })
                 .catch((error) => {

@@ -2,8 +2,9 @@
     <div class="profile" v-if="isAuthenticated">
         <h1>Profile</h1>
         
+        
         <div class="profileInfo" v-if="userAccount">
-            <img :src="userAccount.photo" alt="Profile Picture" />
+            <img :src="userAccount.profilePicture" alt="Profile Picture" />
             <p>{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
             <p>Email: {{ userAccount.email }}</p>
             <p>{{ userAccount.profile }}</p>
@@ -19,6 +20,8 @@
 </template>
 
 <script>
+
+
 import authService from '../services/AuthService';
 import AccountService from '../services/AccountService';
 
@@ -29,11 +32,12 @@ export default {
                 firstName: '',
                 lastName: '',
                 email: '',
-                photo: '',
+                profilePicture: '',
                 profile: '',
                 goals: ''
             },
             isAuthenticated: false,
+            
         };
     },
     methods: {
