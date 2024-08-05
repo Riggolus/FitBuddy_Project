@@ -2,6 +2,7 @@
     <!-- Should change to 'Edit Account' and button to 'Save Changes' -->
      <!-- Form should be required to have all fields filled out -->
     <h1>Edit Account</h1>
+   
     <form v-on:submit.prevent="submitForm">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" v-model="editAccount.firstName"/>
@@ -52,6 +53,8 @@ export default {
 
     data() {
         return {
+            
+
             editAccount: {
                 email: this.account.email,
                 firstName: this.account.firstName,
@@ -74,7 +77,7 @@ export default {
             console.log("Button works");
             console.log(this.editAccount);
             console.log(localStorage.getItem('token')); 
-
+            
             AccountService.updateAccount(this.account.id, this.editAccount)
                 .then(() => {
                     console.log("Account Updated");
@@ -92,8 +95,21 @@ export default {
             } else {
                 this.registrationErrorMsg = 'There was a problem with the server.';
             }
-        
         }
+        
+            
+    },
+    created() {
+        this.isAuthenticated = !!localStorage.getItem('token'); // Check if the user is authenticated
+            if (this.isAuthenticated) {
+                AccountService.getMyAccount()
+                    .then((response) => {
+                    this.editAccount = response.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
     }
 }
 </script>

@@ -9,7 +9,7 @@
     <h1>Home</h1>
     <p>You must be authenticated to see this</p>
     
-
+    <h1 v-if="isAdmin">Add Employee</h1>
    
     
   </div>
@@ -21,8 +21,18 @@ import AccountService from '../services/AccountService';
 
 
 export default {
-  
+  data() {
+    return {
+      user: JSON.parse(localStorage.getItem('user'))
+    }
+  },
+  computed: {
+    isAdmin(){
+      return this.user.authorities.some((auth) => auth.name ==='ROLE_ADMIN');
+    }
+  },
   methods: {
+    
     toAccount() {
       const currentUser = JSON.parse(localStorage.getItem('user'));
       console.log("Account Object:", this.account); // Debugging line
