@@ -88,6 +88,23 @@ public class JdbcUserDao implements UserDao {
         return newUser;
     }
 
+    @Override
+    public boolean updateUserRole(int userId, String role) {
+        int rowsAffected = 0;
+        String sql = "UPDATE users SET role = ? WHERE user_id = ?";
+        try {
+            rowsAffected = jdbcTemplate.update(sql, role.toUpperCase().startsWith("ROLE_") ? role.toUpperCase() : "ROLE_" + role.toUpperCase(), userId);
+            if (rowsAffected != 0) {
+                return true;
+            } else
+                return false;
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Cannot connect to database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Violation of data integrity");
+        }
+    }
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
