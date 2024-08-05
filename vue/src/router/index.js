@@ -59,7 +59,7 @@ const routes = [
     }
   },
   {
-    path: "/account/:id", //Switch this to username
+    path: "/account/:username", //Switch this to username
     name: "profile",
     component: ProfileView,
     meta: {

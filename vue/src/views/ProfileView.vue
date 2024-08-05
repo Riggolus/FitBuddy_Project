@@ -7,7 +7,7 @@
             <p>{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
             <p>Email: {{ userAccount.email }}</p>
             <p>{{ userAccount.profile }}</p>
-            <p>Goals:{{ userAccount.goal }}</p>
+            <p>Goals: {{ userAccount.goals }}</p>
         </div>
         <div id="profileNav">
             <button id="editAccount" v-on:click="toAccount">Edit Account</button>
@@ -31,7 +31,7 @@ export default {
                 email: '',
                 photo: '',
                 profile: '',
-                goal: ''
+                goals: ''
             },
             isAuthenticated: false,
         };
@@ -40,8 +40,8 @@ export default {
         toAccount() {
             this.$router.push({ name: 'editAccount' });
         },
-        getAccount(userId) {
-            AccountService.getAccount(userId)
+        getAccount() {
+            AccountService.getMyAccount()
                 .then((response) => {
                     this.userAccount = response.data;
                 })
@@ -51,15 +51,16 @@ export default {
         }
     },
     created() {
+
          this.isAuthenticated = !!localStorage.getItem('token'); // Check if the user is authenticated
          if (this.isAuthenticated) {
-            const userId = this.$route.params.id; // Extract user ID from the URL
-            console.log('User ID:', userId); // Debugging line
-            if (userId) {
-                this.getAccount(userId); // Fetch account details using the user ID
-            } else {
-                console.error('User ID is undefined'); // Error handling for undefined user ID
-            }
+            AccountService.getMyAccount()
+                .then((response) => {
+                    this.userAccount = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     }
 }

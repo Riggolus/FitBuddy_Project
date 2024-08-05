@@ -24,11 +24,11 @@ export default {
   
   methods: {
     toAccount() {
-      const userId = this.account.user_id; // Access user_id from account prop
+      const currentUser = JSON.parse(localStorage.getItem('user'));
       console.log("Account Object:", this.account); // Debugging line
-      console.log("The user id: " + userId); // Debugging line
-      if (userId) {
-        this.$router.push({ name: 'profile', params: { id: userId } });
+      console.log("The user id: " + currentUser); // Debugging line
+      if (currentUser) {
+        this.$router.push({ name: 'profile', params: { username: currentUser } });
       } else {
         console.error("User ID is not available.");
       }
