@@ -1,7 +1,5 @@
 <template>
-    <!-- Should change to 'Edit Account' and button to 'Save Changes' -->
-     <!-- Form should be required to have all fields filled out -->
-    <h1>Edit Account</h1>
+    <h1>Create Account</h1>
     <form v-on:submit.prevent="submitForm">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" v-model="editAccount.firstName"/>
@@ -31,19 +29,16 @@
             </textarea>
         </div>
 
-        <button type="submit">Save Changes</button>
+        <button type="submit">Create Account</button>
         <button type="reset" v-on:click="cancelForm">Cancel</button>
 
     </form>
 </template>
-
 <script>
-console.log(localStorage.getItem('token'));
+    import AccountService from '../services/AccountService';
 
-import AccountService from '../services/AccountService';
-
-export default {
-    props: {
+    export default {
+        props: {
         account: {
             type: Object,
             required: true
@@ -64,7 +59,6 @@ export default {
             registrationErrorMsg: 'There were problems submitting the info.'
         };
     },
-
     methods: {
         
         cancelForm() {
@@ -75,9 +69,9 @@ export default {
             console.log(this.editAccount);
             console.log(localStorage.getItem('token')); 
 
-            AccountService.updateAccount(this.account.id, this.editAccount)
+            AccountService.createAccount(this.editAccount)
                 .then(() => {
-                    console.log("Account Updated");
+                    console.log("Account Created");
                     this.$router.push({ name: 'home' });
                 })
                 .catch((error) => {
@@ -95,5 +89,5 @@ export default {
         
         }
     }
-}
+    }
 </script>

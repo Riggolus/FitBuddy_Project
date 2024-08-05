@@ -6,7 +6,8 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import AccountView from '../views/AccountView.vue';
+import EditAccountView from '../views/EditAccountView.vue';
+import CreateAccountView from '../views/CreateAccountView.vue';
 import ProfileView from '../views/ProfileView.vue';
 
 /**
@@ -53,7 +54,15 @@ const routes = [
   {
     path: "/edit-account",
     name: "editAccount",
-    component: AccountView,
+    component: EditAccountView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/create-account",
+    name: "createAccount",
+    component: CreateAccountView,
     meta: {
       requiresAuth: true
     }
