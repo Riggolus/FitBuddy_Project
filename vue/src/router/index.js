@@ -12,6 +12,7 @@ import ProfileView from '../views/ProfileView.vue';
 import UserRoleView from '../views/UserRoleView.vue';
 import WorkoutView from '../views/WorkoutView.vue';
 import AnalyticsView from '../views/AnalyticsView.vue';
+import MemberCheckInCheckOutViewVue from '../views/MemberCheckInCheckOutView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -82,6 +83,14 @@ const routes = [
     path: "/user-role",
     name: "userRole",
     component: UserRoleView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {  
+    path: "/check-in-check-out",
+    name: "checkInCheckOut",
+    component: MemberCheckInCheckOutViewVue,
     meta: {
       requiresAuth: true
     }
