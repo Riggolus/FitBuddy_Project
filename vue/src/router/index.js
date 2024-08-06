@@ -10,6 +10,8 @@ import EditAccountView from '../views/EditAccountView.vue';
 import CreateAccountView from '../views/CreateAccountView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import UserRoleView from '../views/UserRoleView.vue';
+import WorkoutView from '../views/WorkoutView.vue';
+import AnalyticsView from '../views/AnalyticsView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -83,6 +85,22 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/workout/:username",
+    name: "workout",
+    component: WorkoutView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/analytics/:username",
+    name: "analytics",
+    component: AnalyticsView,
+    meta: {
+      requiresAuth: true
+    } 
   }
 ];
 
