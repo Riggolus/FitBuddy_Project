@@ -8,5 +8,7 @@ public interface CheckInCheckOutDao {
 
     void checkIn(Principal principal);
     void checkOut(Principal principal);
+    void employeeCheckIn(int userId, Principal principal);
+    void employeeCheckOut(int userId, Principal principal);
     CheckInCheckOut getCheckInTime(Principal principal);
 }
