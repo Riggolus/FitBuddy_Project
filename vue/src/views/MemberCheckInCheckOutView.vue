@@ -28,8 +28,7 @@
             <tr v-for="user in filteredUsers" :key="user.userId">
                 <td>{{user.username}}</td>
                 <td>{{user.userId}}</td>
-                <td v-if="user.checkedStatus">Checked In</td>
-                <td v-else>Checked Out</td>
+                <td >{{ user.checkedIn ? 'Checked In' : 'Checked Out'}}</td>
                 <td>
                     <button class="btnActivateDeactivate" v-on:click="updateUserRole(user)">Change Status</button>
                 </td>
@@ -70,7 +69,7 @@ export default {
     },
     methods: {
         getUsers() {
-            UserService.getUsers()
+            CheckInCheckOutService.getUserStatuses()
                 .then((response) => {
                     this.users = response.data;
                 })
@@ -132,10 +131,7 @@ export default {
         this.getUsers();
         
     },
-    mounted() {
-        
-        this.getUserStatuses();
-    }
+   
 }
 
 

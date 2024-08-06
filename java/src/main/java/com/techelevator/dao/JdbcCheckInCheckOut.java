@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.CheckInCheckOut;
 import com.techelevator.model.User;
+import com.techelevator.model.UserStatus;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
@@ -39,6 +42,28 @@ public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data Integrity Violation", e);
         }
+
+    }
+    @Override
+    public List<UserStatus> getUserStatuses(){
+        List<UserStatus> users = new ArrayList<>();
+        String sql = "SELECT  u.user_id, u.username, MIN(c.check_in_time) AS check_in_time, MIN(c.check_out_time) AS check_out_time " +
+                "FROM users u LEFT JOIN check_in_check_out c ON u.user_id = c.user_id " +
+                "GROUP BY u.user_id, u.username ORDER BY user_id";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+
+            while (results.next()) {
+                UserStatus user = new UserStatus(results.getInt("user_id"), results.getString("username"), results.getDate("check_in_time"), results.getDate("check_out_time"));
+                users.add(user);
+            }
+        }catch(CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database", e);
+        }catch(DataIntegrityViolationException e){
+            throw new DaoException("Data Integrity Violation", e);
+        }
+
+        return users;
 
     }
 

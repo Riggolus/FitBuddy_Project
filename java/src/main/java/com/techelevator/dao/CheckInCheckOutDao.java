@@ -1,8 +1,10 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.CheckInCheckOut;
+import com.techelevator.model.UserStatus;
 
 import java.security.Principal;
+import java.util.List;
 
 public interface CheckInCheckOutDao {
 
@@ -11,4 +13,5 @@ public interface CheckInCheckOutDao {
     void employeeCheckIn(int userId, Principal principal);
     void employeeCheckOut(int userId, Principal principal);
     CheckInCheckOut getCheckInTime(int userId);
+    List<UserStatus> getUserStatuses();
 }

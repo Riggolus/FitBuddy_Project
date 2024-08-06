@@ -4,11 +4,13 @@ package com.techelevator.controller;
 import com.techelevator.dao.CheckInCheckOutDao;
 import com.techelevator.model.CheckInCheckOut;
 import com.techelevator.model.User;
+import com.techelevator.model.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -46,8 +48,14 @@ public class CheckInCheckOutController {
     public CheckInCheckOut checkStatus(@RequestBody User user) {
         CheckInCheckOut checkInCheckOut = checkInCheckOutDao.getCheckInTime(user.getId());
         return checkInCheckOut;
-
     }
+    @GetMapping("/statuses")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+    public List<UserStatus> usersStatuses(){
+      List<UserStatus> users =  checkInCheckOutDao.getUserStatuses();
+      return users;
+    }
+
 
 
 

@@ -31,5 +31,8 @@ export default {
     },
     getUserStatus(user) {
         return http.get('/check/status', user)
+    },
+    getUserStatuses(){
+      return http.get('/check/statuses')
     }
 }
