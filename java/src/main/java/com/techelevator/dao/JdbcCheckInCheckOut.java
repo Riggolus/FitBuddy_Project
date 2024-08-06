@@ -70,6 +70,33 @@ public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
             throw new DaoException("Data Integrity Violation", e);
         }
     }
+    @Override
+    public void employeeCheckIn(int userId, Principal principal){
+        Date dateTime = new Date();
+        User employee = userDao.getUserByUsername(principal.getName());
+        String sql = "INSERT INTO check_in_check_out (user_id, check_in_time, check_in_by) " +
+                "VALUES (?,?,?);";
+        try {
+            jdbcTemplate.update(sql, userId, dateTime, employee.getId());
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Data Integrity Violation", e);
+        }
+    }
+    @Override
+    public void employeeCheckOut(int userId, Principal principal){
+        Date datetime = new Date();
+        User employee = userDao.getUserByUsername(principal.getName());
+        String sql = "UPDATE check_in_check_out SET check_out_time = ?, check_out_by = ? WHERE user_id = ? AND check_out_time IS NULL";
+        try {
+            jdbcTemplate.update(sql, datetime, employee.getId(), userId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Data Integrity Error", e);
+        }
+    }
 
     private CheckInCheckOut mapRowToCheckInCheckOut(SqlRowSet rs) {
         CheckInCheckOut checkInCheckOut = new CheckInCheckOut();
