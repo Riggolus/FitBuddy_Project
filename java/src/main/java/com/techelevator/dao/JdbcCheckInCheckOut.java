@@ -44,13 +44,15 @@ public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
 
 
     @Override
-    public CheckInCheckOut getCheckInTime(Principal principal) {
-        User user = userDao.getUserByUsername(principal.getName());
-        String sql2 = "SELECT * FROM check_in_check_out WHERE user_id = ? AND check_out_time IS NULL";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql2, user.getId());
-        CheckInCheckOut checkInCheckOut = null;
+    public CheckInCheckOut getCheckInTime(int userId) {
+        String sql2 = "SELECT check_in_out_id, user_id, check_in_time, check_out_time FROM check_in_check_out WHERE user_id = ? AND check_out_time IS NULL";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql2, userId);
+        CheckInCheckOut checkInCheckOut = new CheckInCheckOut();
         if(results.next()) {
-            checkInCheckOut = mapRowToCheckInCheckOut(results);
+            checkInCheckOut.setUserId(results.getInt("user_id"));
+            checkInCheckOut.setCheckInTime(results.getDate("check_in_time"));
+            checkInCheckOut.setCheckOutTime(results.getDate("check_out_time"));
+//            checkInCheckOut = mapRowToCheckInCheckOut(results);
         }
         return checkInCheckOut;
 
@@ -98,13 +100,16 @@ public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
         }
     }
 
-    private CheckInCheckOut mapRowToCheckInCheckOut(SqlRowSet rs) {
-        CheckInCheckOut checkInCheckOut = new CheckInCheckOut();
-        checkInCheckOut.setCheckInCheckOutId(rs.getInt("check_in_check_out_id"));
-        checkInCheckOut.setUserId(rs.getInt("user_id"));
-        checkInCheckOut.setCheckInTime(rs.getDate("check_in_time"));
-        checkInCheckOut.setCheckOutTime(rs.getDate("check_out_time"));
-        checkInCheckOut.setCheckInBy(rs.getInt("check_in_by"));
-        return checkInCheckOut;
-    }
+
+
+//    private CheckInCheckOut mapRowToCheckInCheckOut(SqlRowSet rs) {
+//        CheckInCheckOut checkInCheckOut = new CheckInCheckOut();
+//        checkInCheckOut.setCheckInCheckOutId(rs.getInt("check_in_out_id"));
+//        checkInCheckOut.setUserId(rs.getInt("user_id"));
+//        checkInCheckOut.setCheckInTime(rs.getDate("check_in_time"));
+//        checkInCheckOut.setCheckOutTime(rs.getDate("check_out_time"));
+//        checkInCheckOut.setCheckInBy(rs.getInt("check_in_by"));
+//        checkInCheckOut.setCheckOutBy(rs.getInt("check_out_by"));
+//        return checkInCheckOut;
+//    }
 }

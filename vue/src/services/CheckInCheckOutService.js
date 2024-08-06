@@ -22,5 +22,14 @@ export default {
     },
     checkOut() {
         return http.put('/check/out')
+    },
+    checkUserIn(user) {
+        return http.post('/check/in/member', user)
+    },
+    checkUserOut(user) {
+        return http.put('/check/out/member', user)
+    },
+    getUserStatus(user) {
+        return http.get('/check/status', user)
     }
 }

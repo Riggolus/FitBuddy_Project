@@ -20,6 +20,7 @@ public class CheckInCheckOut {
 
     private Integer checkOutBy;
 
+
     public CheckInCheckOut(int checkInCheckOutId, int userId, Date checkInTime, Date checkOutTime, Integer checkInBy, Integer checkOutBy) {
         this.checkInCheckOutId = checkInCheckOutId;
         this.userId = userId;

@@ -41,5 +41,14 @@ public class CheckInCheckOutController {
         checkInCheckOutDao.employeeCheckOut(user.getId(), principal);
     }
 
+    @GetMapping("/status")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+    public CheckInCheckOut checkStatus(@RequestBody User user) {
+        CheckInCheckOut checkInCheckOut = checkInCheckOutDao.getCheckInTime(user.getId());
+        return checkInCheckOut;
+
+    }
+
+
 
 }
