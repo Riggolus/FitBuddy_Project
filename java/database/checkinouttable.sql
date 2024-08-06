@@ -7,5 +7,6 @@ CREATE TABLE check_in_check_out (
 	CONSTRAINT FK_check_in_check_out_users FOREIGN KEY (user_id) REFERENCES users(user_id)
 	
 );	
-	GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE check_in_check_out TO final_capstone_appuser;
+
+
    
