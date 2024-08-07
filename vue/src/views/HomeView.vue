@@ -7,11 +7,13 @@
 
   <div class="home">
     <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+    <p>You must be authenticated to see this </p>
 
     <button id="check-in" v-on:click="checkUserIn">Check In</button>
 
-    <h1 v-if="isAdminOrEmployee"><router-link v-bind:to="{name: 'checkInCheckOut'}">Check-in Member</router-link></h1>
+    
+
+    <h1 v-if="isAdminOrEmployee"><router-link v-bind:to="{name: 'userRole'}" >Check-in Member</router-link></h1>
     
     <h1 v-if="isAdmin"><router-link v-bind:to="{name: 'userRole'}">Add Employee</router-link></h1>
    
