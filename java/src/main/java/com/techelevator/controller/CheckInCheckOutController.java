@@ -33,14 +33,14 @@ public class CheckInCheckOutController {
 
     @PostMapping("/in/member")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
-    public void employeeCheckIn(@RequestBody User user, Principal principal){
-        checkInCheckOutDao.employeeCheckIn(user.getId(), principal);
+    public void employeeCheckIn(@RequestBody UserStatus user, Principal principal){
+        checkInCheckOutDao.employeeCheckIn(user.getUserId(), principal);
     }
 
     @PutMapping("/out/member")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
-    public void employeeCheckOut(@RequestBody User user, Principal principal){
-        checkInCheckOutDao.employeeCheckOut(user.getId(), principal);
+    public void employeeCheckOut(@RequestBody UserStatus user, Principal principal){
+        checkInCheckOutDao.employeeCheckOut(user.getUserId(), principal);
     }
 
     @GetMapping("/status")

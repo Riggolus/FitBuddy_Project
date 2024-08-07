@@ -47,9 +47,10 @@ public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
     @Override
     public List<UserStatus> getUserStatuses(){
         List<UserStatus> users = new ArrayList<>();
-        String sql = "SELECT  u.user_id, u.username, MIN(c.check_in_time) AS check_in_time, MIN(c.check_out_time) AS check_out_time " +
-                "FROM users u LEFT JOIN check_in_check_out c ON u.user_id = c.user_id " +
-                "GROUP BY u.user_id, u.username ORDER BY user_id";
+        String sql = "SELECT u.user_id, u.username, c.check_in_time, c.check_out_time FROM users u LEFT JOIN ( SELECT user_id, check_in_time, check_out_time FROM check_in_check_out WHERE (user_id, check_in_time) IN ( SELECT user_id, MAX(check_in_time) FROM check_in_check_out GROUP BY user_id ) ) c ON u.user_id = c.user_id ORDER BY u.user_id;";
+//                "SELECT  u.user_id, u.username, MAX(c.check_in_time) AS check_in_time, MAX(c.check_out_time) AS check_out_time " +
+//                "FROM users u LEFT JOIN check_in_check_out c ON u.user_id = c.user_id " +
+//                "GROUP BY u.user_id, u.username ORDER BY user_id";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 

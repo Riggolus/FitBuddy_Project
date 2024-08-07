@@ -17,10 +17,10 @@
                     <input type="number" id="userId" v-model="userId">
                 </td>
                 <td>
-                    <select id="role" v-model="role">
-                        <option value>All</option>   
-                        <option value="checked_in">Checked In</option>
-                        <option value="checked_out">Checked Out</option>
+                    <select id="checked-in" v-model="checkedStatus">
+                        <option value="">All</option>   
+                        <option value="true">Checked In</option>
+                        <option value="false">Checked Out</option>
                     </select>
                 </td>      
                 
@@ -28,16 +28,23 @@
             <tr v-for="user in filteredUsers" :key="user.userId">
                 <td>{{user.username}}</td>
                 <td>{{user.userId}}</td>
-                <td >{{ user.checkedIn ? 'Checked In' : 'Checked Out'}}</td>
+                <td >{{ user.checkedIn && user.checkedOut ? 'Checked In' : 'Checked Out'}}</td>
                 <td>
-                    <button class="btnActivateDeactivate" v-on:click="updateUserRole(user)">Change Status</button>
+                    <button class="btnActivateDeactivate" @click="checkMemberIn(user)">
+                        Change Status In
+                    </button>
+                </td>
+                <td>
+                    <button class="btnActivateDeactivate" @click="checkMemberOut(user)">
+                        Change Status Out
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table> 
 </template>
 <script>
-import UserService from '../services/UserService';
+
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
 
 export default {
@@ -51,21 +58,15 @@ export default {
     },
     computed: {
         filteredUsers() {
-            let filteredUsers = this.users;
-            if (this.username) {
-                filteredUsers = filteredUsers.filter((user) => user.username
-                .toLowerCase()
-                .includes(this.username));
-            }
-            if (this.userId){
-            filteredUsers = filteredUsers.filter((user)=> user.userId === this.userId);
-           }
-           if (this.checkedStatus){
-            filteredUsers = filteredUsers.filter((user)=> user.checkedStatus === this.checkedStatus);
-           }
-            return filteredUsers;
+            return this.users.filter((user) => {
+                return (
+                    (!this.username || user.username.toLowerCase().includes(this.username.toLowerCase())) &&
+                    (!this.userId || user.userId === parseInt(this.userId)) &&
+                    (this.checkedStatus === '' || user.checkedStatus.toString() === this.checkedStatus)
+                );
+            });
         },
-        
+                
     },
     methods: {
         getUsers() {
@@ -76,58 +77,44 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
-        }, getUserStatuses(){
-            console.log("Getting user statuses");
-            this.users.forEach(user => {
-                console.log("Checking user status for: " + user.username);
-                CheckInCheckOutService.getUserStatus(user)
-                    .then(response => {
-                    console.log("User status: " + response.data.checkedIn);
-                    if(response.data.checkedIn !== null && response.data.checkedOut === null){
-                        user.checkedStatus = true;
-                        
-                    } else {
-                        user.checkedStatus = false;
-                    }
-                })
-                .catch(error => {
-                console.log(error);
-          });
-      });
-    },
-
-        },
+            },
+         
+        
         toggleUserStatus(user){
-            if (user.checkedStatus) {
-                this.checkUserOut(user);
+            console.log("Button Pressed and user status: " + user.checkedIn);
+            console.log("User: " + user);
+            if (user.checkedIn) {
+                this.checkMemberOut(user);
+                
             } else {
-                this.checkUserIn(user);
+                this.checkMemberIn(user);
             }
         },
         
 
 
-        checkUserIn(user){
-            UserService.checkUserIn(user)
-            .then((response) => {
+        checkMemberIn(user){
+            CheckInCheckOutService.checkUserIn(user)
+            .then(() => {
                 this.getUsers();
-                console.log("Did this work? " + user);
+                console.log("checked in: " + user);
             })
             .catch((error) => {
                 console.log(error);
             });
         },
-        checkUserOut(user){
-            UserService.checkUserOut(user)
-            .then((response) => {
+        checkMemberOut(user){
+            CheckInCheckOutService.checkUserOut(user)
+            .then(() => {
                 this.getUsers();
-                console.log("Did this work? " + user);
+                console.log("Checked out: " + user);
             })
             .catch((error) => {
                 console.log(error);
             });
         },
-    created() {
+    },
+    mounted() {
         this.getUsers();
         
     },
@@ -136,3 +123,4 @@ export default {
 
 
 </script>
+
