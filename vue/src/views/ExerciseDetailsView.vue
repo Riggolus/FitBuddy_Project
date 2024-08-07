@@ -25,7 +25,8 @@ export default {
                 reps: 0,
                 weight: 0,
                 duration: 0
-            }
+            },
+            
         };
     },
     methods: {
