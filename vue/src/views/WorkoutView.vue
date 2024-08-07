@@ -16,11 +16,10 @@
                 <tr v-for="exercise in filteredExercises" :key="exercise.exerciseId">
                     <td>{{exercise.exerciseName}}</td>
                     <td>
-                        <div v-show="selectedExerciseId === exercise.exerciseId">
-                            gif goes here
-                            {{ exercise.description }}
-                        </div>
+                        <button v-on:click="selectExercise(exercise.exerciseId)">View Exercise</button>
                     </td>
+                        
+                    
                 </tr>
             </tbody>
         </table>
@@ -35,7 +34,7 @@ export default {
         return {
             user: JSON.parse(localStorage.getItem('user')),
             exercises: [],
-            exerciseName: '',
+            selectedExerciseId: null,
         };
     },
     computed: {
@@ -73,8 +72,8 @@ export default {
                 });
         },
         selectExercise(exerciseId) {
-            // Toggle the selected exercise ID
-            this.selectedExerciseId = this.selectedExerciseId === exerciseId ? null : exerciseId;   
+            // route user to exercise via exerciseId
+              
         }
     },
     mounted() {
