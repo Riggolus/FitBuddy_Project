@@ -1,5 +1,5 @@
 <template>
-    This is your current workout
+    This is your current workout 
     <div>
         <table id="currentWorkout">
             <thead>
@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="workout in workouts" :key="workout.workoutId">
-                    <td></td>
+                <tr v-for="workout in workouts" :key="workout.exerciseName">
+                    <td>{{ workout.exerciseName }}</td>
                     <td>{{workout.sets}}</td>
                     <td>{{workout.reps}}</td>
                     <td>{{workout.weight}}</td>
@@ -32,13 +32,14 @@ export default {
         return {
             workouts: [
                 {
-                    exerciseName: '',
+                   
                     workoutId: 0,
                     exerciseId: 0,
                     sets: 0,
                     reps: 0,
                     weight: 0,
-                    duration: 0
+                    duration: 0,
+                    exerciseName: '',
                 }
             ],
             currentDate: this.getCurrentDate(),
@@ -81,8 +82,12 @@ export default {
             
         // }
     },
-    created() {
+    mounted(){
         this.getCurrentWorkout();
+    },
+    created() {
+        this.getCurrentDate();
+        
         console.log("Current Date: ", this.currentDate);
         console.log("Workouts: ", this.workouts);
         // this.getExerciseName();

@@ -11,6 +11,6 @@ public interface WorkoutDao {
 
     void addWorkout(WorkoutDto workoutDto, Principal principal);
     Workout getLastWorkoutByUserId(int userId);
-    List<Workout> getWorkoutByDate(Date dateOfWorkout, Principal principal);
+    List<WorkoutDto> getWorkoutByDate(Date dateOfWorkout, Principal principal);
     List<Workout> getAllWorkouts(int userId);
 }

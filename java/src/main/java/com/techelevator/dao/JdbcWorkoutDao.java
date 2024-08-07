@@ -61,15 +61,23 @@ public class JdbcWorkoutDao implements WorkoutDao {
     }
 
     @Override
-    public List<Workout> getWorkoutByDate(Date dateOfWorkout, Principal principal) {
-        List<Workout> workouts = new ArrayList<>();
+    public List<WorkoutDto> getWorkoutByDate(Date dateOfWorkout, Principal principal) {
+        List<WorkoutDto> workouts = new ArrayList<>();
         User user = userDao.getUserByUsername(principal.getName());
-        String sql = "SELECT * FROM workout WHERE date_of_workout::date = ? AND user_id = ? ORDER BY workout_id";
-        Workout workout = null;
+        String sql = "SELECT w.user_id, e.exercise_id, sets, reps, weight, duration, date_of_workout, exercise_name FROM workout w JOIN exercise e ON w.exercise_id = e.exercise_id WHERE date_of_workout::date = ? AND user_id = ?";
+
         try {
             SqlRowSet results =  jdbcTemplate.queryForRowSet(sql, dateOfWorkout, user.getId());
             while (results.next()) {
-                workout = mapToRowSet(results);
+                WorkoutDto workout = new WorkoutDto();
+                workout.setUserId(results.getInt("user_id"));
+                workout.setExerciseId(results.getInt("exercise_id"));
+                workout.setSets(results.getInt("sets"));
+                workout.setReps(results.getInt("reps"));
+                workout.setWeight(results.getInt("weight"));
+                workout.setDuration(results.getInt("duration"));
+                workout.setDateOfWorkout(results.getDate("date_of_workout"));
+                workout.setExerciseName(results.getString("exercise_name"));
                 workouts.add(workout);
             }
         } catch (CannotGetJdbcConnectionException e) {

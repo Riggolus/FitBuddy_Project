@@ -12,7 +12,21 @@ public class WorkoutDto {
     private double weight;
     private Integer duration;
     private Date dateOfWorkout;
+    private String exerciseName;
+    private int userId;
+    public WorkoutDto(){
 
+    }
+
+    public WorkoutDto( int exerciseId, int sets, int reps, double weight, Integer duration, Date dateOfWorkout, String exerciseName) {
+        this.exerciseId = exerciseId;
+        this.sets = sets;
+        this.reps = reps;
+        this.weight = weight;
+        this.duration = duration;
+        this.dateOfWorkout = dateOfWorkout;
+        this.exerciseName = exerciseName;
+    }
     public WorkoutDto( int exerciseId, int sets, int reps, double weight, Integer duration, Date dateOfWorkout) {
         this.exerciseId = exerciseId;
         this.sets = sets;
@@ -22,6 +36,21 @@ public class WorkoutDto {
         this.dateOfWorkout = dateOfWorkout;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getExerciseName() {
+        return exerciseName;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
 
     public int getExerciseId() {
         return exerciseId;

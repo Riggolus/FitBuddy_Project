@@ -39,7 +39,7 @@ public class WorkoutController {
     }
 
     @GetMapping("/date/{date}")
-    public List<Workout>  getWorkoutByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, Principal principal) {
+    public List<WorkoutDto>  getWorkoutByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, Principal principal) {
         return workoutDao.getWorkoutByDate(date, principal);
     }
 
