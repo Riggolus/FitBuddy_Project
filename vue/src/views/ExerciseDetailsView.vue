@@ -1,7 +1,7 @@
 <template>
     Details 
     <h2>{{exercise.exerciseName}}</h2>
-    <img :src="getGifSrc(exercise.exerciseId)" alt="exercise.exerciseName" width="200" height="200"> 
+    <img :src="getGifSrc(id)" alt="exercise.exerciseName" width="200" height="200"> 
     <p>{{exercise.exerciseDescription}}</p> 
 
     <add-exercise-form v-bind:workout="workout"/>
@@ -18,6 +18,7 @@ export default {
         return {
             exercise: {
             },
+            id: this.$route.params.id,
             workout: {
                 exerciseId: this.$route.params.id,
                 sets: 0,
@@ -37,9 +38,9 @@ export default {
                     console.log(error);
                 });
         },
-        getGifSrc(exerciseId) {
-            return `../assets/exerciseGifs/${exerciseId}.gif`;
-        }
+        getGifSrc(id) {
+        return new URL(`../assets/exerciseGifs/${id}.gif`, import.meta.url).href;
+    }
     },
     mounted() {
         this.getCurrentExercise();

@@ -1,5 +1,6 @@
 <template>
     <h2>Workout</h2>
+    <current-workout/>
     <div>
         <table id="exercises">
             <thead>
@@ -30,7 +31,11 @@
 <script>
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
 import ExerciseServices from '../services/ExerciseServices';
+import CurrentWorkout from '../components/CurrentWorkout.vue';
 export default {
+    components: {
+        CurrentWorkout
+    },
     data() {
         return {
             user: JSON.parse(localStorage.getItem('user')),
