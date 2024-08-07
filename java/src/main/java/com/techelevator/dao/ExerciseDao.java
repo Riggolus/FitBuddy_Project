@@ -7,4 +7,5 @@ import java.util.List;
 public interface ExerciseDao {
 
     List<Exercise> getExercises();
+    Exercise getExerciseById(int id);
 }

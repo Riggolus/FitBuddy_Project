@@ -1,6 +1,9 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Exercise;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -30,6 +33,22 @@ public class JdbcExerciseDao implements ExerciseDao{
             exercises.add(exercise);
         }
         return exercises;
+    }
+    @Override
+    public Exercise getExerciseById(int id){
+        Exercise exercise = null;
+        String sql = "SELECT * FROM exercise WHERE exercise_id = ?;";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+            if (results.next()){
+                exercise = mapToRowSet(results);
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to Database", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Data Integrity Violated", e);
+        }
+        return exercise;
     }
 
     public Exercise mapToRowSet(SqlRowSet rs){
