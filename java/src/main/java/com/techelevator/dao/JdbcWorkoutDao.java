@@ -61,12 +61,13 @@ public class JdbcWorkoutDao implements WorkoutDao {
     }
 
     @Override
-    public List<Workout> getWorkoutByDate(Date dateOfWorkout) {
+    public List<Workout> getWorkoutByDate(Date dateOfWorkout, Principal principal) {
         List<Workout> workouts = new ArrayList<>();
-        String sql = "SELECT * FROM workout WHERE date_of_workout::date = ? ORDER BY workout_id";
+        User user = userDao.getUserByUsername(principal.getName());
+        String sql = "SELECT * FROM workout WHERE date_of_workout::date = ? AND user_id = ? ORDER BY workout_id";
         Workout workout = null;
         try {
-            SqlRowSet results =  jdbcTemplate.queryForRowSet(sql, dateOfWorkout);
+            SqlRowSet results =  jdbcTemplate.queryForRowSet(sql, dateOfWorkout, user.getId());
             while (results.next()) {
                 workout = mapToRowSet(results);
                 workouts.add(workout);
