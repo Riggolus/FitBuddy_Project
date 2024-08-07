@@ -25,16 +25,18 @@
         </table>
     </div>
     <button id="check-out" v-on:click="checkOut">Complete Workout/check-out</button>
+    
 </template>
 <script>
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
-import ExerciseServices from '../services/ExerciseServices';
+ import ExerciseServices from '../services/ExerciseServices';
 export default {
     data() {
         return {
             user: JSON.parse(localStorage.getItem('user')),
             exercises: [],
             selectedExerciseId: null,
+            exerciseName: ''
         };
     },
     computed: {
@@ -73,6 +75,8 @@ export default {
         },
         selectExercise(exerciseId) {
             // route user to exercise via exerciseId
+            console.log("exerciseId: ", exerciseId);
+            this.$router.push({ name: 'exerciseDetails', params: { id: exerciseId } });
               
         }
     },

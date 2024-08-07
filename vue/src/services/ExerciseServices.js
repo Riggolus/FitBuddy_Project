@@ -22,4 +22,8 @@ export default {
     getExercises() {
         return http.get('/exercise/all')
     }
+    // getExercise(id) {
+    //     return http.get(`/exercise/${id}`)
+    // },
+
 }  
