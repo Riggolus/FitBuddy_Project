@@ -1,7 +1,7 @@
 <template>
     Details 
     <h2>{{exercise.exerciseName}}</h2>
-    <!-- <img :src="getGifSrc(exercise.exerciseId)" alt="exercise.exerciseName" width="200" height="200">  -->
+    <img :src="getGifSrc(exercise.exerciseId)" alt="exercise.exerciseName" width="200" height="200"> 
     <p>{{exercise.exerciseDescription}}</p> 
 
     <add-exercise-form v-bind:workout="workout"/>
@@ -37,9 +37,9 @@ export default {
                     console.log(error);
                 });
         },
-        // getGifSrc(exerciseId) {
-        //     return require(`../assets/exerciseGifs/${exerciseId}.gif`);
-        // }
+        getGifSrc(exerciseId) {
+            return `../assets/exerciseGifs/${exerciseId}.gif`;
+        }
     },
     mounted() {
         this.getCurrentExercise();

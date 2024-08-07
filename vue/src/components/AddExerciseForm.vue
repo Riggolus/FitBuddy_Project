@@ -38,17 +38,14 @@ export default {
     methods: {
         cancelExercise() {
             // I'll need to navigate back to the workout view
-            // this.$router.push({ name: 'workout', params: { id: this.workout.workoutId } });
+            this.$router.go(-1);
         },
         addExerciseToWorkout(editWorkout) {
-            // I'll need to call the getWorkout method from the workout service
-            // I'll need to pass in the workout id from the route params
-            // I'll need to set the workout data to the response data
             WorkoutService.createWorkout(this.editWorkout)
                 .then(() => {
                     console.log("Exercise added to workout: " + this.editWorkout);
                     // I'll need to navigate back to the workout view
-                    // this.$router.push({ name: 'workout', params: { id: this.workout.workoutId } });
+                    this.$router.go(-1);
                 })
                 .catch((error) => {
                     console.log(error);
