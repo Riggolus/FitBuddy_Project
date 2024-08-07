@@ -15,6 +15,8 @@
 </template>
 <script>
 // I'll need to import workout services
+import WorkoutService from '../services/WorkoutService';
+
 export default {
     props: {
         workout: {
@@ -25,7 +27,7 @@ export default {
     data() {
         return {
             editWorkout: {
-                exerciseId: 0,//this id is based on the param in the url
+                exerciseId: this.$route.params.id,//this id is based on the param in the url
                 sets: 0,
                 reps: 0,
                 weight: 0,
@@ -38,10 +40,20 @@ export default {
             // I'll need to navigate back to the workout view
             // this.$router.push({ name: 'workout', params: { id: this.workout.workoutId } });
         },
-        addExerciseToWorkout() {
+        addExerciseToWorkout(editWorkout) {
             // I'll need to call the getWorkout method from the workout service
             // I'll need to pass in the workout id from the route params
             // I'll need to set the workout data to the response data
+            WorkoutService.createWorkout(this.editWorkout)
+                .then(() => {
+                    console.log("Exercise added to workout: " + this.editWorkout);
+                    // I'll need to navigate back to the workout view
+                    // this.$router.push({ name: 'workout', params: { id: this.workout.workoutId } });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
         }
     },
     

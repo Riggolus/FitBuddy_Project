@@ -1,22 +1,23 @@
 <template>
-    Details
+    Details 
     <h2>{{exercise.exerciseName}}</h2>
-    <img :src="getGifSrc(exercise.exerciseId)" alt="exercise.exerciseName" width="200" height="200"> 
-    <p>{{exercise.description}}</p>
+    <!-- <img :src="getGifSrc(exercise.exerciseId)" alt="exercise.exerciseName" width="200" height="200">  -->
+    <p>{{exercise.exerciseDescription}}</p> 
 
-    <!-- <add-exercise-form v-bind:workout="workout"></add-exercise-form> -->
+    <add-exercise-form v-bind:workout="workout"/>
 </template>
 <script>
 import AddExerciseForm from '../components/AddExerciseForm.vue';
-// import ExerciseService from '../services/ExerciseService';
+import ExerciseServices from '../services/ExerciseServices';
 
 export default {
     components: {
-        // AddExerciseForm
+        AddExerciseForm
     },
     data() {
         return {
-            exercise: {},
+            exercise: {
+            },
             workout: {
                 exerciseId: this.$route.params.id,
                 sets: 0,
@@ -28,17 +29,17 @@ export default {
     },
     methods: {
         getCurrentExercise() {
-            // ExerciseService.getExercise(this.$route.params.id)
-            //     .then((response) => {
-            //         this.exercise = response.data;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
+            ExerciseServices.getExercise(this.$route.params.id)
+                .then((response) => {
+                    this.exercise = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
-        getGifSrc(exerciseId) {
-            return require(`../assets/exerciseGifs/${exerciseId}.gif`);
-        }
+        // getGifSrc(exerciseId) {
+        //     return require(`../assets/exerciseGifs/${exerciseId}.gif`);
+        // }
     },
     mounted() {
         this.getCurrentExercise();

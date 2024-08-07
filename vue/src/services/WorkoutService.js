@@ -19,10 +19,13 @@ http.interceptors.request.use(config => {
   });
 
 export default {
-    getExercises() {
-        return http.get('/exercise/all')
+    createWorkout(workout){
+        return http.post('/workout/create', workout)
     },
-    getExercise(id) {
-        return http.get(`/exercise/${id}`)
+    // getWorkoutById(id) {
+    //     return http.get(`/workout/${id}`)
+    // },
+    getWorkoutByDate(date) {
+        return http.get(`/workout/date/${date}`)
     }
-}  
+}

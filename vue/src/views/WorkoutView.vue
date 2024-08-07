@@ -29,7 +29,7 @@
 </template>
 <script>
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
- import ExerciseServices from '../services/ExerciseServices';
+import ExerciseServices from '../services/ExerciseServices';
 export default {
     data() {
         return {
