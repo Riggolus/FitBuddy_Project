@@ -1,5 +1,7 @@
 START TRANSACTION;
 
+DROP TABLE IF EXISTS exercise, workout; 
+
 -- Creating the exercise table with a unique constraint on exercise_name
 CREATE TABLE exercise (
     exercise_id SERIAL PRIMARY KEY,
@@ -15,7 +17,8 @@ CREATE TABLE workout (
     sets INT CHECK (sets >= 0),
     reps INT CHECK (reps >= 0),
     weight DECIMAL CHECK (weight >= 0),
-    duration INT CHECK (duration >= 0)
+    duration INT CHECK (duration >= 0),
+	date_of_workout DATE NOT NULL
 );
 
 -- Inserting kettlebell exercises for each movement pattern
@@ -93,3 +96,4 @@ INSERT INTO exercise (exercise_name, exercise_description) VALUES
     ('Kettlebell Overhead Walk', 'Walking with a kettlebell held overhead.');
 
 COMMIT;
+
