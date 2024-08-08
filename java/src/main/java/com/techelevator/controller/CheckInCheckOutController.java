@@ -31,6 +31,12 @@ public class CheckInCheckOutController {
         checkInCheckOutDao.checkOut(principal);
     }
 
+    @GetMapping("/mystatus")
+    public CheckInCheckOut myStatus(Principal principal){
+        CheckInCheckOut checkInCheckOut = checkInCheckOutDao.myStatus(principal);
+        return checkInCheckOut;
+    }
+
     @PostMapping("/in/member")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public void employeeCheckIn(@RequestBody UserStatus user, Principal principal){

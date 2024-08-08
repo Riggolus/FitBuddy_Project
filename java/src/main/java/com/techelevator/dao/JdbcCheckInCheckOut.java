@@ -125,7 +125,21 @@ public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
             throw new DaoException("Data Integrity Error", e);
         }
     }
+    @Override
+    public CheckInCheckOut myStatus(Principal principal){
+        User user = userDao.getUserByUsername(principal.getName());
+        String sql2 = "SELECT check_in_out_id, user_id, check_in_time, check_out_time FROM check_in_check_out WHERE user_id = ? AND check_out_time IS NULL";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql2, user.getId());
+        CheckInCheckOut checkInCheckOut = new CheckInCheckOut();
+        if(results.next()) {
+            checkInCheckOut.setUserId(results.getInt("user_id"));
+            checkInCheckOut.setCheckInTime(results.getDate("check_in_time"));
+            checkInCheckOut.setCheckOutTime(results.getDate("check_out_time"));
+//            checkInCheckOut = mapRowToCheckInCheckOut(results);
+        }
+        return checkInCheckOut;
 
+    }
 
 
 //    private CheckInCheckOut mapRowToCheckInCheckOut(SqlRowSet rs) {

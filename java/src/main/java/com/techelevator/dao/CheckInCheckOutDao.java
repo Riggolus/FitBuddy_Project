@@ -14,4 +14,5 @@ public interface CheckInCheckOutDao {
     void employeeCheckOut(int userId, Principal principal);
     CheckInCheckOut getCheckInTime(int userId);
     List<UserStatus> getUserStatuses();
+    CheckInCheckOut myStatus(Principal principal);
 }
