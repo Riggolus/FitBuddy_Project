@@ -1,5 +1,4 @@
-<template>
-    This is your current workout 
+<template> 
     <div>
         <table id="currentWorkout">
             <thead>
@@ -22,12 +21,32 @@
             </tbody>
         </table>
     </div>
+    <table v-show="statsOn">
+        <thead>
+            <tr>
+                <th>Calories Burned</th>
+                <th>Load Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ estimatedCalsExpended }}cals</td>
+                <td>{{ loadVolume }}lbs</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 <script>
 import WorkoutService from '../services/WorkoutService';
 import ExerciseServices from '../services/ExerciseServices';
 
 export default {
+    props: {
+        statsOn: {
+            type: Boolean,
+            default: true
+        }
+    },
     data() {
         return {
             workouts: [
@@ -68,19 +87,21 @@ export default {
             let year = date.getFullYear();
             return `${year}-${month}-${day}`;
         }
-        // getExerciseName() {
-            
-                
-        //     ExerciseServices.getExercise(this.workout.exerciseId)
-        //         .then((response) => {
-        //             this.exercise = response.data;
-        //             this.workout.exerciseName = this.exercise.exerciseName;
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         });
-            
-        // }
+        
+    },
+    computed: {
+        estimatedCalsExpended() {
+            return Math.round(
+                this.workouts.reduce((acc, workout) => {
+                    return acc + ((4.25 * 3.5 * (workout.weight * 0.453592)) / 200) * (workout.sets * workout.reps);
+                }, 0)
+            );
+        },
+        loadVolume() {
+            return this.workouts.reduce((acc, workout) => {
+                return acc + workout.sets * workout.reps * workout.weight;
+            }, 0);
+        }
     },
     mounted(){
         this.getCurrentWorkout();

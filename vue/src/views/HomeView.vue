@@ -2,6 +2,7 @@
   <div id="homeNav">
     <!-- <button id="editAccount" v-on:click="toAccount">Edit Account</button> -->
 <button id="accountProfile" v-on:click="toAccount" >Profile</button>
+<button id="analytics" v-on:click="toAnalytics" >Analytics/History</button>
   </div>
   
 
@@ -65,7 +66,17 @@ export default {
          .catch((error) => {
            console.log(error);
          });
-    }
+    },
+    toAnalytics() {
+      const currentUser = JSON.parse(localStorage.getItem('user'));
+      console.log("Account Object:", this.account); // Debugging line
+      console.log("The user id: " + currentUser); // Debugging line
+      if (currentUser) {
+        this.$router.push({ name: 'analytics', params: { username: currentUser }, query: { isNavFromHome: true } });
+      } else {
+        console.error("User ID is not available.");
+      }
+    },
   }
 }
 </script>

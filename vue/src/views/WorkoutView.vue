@@ -1,6 +1,6 @@
 <template>
     <h2>Workout</h2>
-    <current-workout/>
+    <current-workout :stats-on="statsOn"/>
     <div>
         <table id="exercises">
             <thead>
@@ -41,7 +41,8 @@ export default {
             user: JSON.parse(localStorage.getItem('user')),
             exercises: [],
             selectedExerciseId: null,
-            exerciseName: ''
+            exerciseName: '',
+            statsOn: false
         };
     },
     computed: {
