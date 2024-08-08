@@ -1,5 +1,4 @@
 <template>
-    test
     <table id="users">
         <thead>
             <tr>

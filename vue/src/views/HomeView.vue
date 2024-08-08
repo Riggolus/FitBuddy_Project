@@ -10,8 +10,8 @@
     <h1>Home</h1>
     <p>You must be authenticated to see this </p>
 
-    <button id="check-in" v-on:click="checkUserIn" >Check In</button>
-    <button id="check-out" v-on:click="checkUserOut" v-show="Todo">Check Out Todo</button>
+    <button id="check-in" v-on:click="checkUserIn">Check In</button>
+    <button id="check-out" v-on:click="checkUserOut">Check Out Todo</button>
 
     
 
@@ -66,6 +66,17 @@ export default {
          .catch((error) => {
            console.log(error);
          });
+    },
+    checkUserOut() {
+      console.log("this.user.username: ", this.user.username);
+      console.log("Checking out");
+      CheckInCheckOutService.checkOut()
+        .then(() => {
+          console.log("Checked Out");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     toAnalytics() {
       const currentUser = JSON.parse(localStorage.getItem('user'));
