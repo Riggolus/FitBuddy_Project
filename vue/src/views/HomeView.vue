@@ -10,8 +10,8 @@
     <h1>Home</h1>
     <p>You must be authenticated to see this </p>
 
-    <button id="check-in" v-on:click="checkUserIn">Check In</button>
-    <button id="check-out" v-on:click="checkUserOut">Check Out Todo</button>
+    <button id="check-in" v-on:click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">Check In</button>
+    <button id="check-out" v-on:click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">Check Out Todo</button>
 
     
 
@@ -33,7 +33,11 @@ import CheckInCheckOutService from '../services/CheckInCheckOutService';
 export default {
   data() {
     return {
-      user: JSON.parse(localStorage.getItem('user'))
+      user: JSON.parse(localStorage.getItem('user')),
+      userStatus: {
+        checkInTime: '',
+        checkOutTime: ''
+      }
     }
   },
   computed: {
@@ -73,6 +77,7 @@ export default {
       CheckInCheckOutService.checkOut()
         .then(() => {
           console.log("Checked Out");
+          this.checkStatus();
         })
         .catch((error) => {
           console.log(error);
@@ -88,6 +93,20 @@ export default {
         console.error("User ID is not available.");
       }
     },
+    checkStatus() {
+      console.log("this.user.username: ", this.user.username);
+      CheckInCheckOutService.getCurrentUserStatus()
+        .then((response) => {
+          console.log("Checked Status");
+          this.userStatus = response.data;
+          })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
+  created() {
+    this.checkStatus();
   }
 }
 </script>
