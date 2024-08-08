@@ -9,7 +9,8 @@
     <h1>Home</h1>
     <p>You must be authenticated to see this </p>
 
-    <button id="check-in" v-on:click="checkUserIn">Check In</button>
+    <button id="check-in" v-on:click="checkUserIn" >Check In</button>
+    <button id="check-out" v-on:click="checkUserOut" v-show="Todo">Check Out Todo</button>
 
     
 

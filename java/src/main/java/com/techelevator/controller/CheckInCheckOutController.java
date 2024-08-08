@@ -55,5 +55,5 @@ public class CheckInCheckOutController {
       List<UserStatus> users =  checkInCheckOutDao.getUserStatuses();
       return users;
     }
-    
+
 }

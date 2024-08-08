@@ -5,6 +5,8 @@
             <tr>
                 <th>Username</th>
                 <th>User ID</th>
+                <th>Last Checked-in</th>
+                <th>Last Checked-Out</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -16,6 +18,8 @@
                 <td>
                     <input type="number" id="userId" v-model="userId">
                 </td>
+                <td></td>
+                <td></td>
                 <td>
                     <select id="checked-in" v-model="checkedStatus">
                         <option value="">All</option>   
@@ -28,17 +32,18 @@
             <tr v-for="user in filteredUsers" :key="user.userId">
                 <td>{{user.username}}</td>
                 <td>{{user.userId}}</td>
-                <td >{{ user.checkedIn && user.checkedOut ? 'Checked In' : 'Checked Out'}}</td>
+                <td>{{user.checkedIn}}</td>
+                <td>{{user.checkedOut}}</td>
+                <td>{{ user.checkedIn && user.checkedOut === null ? 'Checked In' : 'Checked Out'}}</td>
                 <td>
-                    <button class="btnActivateDeactivate" @click="checkMemberIn(user)">
-                        Change Status In
+                    <button class="btnActivateDeactivate" @click="checkMemberOut(user)" v-show="user.checkedIn && user.checkedOut === null">
+                        Check-Out
+                    </button>
+                    <button class="btnActivateDeactivate" @click="checkMemberIn(user)" v-show="user.checkedOut !== null || user.checkedIn === null">
+                        Check-In
                     </button>
                 </td>
-                <td>
-                    <button class="btnActivateDeactivate" @click="checkMemberOut(user)">
-                        Change Status Out
-                    </button>
-                </td>
+                
             </tr>
         </tbody>
     </table> 
@@ -53,18 +58,19 @@ export default {
             users: [],
             username: '',
             userId: '',
+            checkedIn: '',
+            checkedOut: '',
             checkedStatus: '',
         };
     },
     computed: {
         filteredUsers() {
             return this.users.filter((user) => {
-                return (
-                    (!this.username || user.username.toLowerCase().includes(this.username.toLowerCase())) &&
-                    (!this.userId || user.userId === parseInt(this.userId)) &&
-                    (this.checkedStatus === '' || user.checkedStatus.toString() === this.checkedStatus)
-                );
-            });
+                const usernameMatch = !this.username || user.username.toLowerCase().includes(this.username.toLowerCase());
+                const userIdMatch = !this.userId || user.userId === parseInt(this.userId);
+                const statusMatch = this.checkedStatus === '' || (this.checkedStatus === 'true' && user.checkedIn && !user.checkedOut) || (this.checkedStatus === 'false' && (!user.checkedIn || user.checkedOut));
+                return usernameMatch && userIdMatch && statusMatch;
+                });
         },
                 
     },
