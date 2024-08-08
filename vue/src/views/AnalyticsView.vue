@@ -1,21 +1,26 @@
 <template>
     This will hold analytics
     <div>
-        <h2 v-show="isNavFromHome">Your last workout:</h2>
-        <h2 v-show="!isNavFromHome">Great Work! Here's your workout report:</h2>
+        <h2>Your last workout:</h2>
+        <h2>Great Work! Here's your workout report:</h2>
     </div>
     <div>
         <current-workout/>
+    </div>
+    <div>
+        <user-metrics/>
     </div>
     
 
 </template>
 <script>
 import CurrentWorkout from '../components/CurrentWorkout.vue';
+import UserMetrics from '../components/UserMetrics.vue';
 
 export default {
        components: {
-        CurrentWorkout
+        CurrentWorkout,
+        UserMetrics
     },
     data() {
         return {
@@ -26,14 +31,6 @@ export default {
             statsOn: true,
             isNavFromHome: false
         };
-    }, methods: {  
-        getCaloriesBurned() {
-                for (let exercise in this.exercises) {
-                    this.caloriesBurned += 4.25 * 3.5 * 60;
-                    
-                
-            }
-        }
     }
 }
 </script>
