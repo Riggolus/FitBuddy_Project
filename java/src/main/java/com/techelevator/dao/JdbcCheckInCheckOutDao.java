@@ -11,19 +11,18 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Component
-public class JdbcCheckInCheckOut implements CheckInCheckOutDao {
+public class JdbcCheckInCheckOutDao implements CheckInCheckOutDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final UserDao userDao;
 
 
-    public JdbcCheckInCheckOut(JdbcTemplate jdbcTemplate, UserDao userDao) {
+    public JdbcCheckInCheckOutDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.userDao = userDao;
     }
