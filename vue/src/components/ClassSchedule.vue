@@ -1,169 +1,240 @@
 <template>
     <div class="container">
-        <div class="calendar">
-            <div class="heading">
-                <div class="month"></div>
-                <div class="btns">
-                    <div class="btn today-btn">
-                        Today
-                    </div>
-                    <div class="btn prev-btn">
-                        Last
-                    </div>
-                    <div class="btn next-btn">
-                        Next
-                    </div>
-                </div>
-            </div>
-            <div class="weekdays">
-                <div class="day">Sun</div>
-                <div class="day">Mon</div>
-                <div class="day">Tue</div>
-                <div class="day">Wed</div>
-                <div class="day">Thu</div>
-                <div class="day">Fri</div>
-                <div class="day">Sat</div>
-            </div>
-            <div class="days">
-
-
-            </div>
+      <div class="calendar">
+        <div class="heading">
+          <div class="month">{{ currentMonth }}</div>
+          <div class="btns">
+            <div class="btn today-btn" @click="goToToday">Today</div>
+            <div class="btn prev-btn" @click="prevWeek">Last</div>
+            <div class="btn next-btn" @click="nextWeek">Next</div>
+          </div>
         </div>
+        <table>
+          <thead class="weekdays">
+            <tr>
+              <th class="day" v-for="(date, index) in weekDates" :key="index">
+                {{ formatDate(date) }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="days">
+            <tr>
+              <td
+                v-for="(date, index) in weekDates"
+                :key="index"
+                :data-date="date"
+                :class="{ today: isToday(date) }"
+              >
+                <div class="classes">
+                  <div
+                    class="class-item"
+                    v-for="(classItem, classIndex) in getClassesForDate(date)"
+                    :key="classIndex"
+                  >
+                    {{ classItem.name }} @ {{ classItem.time }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</template>
-<script>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        classes: [], // This will hold your classes
+        currentDate: new Date(), // Holds the current date
+      };
+    },
+    computed: {
+      currentMonth() {
+        return this.currentDate.toLocaleString('default', { month: 'long' });
+      },
+      weekDates() {
+        const startOfWeek = this.getStartOfWeek(this.currentDate);
+        return Array.from({ length: 7 }, (_, i) => {
+          const date = new Date(startOfWeek);
+          date.setDate(startOfWeek.getDate() + i);
+          return date;
+        });
+      },
+    },
+    mounted() {
+      this.fetchClasses();
+    },
+    methods: {
+      fetchClasses() {
+        // Insert getAllClasses Here
+      },
+      getStartOfWeek(date) {
+        const day = date.getDay();
+        const diff = date.getDate() - day;
+        return new Date(date.setDate(diff));
+      },
+      isToday(date) {
+        const today = new Date();
+        return (
+          today.getFullYear() === date.getFullYear() &&
+          today.getMonth() === date.getMonth() &&
+          today.getDate() === date.getDate()
+        );
+      },
+      getClassesForDate(date) {
+        return this.classes.filter(
+          (classItem) =>
+            new Date(classItem.date).toDateString() === date.toDateString()
+        );
+      },
+      prevWeek() {
+        this.currentDate.setDate(this.currentDate.getDate() - 7);
+        this.currentDate = new Date(this.currentDate); // Force reactivity
+      },
+      nextWeek() {
+        this.currentDate.setDate(this.currentDate.getDate() + 7);
+        this.currentDate = new Date(this.currentDate); // Force reactivity
+      },
+      goToToday() {
+        this.currentDate = new Date(); // Reset to today
+      },
+      formatDate(date) {
+        const dayOfWeek = date.toLocaleDateString('default', { weekday: 'short' });
+        const dayOfMonth = date.getDate();
+        return `${dayOfWeek} ${dayOfMonth}`;
+      },
+    },
+  };
+  </script>
 
-</script>
 <style>
-header {
-    margin: 0px;    
-    background-color: white;
-}
-h1 {
-    padding: 20px;
-}
-
-
+/* Global styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
-
-
-
 
 body {
-    background-color:lightgray
+  background-color: lightgray;
 }
+
+/* Container and Calendar */
 .container {
-    width: 100%;
-    min-height: 75vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .calendar {
-    width: 100%;
-    max-width: 800px;
-    padding: 30px 20px;
-    border-radius: 10px;
-    background-color: white;
+  width: 100%;
+  max-width: 900px;
+  padding: 30px 20px;
+  border-radius: 10px;
+  background-color: white;
 }
+
+/* Calendar Heading */
 .calendar .heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ccc;
 }
+
 .calendar .heading .month {
-    display:flex;
-    align-items: center;
-    font-size: 25px;
-    font-weight: 600;
-    color: black;
+  font-size: 25px;
+  font-weight: 600;
+  color: black;
 }
+
 .calendar .heading .btns {
-    display:flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
+
 .calendar .heading .btns .btn {
-    width: 50px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    color: black;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+  width: 60px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
+
 .calendar .heading .btns .btn:hover {
-    transform: scale(1.25);
-}
-.weekdays {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;  
-}
-.weekdays .day {
-    width: calc(100% / 7 - 10px);
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;  
-}
-.days {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;  
-}
-.days .day {
-    width: calc(100% / 7 - 10px);
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 400;
-    color: black;
-    background-color: whitesmoke;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-.days .day:not(.next):not(.prev):hover {
-    background-color: lightgrey;
-    transform: scale(1.10);
-}
-.days .day.today {
-    background-color: lightgrey;
-}
-.days .day.next,
-.days .day.prev {
-    color: grey
+  transform: scale(1.25);
 }
 
-#searchMember {
-    margin-top: 50px;
-    margin-left: 55px;
-}
-table, th, td, tr {
-    background-color: white;
-    border: 3px;
-    margin-left: 54px;
-    padding: 5px;
-    width: 500px;
-    text-align: left;
-    transition: all 0.1s ease-in-out;
-    cursor: pointer;
-  }
-  tr:hover {
-    transform: scale(1.05);
-    background-color: grey;
+/* Table and Table Headers */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensures columns are evenly spaced */
 }
 
+thead .weekdays {
+  background-color: #f4f4f4;
+}
+
+thead .weekdays .day {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+tbody .days {
+  display: flex;
+}
+
+tbody .days .day {
+  text-align: center;
+  vertical-align: top;
+  padding: 20px;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease-in-out;
+}
+
+tbody .days .day.today {
+  background-color: lightgray;
+}
+
+tbody .days .day:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+/* Adjusts spacing for table columns */
+th, td {
+  width: 14.28%; /* Spreads columns evenly across the table */
+}
+
+/* Class items inside table cells */
+.classes {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.class-item {
+  background-color: #f8f8f8;
+  padding: 5px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  text-align: center;
+}
 </style>
