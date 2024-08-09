@@ -5,3 +5,5 @@ GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE exercise TO final_capstone_appuser
 GRANT USAGE, SELECT, UPDATE ON SEQUENCE exercise_exercise_id_seq TO final_capstone_appuser;
 GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE workout TO final_capstone_appuser;
 GRANT USAGE, SELECT, UPDATE ON SEQUENCE workout_workout_id_seq TO final_capstone_appuser;
+GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE class_schedule TO final_capstone_appuser;
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE class_schedule_class_id_seq TO final_capstone_appuser;
