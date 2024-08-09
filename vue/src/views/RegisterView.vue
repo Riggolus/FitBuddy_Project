@@ -1,6 +1,7 @@
 <template>
   <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
+    <img src="src\assets\imgs\istockphoto-1448303096-612x612.jpg" alt="workout"/>
+    <form v-on:submit.prevent="register" class="register100-form">
       <h1>Register</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -18,7 +19,7 @@
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
       <button type="submit" >Register</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already registered? Log in.</router-link></p>
+      <p><router-link v-bind:to="{ name: 'login' }" class="button-link">Already registered? Log in.</router-link></p>
     </form>
   </div>
 </template>
@@ -94,32 +95,75 @@ export default {
 </script>
 
 <style scoped>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(135deg, #6D5BBA, #8D58BF, #DE67B4);
-  color: #333;
+#register {
+    display: grid;
+    grid-template-areas: 
+        "register-form img";
+    grid-template-columns: 50% 50%;
+    width: 1170px;
+    background: #B9D7EA;
+    border: #D6E6F2 solid 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 77px 55px 33px 55px;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
-/* #register {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
+
+.register100-form {
+    grid-area: register-form;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-form {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-} */
+
+.register100-form > h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+#register > img {
+    grid-area: img;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+.button-link {
+    display: inline-block; 
+    padding: 5px; 
+    background-color: #007bff; 
+    color: white; 
+    text-align: center; 
+    text-decoration: none;
+    border-radius: 5px; 
+    /* border: 1px solid #007bff;  */
+    /* font-size: 16px;  */
+    /* font-weight: bold; */
+    transition: background-color 0.3s, border-color 0.3s;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.button-link:active {
+    background-color: #00408d;
+    border-color: #00408d;
+}
+
+ /***** Keep ******/
 h1 {
   margin-bottom: 2rem;
-  color: #333;
+  color: #134B70;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 .form-input-group {
   margin-bottom: 1.5rem;
@@ -127,7 +171,9 @@ h1 {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #555;
+  color: #134B70;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 input {
   width: 100%;
