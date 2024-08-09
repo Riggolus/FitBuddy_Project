@@ -21,6 +21,7 @@
    
     
   </div>
+  <class-schedule/>
   </div>
   
 </template>
@@ -30,9 +31,12 @@ import authService from '../services/AuthService';
 import AccountService from '../services/AccountService';
 
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
-
+import ClassSchedule from '../components/ClassSchedule.vue';
 
 export default {
+  components: {
+    ClassSchedule
+  },
   data() {
     return {
       user: JSON.parse(localStorage.getItem('user')),
