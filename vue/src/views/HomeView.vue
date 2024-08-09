@@ -1,41 +1,40 @@
 <template>
   <div class="container">
     <div id="homeNav">
-    <!-- <button id="editAccount" v-on:click="toAccount">Edit Account</button> -->
-      <button id="accountProfile" class="button-link" v-on:click="toAccount" >Profile</button>
-      <button id="analytics" class="button-link" v-on:click="toAnalytics" >Analytics/History</button>
-      <button id="check-in" class="button-link" v-on:click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">Check In</button>
-      <button id="check-out" class="button-link" v-on:click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">Check Out Todo</button>
-      <button v-if="isAdmin" class="button-link"><router-link v-bind:to="{name: 'userRole'}" class="router">Add Employee</router-link></button>
-      <button v-if="isAdminOrEmployee" class="button-link"><router-link v-bind:to="{name: 'checkInCheckOut'}" class="router">Check-in Member</router-link></button>
-  </div>
-  
+      <!-- Existing buttons -->
+      <button id="accountProfile" class="button-link" @click="toAccount">Profile</button>
+      <button id="analytics" class="button-link" @click="toAnalytics">Analytics/History</button>
+      <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">Check In</button>
+      <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">Check Out Todo</button>
+      <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">Add Employee</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">Check-in Member</router-link></button>
+    </div>
 
-  <div class="home">
-    <h1>Home</h1>
-    <p>You must be authenticated to see this </p>
-
-
-    <!-- <h1 v-if="isAdminOrEmployee"><router-link v-bind:to="{name: 'equipmentUsage'}">Equipment Usage</router-link></h1> -->
-    
-   
-    
+    <div class="home">
+      <h1>Home</h1>
+      <div class="calendar-container">
+        <class-schedule/>
+        <button class="toggle-form-btn" @click="toggleForm">
+          {{ showForm ? 'Cancel' : 'Add New Class' }}
+        </button>
+        <transition name="slide">
+          <create-class v-if="showForm" @classCreated="addClass" />
+        </transition>
+      </div>
+    </div>
   </div>
-  <class-schedule/>
-  </div>
-  
 </template>
 
-<script>
-import authService from '../services/AuthService';
-import AccountService from '../services/AccountService';
 
+<script>
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
 import ClassSchedule from '../components/ClassSchedule.vue';
+import CreateClass from '../components/CreateClass.vue';
 
 export default {
   components: {
-    ClassSchedule
+    ClassSchedule,
+    CreateClass
   },
   data() {
     return {
@@ -43,23 +42,21 @@ export default {
       userStatus: {
         checkInTime: '',
         checkOutTime: ''
-      }
+      },
+      showForm: false // State for toggling the CreateClass form
     }
   },
   computed: {
-    isAdmin(){
-      return this.user.authorities.some((auth) => auth.name ==='ROLE_ADMIN');
+    isAdmin() {
+      return this.user.authorities.some((auth) => auth.name === 'ROLE_ADMIN');
     },
-    isAdminOrEmployee(){
-      return this.user.authorities.some((auth) => auth.name ==='ROLE_ADMIN' || auth.name ==='ROLE_EMPLOYEE');
+    isAdminOrEmployee() {
+      return this.user.authorities.some((auth) => auth.name === 'ROLE_ADMIN' || auth.name === 'ROLE_EMPLOYEE');
     }
   },
   methods: {
-    
     toAccount() {
       const currentUser = JSON.parse(localStorage.getItem('user'));
-      console.log("Account Object:", this.account); // Debugging line
-      console.log("The user id: " + currentUser); // Debugging line
       if (currentUser) {
         this.$router.push({ name: 'profile', params: { username: currentUser } });
       } else {
@@ -67,22 +64,17 @@ export default {
       }
     },
     checkUserIn() {
-      console.log("this.user.username: ", this.user.username);
       CheckInCheckOutService.checkIn()
         .then(() => {
-          console.log("Checked In");
           this.$router.push({ name: 'workout', params: { username: this.user.username } });
-         })
-         .catch((error) => {
-           console.log(error);
-         });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     checkUserOut() {
-      console.log("this.user.username: ", this.user.username);
-      console.log("Checking out");
       CheckInCheckOutService.checkOut()
         .then(() => {
-          console.log("Checked Out");
           this.checkStatus();
         })
         .catch((error) => {
@@ -91,8 +83,6 @@ export default {
     },
     toAnalytics() {
       const currentUser = JSON.parse(localStorage.getItem('user'));
-      console.log("Account Object:", this.account); // Debugging line
-      console.log("The user id: " + currentUser); // Debugging line
       if (currentUser) {
         this.$router.push({ name: 'analytics', params: { username: currentUser }, query: { isNavFromHome: true } });
       } else {
@@ -100,15 +90,20 @@ export default {
       }
     },
     checkStatus() {
-      console.log("this.user.username: ", this.user.username);
       CheckInCheckOutService.getCurrentUserStatus()
         .then((response) => {
-          console.log("Checked Status");
           this.userStatus = response.data;
-          })
+        })
         .catch((error) => {
           console.log(error);
         });
+    },
+    toggleForm() {
+      this.showForm = !this.showForm;
+    },
+    addClass(newClass) {
+      // Add the new class to your schedule or wherever necessary
+      this.showForm = false; // Hide the form after adding a class
     }
   },
   created() {
@@ -118,7 +113,7 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container {
   display: grid;
   grid-template-areas: 
       "homeNav homeNav"
@@ -129,9 +124,7 @@ export default {
   border: #D6E6F2 solid 5px;
   border-radius: 10px;
   overflow: hidden;
-  /* padding: 77px 55px 33px 55px; */
   box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-    
 }
 
 #homeNav {
@@ -147,9 +140,10 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0rem 2rem;
   color: #134B70;
+  position: relative; /* Ensure the button positioning is relative to this container */
 }
 
 .home > h1 {
@@ -158,31 +152,82 @@ export default {
 
 .router {
   text-decoration: none;
-  color: white; 
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .button-link {
-    display: inline-block; 
-    padding: 5px; 
-    background-color: #007bff; 
-    color: white; 
-    text-align: center; 
-    text-decoration: none;
-    border-radius: 5px; 
-    border: 1px solid #007bff; 
-    transition: background-color 0.3s, border-color 0.3s;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+  padding: 5px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 1px solid #007bff;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .button-link:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+  background-color: #0056b3;
+  border-color: #0056b3;
 }
 
 .button-link:active {
-    background-color: #00408d;
-    border-color: #00408d;
+  background-color: #00408d;
+  border-color: #00408d;
 }
 
+.calendar-container {
+  position: relative; /* Container for positioning the button and form */
+}
+
+.toggle-form-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-form-btn:hover {
+  background-color: darkgreen;
+}
+
+.toggle-form-btn.cancel {
+  background-color: red;
+}
+
+.toggle-form-btn.cancel:hover {
+  background-color: darkred;
+}
+
+/* Sliding effect for the form */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
+  transform: translateX(100%);
+}
+
+/* Create Class Form Styling */
+.create-class {
+  position: absolute;
+  top: 20px; /* Adjust based on the placement you need */
+  right: 20px; /* Position it to the right side of the calendar */
+  width: 300px; /* Adjust width as needed */
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Ensure it appears above other elements */
+  transform: translateX(100%); /* Start off-screen */
+}
 </style>

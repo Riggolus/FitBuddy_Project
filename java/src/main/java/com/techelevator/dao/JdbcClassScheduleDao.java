@@ -59,7 +59,7 @@ public class JdbcClassScheduleDao implements ClassScheduleDao {
             int created = jdbcTemplate.update(sql, classSchedule.getClassName(), user.getId(), classSchedule.getStartTime(), classSchedule.getEndTime(),
                                 classSchedule.getDescription(), classSchedule.isMonday(), classSchedule.isTuesday(), classSchedule.isWednesday(),
                                 classSchedule.isThursday(), classSchedule.isFriday(), classSchedule.isSaturday(), classSchedule.isSunday(),
-                                classSchedule.getRecurrenceEnd(), classSchedule.getCreatedBy());
+                                classSchedule.getRecurrenceEnd(), user.getId());
             if (created > 0) {
                 success = true;
             }

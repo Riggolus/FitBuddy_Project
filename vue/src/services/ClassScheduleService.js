@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ClassScheduleVue from '../components/ClassSchedule.vue';
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_REMOTE_API
@@ -19,6 +20,9 @@ http.interceptors.request.use(config => {
 export default {
     getClassSchedule() {
         return http.get('/class-schedule/all')
+    },
+    createClass(classScheduled){
+        return http.post('class-schedule/create-class', classScheduled)
     }
 
 }
