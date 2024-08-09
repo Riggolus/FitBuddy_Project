@@ -18,6 +18,11 @@ http.interceptors.request.use(config => {
 
 export default {
 
+    getEquipmentUsage(date) {
+        return http.get(`/monthly-equipment-usage/specific-month/${date}`)
+    },
+    getEquipmentUsageCurrentMonth() {
+        return http.get('/monthly-equipment-usage/current-month')
+    }
 
-    
 }
