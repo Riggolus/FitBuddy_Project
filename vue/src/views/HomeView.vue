@@ -16,6 +16,8 @@
     
 
     <h1 v-if="isAdminOrEmployee"><router-link v-bind:to="{name: 'checkInCheckOut'}" >Check-in Member</router-link></h1>
+
+    <!-- <h1 v-if="isAdminOrEmployee"><router-link v-bind:to="{name: 'equipmentUsage'}">Equipment Usage</router-link></h1> -->
     
     <h1 v-if="isAdmin"><router-link v-bind:to="{name: 'userRole'}">Add Employee</router-link></h1>
    

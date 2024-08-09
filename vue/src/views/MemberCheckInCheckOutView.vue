@@ -43,6 +43,11 @@
                         Check-In
                     </button>
                 </td>
+                <td>
+                    <button class="viewUserHistory" @click="viewUserHistory(user)">
+                        View History
+                    </button>
+                </td>
                 
             </tr>
         </tbody>
@@ -96,7 +101,10 @@ export default {
                 this.checkMemberIn(user);
             }
         },
-        
+        viewUserHistory(user){
+            console.log("Viewing history for: " + user);
+            this.$router.push({name: 'userAnalytics', params: {id: user.userId}});
+        },
 
 
         checkMemberIn(user){

@@ -14,6 +14,8 @@ import WorkoutView from '../views/WorkoutView.vue';
 import AnalyticsView from '../views/AnalyticsView.vue';
 import MemberCheckInCheckOutViewVue from '../views/MemberCheckInCheckOutView.vue';
 import ExerciseDetailsView from '../views/ExerciseDetailsView.vue';
+import UserAnalyticsView from '../views/UserAnalyticsView.vue';
+import EquipmentUsageView from '../views/EquipmentUsageView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -113,9 +115,25 @@ const routes = [
     } 
   },
   {
+    path: "/user-analytics/:id",
+    name: "userAnalytics",
+    component: UserAnalyticsView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/exerciseDetails/:id",
     name: "exerciseDetails",
     component: ExerciseDetailsView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/equipmentUsage",
+    name: "equipmentUsage",
+    component: EquipmentUsageView,
     meta: {
       requiresAuth: true
     }
