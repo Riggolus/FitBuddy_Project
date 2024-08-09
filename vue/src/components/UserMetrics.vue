@@ -14,8 +14,8 @@
             </thead>
             <tbody>
                 <tr v-for="(metric, index) in groupedMetrics" :key="index" @click="selectMetric(metric)">
-                    <td>{{ metric.date }}</td>
-                    <td>{{ metric.totalCalsPerDay }}cals</td>
+                    <td>{{ metric.date }} </td>
+                    <td>{{ calsPerWorkout(metric.date) }}cals</td>
                     <td>{{ formatDuration(metric.durationInMinutes) }}</td>
                 </tr>
             </tbody>
@@ -102,6 +102,18 @@ export default{
         };
     },
     methods: {
+        calsPerWorkout(date) {
+           
+           let firstWorkout = date;
+           let calsBurned = 0;
+           for (let i = 0; i < this.metrics.length; i++){
+                   if (this.metrics[i].date === firstWorkout)
+                   calsBurned += Math.round((4.25 * 3.5 * (this.metrics[i].weight * 0.453592) / 200) * (this.metrics[i].sets * this.metrics[i].reps))
+                   
+                }
+               return calsBurned;
+           
+       },
         getMetrics(){
             WorkoutMetricsService.getUsersWorkoutMetrics()
                 .then((response) => {
@@ -132,14 +144,20 @@ export default{
     
     },
     computed: {
-        calsPerWorkout(index) {
-            return Math.round(
-                this.index.reduce((acc, workout) => {
-                    console.log(workout);
-                    return acc + ((4.25 * 3.5 * (workout.weight * 0.453592)) / 200) * (workout.sets * workout.reps);
-                }, 0)
-            );
-        },
+        // calsPerWorkout(this.metric.date) {
+           
+        //     let firstWorkout = this.metric.date;
+        //     let calsBurned = 0;
+        //     for (let i = 0; i < this.metrics.length; i++){
+        //             if (this.metrics[i].date === firstWorkout)
+        //             calsBurned += Math.round(4.25 * 3.5 * (this.metrics[i].weight * 0.453592) / 200) * (this.metrics[i].sets * this.metrics[i].reps)
+                    
+            
+        //         }
+        //         return calsBurned;
+            
+            
+        // },
         totalCalsExpended() {
             return Math.round(
                 this.metrics.reduce((acc, workout) => {
@@ -183,6 +201,7 @@ export default{
 
             return Object.values(uniqueDates, totalCalsPerDay);
         }
+    
     }, 
     created(){
         this.getMetrics();
