@@ -3,20 +3,20 @@
         <table id="currentWorkout">
             <thead>
                 <tr>
-                    <th>Exercise</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Weight</th>
-                    <th>Duration</th>
+                    <th class="name" id="e-name">Exercise</th>
+                    <th class="sets" id="e-sets">Sets</th>
+                    <th class="reps" id="e-reps">Reps</th>
+                    <th class="weight" id="e-weight">Weight</th>
+                    <th class="time" id="e-time">Duration</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="workout in workouts" :key="workout.exerciseName">
-                    <td>{{ workout.exerciseName }}</td>
-                    <td>{{workout.sets}}</td>
-                    <td>{{workout.reps}}</td>
-                    <td>{{workout.weight}}</td>
-                    <td>{{workout.duration}}</td>
+                <tr v-for="workout in workouts" :key="workout.exerciseName" id="workoutData">
+                    <td class="name">{{ workout.exerciseName }}</td>
+                    <td class="sets">{{workout.sets}}</td>
+                    <td class="reps">{{workout.reps}}</td>
+                    <td class="weight">{{workout.weight}}</td>
+                    <td class="time">{{workout.duration}}</td>
                 </tr>
             </tbody>
         </table>
@@ -116,3 +116,65 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#currentWorkout {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #134B70;
+}
+
+#e-name {
+    width: 30%;
+    background: #134B70;
+    color: white;
+    border-radius: 10px;
+}
+
+#e-sets {
+    width: 10%;
+    background: #134B70;
+    color: white;
+    border-radius: 10px;
+}
+
+#e-reps {
+    width: 10%;
+    background: #134B70;
+    color: white;
+    border-radius: 10px;
+}
+
+#e-weight {
+    width: 10%;
+    background: #134B70;
+    color: white;
+    border-radius: 10px;
+}
+
+#e-time {
+    width: 10%;
+    background: #134B70;
+    color: white;
+    border-radius: 10px;
+} 
+
+.name {
+    width: 30%;
+}
+
+.sets {
+    width: 10%;
+}
+
+.reps {
+    width: 10%;
+}
+
+.weight {
+    width: 10%;
+}
+
+.time {
+    width: 10%;
+}
+</style>

@@ -92,3 +92,15 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+#users {
+    background: #B9D7EA;
+    border: #D6E6F2 solid 5px;
+    border-radius: 10px;
+    padding: 10px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #134B70;
+}
+
+</style>

@@ -1,6 +1,6 @@
 <template>
     <h2>Workout</h2>
-    <current-workout :stats-on="statsOn"/>
+    <current-workout :stats-on="statsOn" id="current-workout"/>
     <div>
         <table id="exercises">
             <thead>
@@ -17,7 +17,7 @@
                 <tr v-for="exercise in filteredExercises" :key="exercise.exerciseId">
                     <td>{{exercise.exerciseName}}</td>
                     <td>
-                        <button v-on:click="selectExercise(exercise.exerciseId)">View Exercise</button>
+                        <button v-on:click="selectExercise(exercise.exerciseId)" class="button-link">View Exercise</button>
                     </td>
                         
                     
@@ -25,7 +25,7 @@
             </tbody>
         </table>
     </div>
-    <button id="check-out" v-on:click="checkOut">Complete Workout/check-out</button>
+    <button id="check-out" v-on:click="checkOut" class="button-link">Complete Workout/check-out</button>
     
 </template>
 <script>
@@ -92,3 +92,42 @@ export default {
 
 }
 </script>
+
+<style scoped>
+#exercises {
+    background: #B9D7EA;
+    border: #D6E6F2 solid 5px;
+    border-radius: 10px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #134B70;
+}
+
+h2 {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #134B70;
+}
+
+.button-link {
+    display: inline-block; 
+    padding: 5px; 
+    background-color: #007bff; 
+    color: white; 
+    text-align: center; 
+    text-decoration: none;
+    border-radius: 5px; 
+    border: 1px solid #007bff; 
+    font-weight: bold;
+    transition: background-color 0.3s, border-color 0.3s;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+.button-link:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.button-link:active {
+    background-color: #00408d;
+    border-color: #00408d;
+}
+</style>

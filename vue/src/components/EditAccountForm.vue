@@ -1,7 +1,8 @@
 <template>
     <!-- Should change to 'Edit Account' and button to 'Save Changes' -->
      <!-- Form should be required to have all fields filled out -->
-    <h1>Edit Account</h1>
+    <div id="container">
+        <h1>Edit Account</h1>
    
     <form v-on:submit.prevent="submitForm">
         <label for="firstName">First Name</label>
@@ -32,10 +33,12 @@
             </textarea>
         </div>
 
-        <button type="submit">Save Changes</button>
-        <button type="reset" v-on:click="cancelForm">Cancel</button>
+        <button type="submit" class="button-link">Save Changes</button>
+        <button type="reset" v-on:click="cancelForm" class="button-link">Cancel</button>
 
     </form>
+    </div>
+    
 </template>
 
 <script>
@@ -113,3 +116,83 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+form {
+    display: grid;
+    grid-template-areas: 
+        "first last"
+        "firstName lastName"
+        "email email"
+        "photo photo"
+        "profile profile"
+        "goal goal"
+        "button button";
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    margin: 10px;
+    padding: 10px;
+    /* border: 1px solid black; */
+    /* border-radius: 5px; */
+    /* background-color: #; */
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+#firstName {
+    grid-area: firstName;
+}
+
+#lastName {
+    grid-area: lastName;
+}
+
+#first {
+    grid-area: first;
+}
+
+#last {
+    grid-area: last;
+}
+
+#email {
+    grid-area: email;
+}
+
+#photo {
+    grid-area: photo;
+}
+
+#profile {
+    grid-area: profile;
+}
+
+#goal {
+    grid-area: goal;
+}
+
+.button-link {
+    display: inline-block; 
+    padding: 5px; 
+    background-color: #007bff; 
+    color: white; 
+    text-align: center; 
+    text-decoration: none;
+    border-radius: 5px; 
+    /* border: 1px solid #007bff;  */
+    /* font-size: 16px;  */
+    /* font-weight: bold; */
+    transition: background-color 0.3s, border-color 0.3s;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+.button-link:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.button-link:active {
+    background-color: #00408d;
+    border-color: #00408d;
+}
+</style>
