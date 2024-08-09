@@ -31,7 +31,8 @@
                     v-for="(classItem, classIndex) in getClassesForDate(date)"
                     :key="classIndex"
                   >
-                    {{ classItem.name }} @ {{ classItem.time }}
+                    {{ classItem.className }} from {{ classItem.startTime }} till {{ classItem.endTime }}
+                    
                   </div>
                 </div>
               </td>
@@ -43,6 +44,8 @@
   </template>
   
   <script>
+  import ClassScheduleService from '../services/ClassScheduleService';
+  
   export default {
     data() {
       return {
@@ -68,7 +71,14 @@
     },
     methods: {
       fetchClasses() {
-        // Insert getAllClasses Here
+        ClassScheduleService.getClassSchedule()
+          .then((response) => {
+            this.classes = response.data;
+            console.log(this.classes);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       },
       getStartOfWeek(date) {
         const day = date.getDay();
@@ -84,10 +94,11 @@
         );
       },
       getClassesForDate(date) {
-        return this.classes.filter(
-          (classItem) =>
-            new Date(classItem.date).toDateString() === date.toDateString()
-        );
+        const dayOfWeek = date.getDay(); // 0 (Sunday) - 6 (Saturday)
+        const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const dayKey = dayKeys[dayOfWeek];
+  
+        return this.classes.filter(classItem => classItem[dayKey]);
       },
       prevWeek() {
         this.currentDate.setDate(this.currentDate.getDate() - 7);
