@@ -3,7 +3,6 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.MonthlyEquipmentUsage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,12 +14,12 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class JdbcMonthlyEquipmentUsage implements MonthlyEquipmentUsageDao {
+public class JdbcMonthlyEquipmentUsageDao implements MonthlyEquipmentUsageDao {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public JdbcMonthlyEquipmentUsage(JdbcTemplate jdbcTemplate) {
+    public JdbcMonthlyEquipmentUsageDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
