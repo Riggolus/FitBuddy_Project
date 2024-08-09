@@ -2,12 +2,14 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.ClassSchedule;
+import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,11 @@ import java.util.List;
 public class JdbcClassScheduleDao implements ClassScheduleDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserDao userDao;
 
-    public JdbcClassScheduleDao(JdbcTemplate jdbcTemplate) {
+    public JdbcClassScheduleDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userDao = userDao;
     }
 
     @Override
@@ -41,6 +45,49 @@ public class JdbcClassScheduleDao implements ClassScheduleDao {
             throw new DaoException("Data Integrity Violation");
         }
         return getClasses;
+
+    }
+
+    @Override
+    public boolean createClass(ClassSchedule classSchedule, Principal principal) {
+        User user = userDao.getUserByUsername(principal.getName());
+        Boolean success = false;
+        String sql = "INSERT INTO class_schedule (class_name, instructor_id, start_time, end_time, description, is_monday, \n" +
+                "\t\t\t\t\t\t\tis_tuesday, is_wednesday, is_thursday, is_friday, is_saturday, is_sunday, recurrence_end, created_by)\n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        try {
+            int created = jdbcTemplate.update(sql, classSchedule.getClassName(), user.getId(), classSchedule.getStartTime(), classSchedule.getEndTime(),
+                                classSchedule.getDescription(), classSchedule.isMonday(), classSchedule.isTuesday(), classSchedule.isWednesday(),
+                                classSchedule.isThursday(), classSchedule.isFriday(), classSchedule.isSaturday(), classSchedule.isSunday(),
+                                classSchedule.getRecurrenceEnd(), classSchedule.getCreatedBy());
+            if (created > 0) {
+                success = true;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Cannot connect to database");
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation");
+        }
+        return success;
+
+    }
+
+    @Override
+    public boolean deleteClass(String name) {
+        Boolean success = false;
+        String sql = "DELETE FROM class_schedule WHERE class_name = ?";
+        try {
+            int created = jdbcTemplate.update(sql, name);
+            if (created > 0) {
+                success = true;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Cannot connect to database");
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation");
+        }
+
+        return success;
 
     }
 

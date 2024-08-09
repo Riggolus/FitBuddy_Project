@@ -4,11 +4,9 @@ import com.techelevator.dao.ClassScheduleDao;
 import com.techelevator.model.ClassSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -27,5 +25,17 @@ public class ClassScheduleController {
     @GetMapping("/all")
     public List<ClassSchedule> getAllClasses() {
         return classScheduleDao.getAllClasses();
+    }
+
+    @PostMapping("/create-class")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+    public boolean createClass(@RequestBody ClassSchedule classSchedule, Principal principal) {
+        return classScheduleDao.createClass(classSchedule, principal);
+    }
+
+    @DeleteMapping("/delete-class/{name}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+    public boolean deleteClass(@PathVariable String name  ) {
+        return  classScheduleDao.deleteClass(name);
     }
 }

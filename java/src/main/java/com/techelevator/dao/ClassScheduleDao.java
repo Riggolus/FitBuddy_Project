@@ -2,12 +2,13 @@ package com.techelevator.dao;
 
 import com.techelevator.model.ClassSchedule;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface ClassScheduleDao {
 
     List<ClassSchedule> getAllClasses();
-//    void createClass(ClassSchedule classSchedule);
-//    void editClass(ClassSchedule classSchedule);
+    boolean createClass(ClassSchedule classSchedule, Principal principal);
+    boolean deleteClass(String name);
 
 }
