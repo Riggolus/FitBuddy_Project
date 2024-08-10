@@ -18,15 +18,18 @@
         <p>You must be authenticated to see this</p>
     </div>
     <average-visit-metrics/>
+    <achievements/>
 </template>
 
 <script>
 import AccountService from '../services/AccountService';
 import AverageVisitMetrics from '../components/AverageVisitMetrics.vue';
+import Achievements from '../components/Achievements.vue';
 
 export default {
     components: {
-        AverageVisitMetrics
+        AverageVisitMetrics,
+        Achievements
     },
     data() {
         return {
