@@ -5,13 +5,14 @@
       <button id="accountProfile" class="button-link" @click="toAccount">Profile</button>
       <button id="analytics" class="button-link" @click="toAnalytics">Analytics/History</button>
       <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">Check In</button>
-      <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">Check Out Todo</button>
+      <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">Check Out</button>
       <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">Add Employee</router-link></button>
-      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">Check-in Member</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">Members</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">Equipment</router-link></button>
     </div>
 
     <div class="home">
-      <h1>Home</h1>
+      <h1>Welcome {{ user.username }}</h1>
       <div class="calendar-container">
         <class-schedule/>
         <button v-if="isAdminOrEmployee" class="toggle-form-btn" @click="toggleForm">

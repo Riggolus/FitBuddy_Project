@@ -22,5 +22,8 @@ http.interceptors.request.use(config => {
     },
     getMemberMetrics(userId) {
         return http.get(`/metrics/${userId}`)
+    },
+    getMemberMetricsForAllSessions(){
+        return http.get('/visit-metrics')
     }
   }

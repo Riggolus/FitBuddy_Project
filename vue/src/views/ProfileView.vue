@@ -17,12 +17,17 @@
     <div v-else>
         <p>You must be authenticated to see this</p>
     </div>
+    <average-visit-metrics/>
 </template>
 
 <script>
 import AccountService from '../services/AccountService';
+import AverageVisitMetrics from '../components/AverageVisitMetrics.vue';
 
 export default {
+    components: {
+        AverageVisitMetrics
+    },
     data() {
         return {
             userAccount: {
