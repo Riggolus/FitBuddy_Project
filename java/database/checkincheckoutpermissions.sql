@@ -11,3 +11,5 @@ GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE occupancy TO final_capstone_appuse
 GRANT USAGE, SELECT, UPDATE ON SEQUENCE occupancy_occupancy_id_seq TO final_capstone_appuser;
 GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE class_registration TO final_capstone_appuser;
 GRANT USAGE, SELECT, UPDATE ON SEQUENCE class_registration_registration_id_seq TO final_capstone_appuser;
+GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE achievements TO final_capstone_appuser;
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE achievements_goal_id_seq TO final_capstone_appuser;
