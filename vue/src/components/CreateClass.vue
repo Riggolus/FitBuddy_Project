@@ -1,7 +1,7 @@
 <template>
     <div class="create-class-form">
-      <h2>Create a New Class {{ this.isSunday }}</h2>
-      <form @submit.prevent="submitClass">
+      <h2>Create a New Class</h2>
+      <form @submit="submitClass">
         <div class="form-group">
           <label for="name">Class Name:</label>
           <input v-model="className" id="name" type="text" required />
@@ -21,13 +21,6 @@
         <div class="form-group">
           <label>Days:</label>
           <div class="days-checkboxes">
-            <!-- <label><input type="checkbox" v-model="days.sunday" /> Sunday</label>
-            <label><input type="checkbox" v-model="days.monday" /> Monday</label>
-            <label><input type="checkbox" v-model="days.tuesday" /> Tuesday</label>
-            <label><input type="checkbox" v-model="days.wednesday" /> Wednesday</label>
-            <label><input type="checkbox" v-model="days.thursday" /> Thursday</label>
-            <label><input type="checkbox" v-model="days.friday" /> Friday</label>
-            <label><input type="checkbox" v-model="days.saturday" /> Saturday</label> -->
             <label><input type="checkbox" v-model="isSunday" /> Sunday</label>
             <label><input type="checkbox" v-model="isMonday" /> Monday</label>
             <label><input type="checkbox" v-model="isTuesday" /> Tuesday</label>
@@ -58,15 +51,6 @@
         endTime: '',
         description: '',
         
-        // days : {
-        //   sunday: false,
-        //   monday: false,
-        //   tuesday: false,
-        //   wednesday: false,
-        //   thursday: false,
-        //   friday: false,
-        //   saturday: false,
-        // },
         isMonday: false,
         isTuesday: false,
         isWednesday: false,
@@ -92,14 +76,13 @@
           startTime: formattedStartTime,
           endTime: formattedEndTime,
           description: this.description,
-        //   ...this.days,
-            isMonday: this.isMonday,
-            isTuesday: this.isTuesday,
-            isWednesday: this.isWednesday,
-            isThursday: this.isThursday,
-            isFriday: this.isFriday,
-            isSaturday: this.isSaturday,
-            isSunday: this.isSunday,
+          isMonday: this.isMonday,
+          isTuesday: this.isTuesday,
+          isWednesday: this.isWednesday,
+          isThursday: this.isThursday,
+          isFriday: this.isFriday,
+          isSaturday: this.isSaturday,
+          isSunday: this.isSunday,
           recurrenceEnd: formattedRecurrenceEnd,
         };
         console.log(newClass);
@@ -130,8 +113,6 @@
         this.isFriday = false;
         this.isSaturday = false;
         this.isSunday = false;
-
-        
         this.recurrenceEnd = '';
       },
     },

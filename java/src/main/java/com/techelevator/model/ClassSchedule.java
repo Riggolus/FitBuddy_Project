@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.crypto.Data;
 import java.time.LocalTime;
 import java.util.Date;
@@ -11,12 +13,19 @@ public class ClassSchedule {
     private LocalTime startTime;
     private LocalTime endTime;
     private String description;
+    @JsonProperty("isMonday")
     private boolean isMonday;
+    @JsonProperty("isTuesday")
     private boolean isTuesday;
+    @JsonProperty("isWednesday")
     private boolean isWednesday;
-    private boolean isFriday;
+    @JsonProperty("isThursday")
     private boolean isThursday;
+    @JsonProperty("isFriday")
+    private boolean isFriday;
+    @JsonProperty("isSaturday")
     private boolean isSaturday;
+    @JsonProperty("isSunday")
     private boolean isSunday;
     private Date recurrenceEnd;
     private int createdBy;
@@ -85,6 +94,7 @@ public class ClassSchedule {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public boolean isMonday() {
         return isMonday;
