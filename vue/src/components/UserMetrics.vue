@@ -1,5 +1,4 @@
 <template>
-    user metrics
     <div>
         <h2>Your Metrics</h2>
         <h3>Workout History</h3>
@@ -144,20 +143,6 @@ export default{
     
     },
     computed: {
-        // calsPerWorkout(this.metric.date) {
-           
-        //     let firstWorkout = this.metric.date;
-        //     let calsBurned = 0;
-        //     for (let i = 0; i < this.metrics.length; i++){
-        //             if (this.metrics[i].date === firstWorkout)
-        //             calsBurned += Math.round(4.25 * 3.5 * (this.metrics[i].weight * 0.453592) / 200) * (this.metrics[i].sets * this.metrics[i].reps)
-                    
-            
-        //         }
-        //         return calsBurned;
-            
-            
-        // },
         totalCalsExpended() {
             return Math.round(
                 this.metrics.reduce((acc, workout) => {
@@ -191,9 +176,6 @@ export default{
             const totalCalsPerDay = {};
 
             this.metrics.forEach(metric => {
-                // getting total calories here
-                // totalCalsPerDay[metric.date] = (Math.round(
-                //     ((4.25 * 3.5 * (metric.weight * 0.453592)) / 200) * (metric.sets * metric.reps)));
                 if (!uniqueDates[metric.date]) {
                     uniqueDates[metric.date] = metric;
                 }

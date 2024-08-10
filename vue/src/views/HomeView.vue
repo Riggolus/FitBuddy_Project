@@ -14,7 +14,7 @@
       <h1>Home</h1>
       <div class="calendar-container">
         <class-schedule/>
-        <button class="toggle-form-btn" @click="toggleForm">
+        <button v-if="isAdminOrEmployee" class="toggle-form-btn" @click="toggleForm">
           {{ showForm ? 'Cancel' : 'Add New Class' }}
         </button>
         <transition name="slide">

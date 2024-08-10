@@ -1,8 +1,6 @@
 <template>
-    This will hold analytics
     <div>
         <h2>Your last workout:</h2>
-        <h2>Great Work! Here's your workout report:</h2>
     </div>
     <div>
         <current-workout/>

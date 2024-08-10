@@ -20,9 +20,6 @@
 </template>
 
 <script>
-
-
-import authService from '../services/AuthService';
 import AccountService from '../services/AccountService';
 
 export default {

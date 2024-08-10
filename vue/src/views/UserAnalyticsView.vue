@@ -175,9 +175,7 @@ export default {
             const uniqueDates = {};
 
             this.metrics.forEach(metric => {
-                // getting total calories here
-                // totalCalsPerDay[metric.date] = (Math.round(
-                //     ((4.25 * 3.5 * (metric.weight * 0.453592)) / 200) * (metric.sets * metric.reps)));
+                
                 if (!uniqueDates[metric.date]) {
                     uniqueDates[metric.date] = metric;
                 }

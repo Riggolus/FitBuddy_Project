@@ -38,7 +38,6 @@
 </template>
 <script>
 import WorkoutService from '../services/WorkoutService';
-import ExerciseServices from '../services/ExerciseServices';
 
 export default {
     props: {

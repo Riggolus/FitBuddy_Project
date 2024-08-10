@@ -1,5 +1,4 @@
 <template>
-    Form for adding sets, reps, duration...
     <form v-on:submit.prevent="addExerciseToWorkout">
         <label for="sets">Sets</label>
         <input type="number" id="sets" v-model="editWorkout.sets">
@@ -14,7 +13,6 @@
     </form>
 </template>
 <script>
-// I'll need to import workout services
 import WorkoutService from '../services/WorkoutService';
 
 export default {
@@ -27,7 +25,7 @@ export default {
     data() {
         return {
             editWorkout: {
-                exerciseId: this.$route.params.id,//this id is based on the param in the url
+                exerciseId: this.$route.params.id,
                 sets: 0,
                 reps: 0,
                 weight: 0,
@@ -37,14 +35,12 @@ export default {
     },
     methods: {
         cancelExercise() {
-            // I'll need to navigate back to the workout view
             this.$router.go(-1);
         },
         addExerciseToWorkout(editWorkout) {
             WorkoutService.createWorkout(this.editWorkout)
                 .then(() => {
                     console.log("Exercise added to workout: " + this.editWorkout);
-                    // I'll need to navigate back to the workout view
                     this.$router.go(-1);
                 })
                 .catch((error) => {
@@ -52,8 +48,7 @@ export default {
                 });
 
         }
-    },
-    
+    }, 
 }
 </script>
 
