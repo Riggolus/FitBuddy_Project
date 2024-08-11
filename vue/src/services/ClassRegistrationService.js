@@ -16,12 +16,13 @@ http.interceptors.request.use(config => {
     return Promise.reject(error);
   });
 
-export default {
-    getClassSchedule() {
-        return http.get('/class-schedule/all')
+  export default {
+    registrationDetails(date, className) {
+        return http.get(`/class/register/${date}/${className}`);
     },
-    createClass(classScheduled){
-        return http.post('class-schedule/create-class', classScheduled)
+    registerForClass(classRegistration){
+        return http.post('/class/register', classRegistration)
     }
 
-}
+
+  }

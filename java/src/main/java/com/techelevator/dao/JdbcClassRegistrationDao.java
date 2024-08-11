@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -27,7 +28,7 @@ public class JdbcClassRegistrationDao implements ClassRegistrationDao{
     }
 
     @Override
-    public ClassRegistration displayRegistration (ClassDto classDto){
+    public ClassRegistration displayRegistration (Date date, String className){
             ClassRegistration classregistration = new ClassRegistration();
             String sql = "SELECT o.session_date, o.total_capacity, o.current_capacity, cs.class_name, cs.description, cs.class_id, cr.registration_date, (a.first_name || ' ' || a.last_name) AS instructor_name\n" +
                     "FROM occupancy o\n" +
@@ -36,7 +37,7 @@ public class JdbcClassRegistrationDao implements ClassRegistrationDao{
                     "JOIN account a on cs.instructor_id = a.user_id\n" +
                     "WHERE cs.class_name = ?; AND session_date = ?";
             try{
-                SqlRowSet results = jdbcTemplate.queryForRowSet(sql, classDto.getClassName(), classDto.getSessoinDate());
+                SqlRowSet results = jdbcTemplate.queryForRowSet(sql, className, date);
                 if(results.next()){
                     classregistration = mapRowsetToClassRegistration(results);
 

@@ -42,10 +42,10 @@
       </div>
     </div>
     <div>
-      <h2>Class Title here</h2>
-      <h3>Instructor: </h3>
-      <p>Description Here</p>
-      <p>current capacity / total capacity</p>
+      <h2>{{ this.currentClass.className }}</h2>
+      <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
+      <p>{{ this.currentClass.description }}</p>
+      <p> {{ this.currentClass.currentCapacity }} / 20</p>
       <button>Register</button> 
       <button>Cancel</button>
     </div>
@@ -53,12 +53,25 @@
   
   <script>
   import ClassScheduleService from '../services/ClassScheduleService';
+  import ClassRegistrationService from '../services/ClassRegistrationService';
   
   export default {
     data() {
       return {
         classes: [], // This will hold your classes
         currentDate: new Date(), // Holds the current date,
+        selectedClass: {
+          className: '',
+          sessionDate: ''
+        },
+        currentClass: {
+          className: '',
+          instructorName: '',
+          description: '',
+          totalCapacity: 0,
+          currentCapacity: 0,
+          sessionDate: '',
+        },
         
       };
     },
@@ -134,10 +147,26 @@
       },
 
       classDetails(classItem, date){
-        
-        console.log("Class Details: " + classItem.className);
-        console.log("Date: " + this.formatDateForServer(date));
+        // console.log("Class Details: " + classItem.className);
+        // console.log("Date: " + this.formatDateForServer(date));
 
+        this.currentClass = {
+          className: classItem.className,
+          instructorName: classItem.instructorName,
+          description: classItem.description,
+          sessionDate: this.formatDateForServer(date)
+        };
+
+
+        this.selectedClass = {
+        className: classItem.className,
+        sessionDate: this.formatDateForServer(date)
+        };
+        console.log(this.selectedClass);
+        // ClassRegistrationService.registrationDetails(this.selectedClass.sessionDate, this.selectedClass.className)
+        // .then((response) => {
+        //   this.currentClass = response.data;
+        // })
       }
     },
   };

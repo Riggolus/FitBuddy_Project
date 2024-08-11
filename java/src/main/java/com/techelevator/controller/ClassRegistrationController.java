@@ -3,10 +3,12 @@ package com.techelevator.controller;
 import com.techelevator.dao.ClassRegistrationDao;
 import com.techelevator.model.ClassDto;
 import com.techelevator.model.ClassRegistration;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,9 +24,9 @@ public class ClassRegistrationController {
         this.classRegistrationDao = classRegistrationDao;
     }
 
-    @GetMapping("/{classDto}")
-    public ClassRegistration displayRegistration (@PathVariable ("classDto")ClassDto classDto){
-        return classRegistrationDao.displayRegistration(classDto);
+    @GetMapping("/{date}/{className}")
+    public ClassRegistration displayRegistration (@PathVariable ("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("className") String className){
+        return classRegistrationDao.displayRegistration(date, className);
     }
 
     @PostMapping()
