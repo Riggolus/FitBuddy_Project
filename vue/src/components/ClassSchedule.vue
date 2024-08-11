@@ -173,7 +173,8 @@
       registerForThisClass(){
         // console.log("Registering for class: " + this.currentClass.className);
         // console.log("Date: " + this.currentClass.sessionDate);
-        console.log(this.currentClass);
+        console.log(this.currentClass.sessionDate);
+        console.log(this.currentClass.classId);
         ClassRegistrationService.registerForClass(this.currentClass)
         .then(() => {
           console.log("Registered for class");
