@@ -46,7 +46,7 @@
       <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
       <p>{{ this.currentClass.description }}</p>
       <p> {{ this.currentClass.currentCapacity }} / 20</p>
-      <button>Register</button> 
+      <button @click="registerForThisClass">Register</button> 
       <button>Cancel</button>
     </div>
   </template>
@@ -65,6 +65,7 @@
           sessionDate: ''
         },
         currentClass: {
+          classId: 0,
           className: '',
           instructorName: '',
           description: '',
@@ -151,6 +152,7 @@
         // console.log("Date: " + this.formatDateForServer(date));
 
         this.currentClass = {
+          classId: classItem.classId,
           className: classItem.className,
           instructorName: classItem.instructorName,
           description: classItem.description,
@@ -167,6 +169,18 @@
         // .then((response) => {
         //   this.currentClass = response.data;
         // })
+      },
+      registerForThisClass(){
+        // console.log("Registering for class: " + this.currentClass.className);
+        // console.log("Date: " + this.currentClass.sessionDate);
+        console.log(this.currentClass);
+        ClassRegistrationService.registerForClass(this.currentClass)
+        .then(() => {
+          console.log("Registered for class");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       }
     },
   };
