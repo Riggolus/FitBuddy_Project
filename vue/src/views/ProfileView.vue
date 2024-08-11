@@ -1,8 +1,6 @@
 <template>
     <div class="profile" v-if="isAuthenticated">
         <h1>Profile</h1>
-        
-        
         <div class="profileInfo" v-if="userAccount">
             <img :src="userAccount.profilePicture" alt="Profile Picture" />
             <p>{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
@@ -13,12 +11,14 @@
         <div id="profileNav">
             <button id="editAccount" v-on:click="toAccount">Edit Account</button>
         </div>
+        <div class="metrics-achievements">
+            <average-visit-metrics />
+            <achievements />
+        </div>
     </div>
     <div v-else>
         <p>You must be authenticated to see this</p>
     </div>
-    <average-visit-metrics/>
-    <achievements/>
 </template>
 
 <script>
@@ -76,53 +76,30 @@ export default {
 </script>
 
 <style scoped>
-/* .profile {
-    display: grid;
-    grid-template-areas: 
-        "profileNav"
-        "h1"
-        "profileInfo";
+.profile {
     max-width: 1400px;
     margin: 0 auto;
     background: #B9D7EA;
     border: #D6E6F2 solid 5px;
-    padding: 0 2rem 2rem 2rem;
+    padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 h1 {
-    grid-area: h1;
-    display: flex;
-    justify-content: center;
     color: #134B70;
     margin-bottom: 1.5rem;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .profileInfo {
-    grid-area: profileInfo;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
-
-#profileInfoNoPfp {
-    display: grid;
-    grid-template-areas: 
-        "name profile goals"
-        "email profile goals";
-    grid-template-columns: 1fr;
-    padding: 1rem;
 }
 
 #pfp {
-    grid-area: pfp;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -132,40 +109,24 @@ h1 {
 }
 
 p {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-#name {
-    grid-area: name;
-}
-#email {
-    grid-area: email;
-}
-#profile {
-    grid-area: profile;
-    padding: 0 1rem 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#goals {
-    grid-area: goals;
-    padding: 0 1rem 0 1rem;
-}
 #profileNav {
-    grid-area: profileNav;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     padding: 1rem;
 }
+
 #editAccount {
-    display: inline-block; 
-    padding: 5px; 
-    background-color: #007bff; 
-    color: white; 
-    text-align: center; 
+    padding: 5px;
+    background-color: #007bff;
+    color: white;
     text-decoration: none;
-    border-radius: 5px; 
-    border: 1px solid #007bff; 
+    border-radius: 5px;
+    border: 1px solid #007bff;
     transition: background-color 0.3s, border-color 0.3s;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #editAccount:hover {
@@ -176,6 +137,20 @@ p {
 #editAccount:active {
     background-color: #00408d;
     border-color: #00408d;
-} */
+}
 
+.metrics-achievements {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem; /* Adjust the gap between components */
+    margin-top: 2rem;
+}
+
+.metrics-achievements > * {
+    flex: 1; /* Allow both components to take up equal width */
+    background-color: #fff; /* Add a background to separate components visually */
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 </style>
