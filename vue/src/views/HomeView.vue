@@ -13,8 +13,10 @@
       <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
         <i class="fas fa-sign-out-alt"></i> Check Out
       </button>   
-      <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">Add Employee</router-link></button>
-      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">Members</router-link></button>
+      <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">
+        Add Employee</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">
+        <i class="fa-solid fa-address-book"></i> Members</router-link></button>
       <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">Equipment</router-link></button>
     </div>
 
