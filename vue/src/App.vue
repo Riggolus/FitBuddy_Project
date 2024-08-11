@@ -1,6 +1,7 @@
 <template>
   <main>
     <div class="title-nav">
+      <img src="public/favicon-32x32.png" alt="logo" id="logo">
       <h1 id="title">FitBuddy</h1>
         <div id="nav">
           <router-link v-bind:to="{ name: 'home' }" class="button-link">
@@ -21,7 +22,7 @@
   </main>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 
 .container-login100 {
   grid-area: container;
@@ -39,7 +40,7 @@
 .title-nav {
     grid-area: title-nav;
     background-color: #F7FBFC;
-
+    margin-right: auto;
     padding: 1rem;
     
 }
@@ -89,5 +90,74 @@
 .button-link:active {
     background-color: #00408d;
     border-color: #00408d;
+}
+</style> -->
+
+<style scoped>
+.container-login100 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-color: #F7FBFC;
+  overflow-x: hidden;
+}
+
+.title-nav {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: #F7FBFC;
+  padding: 1rem;
+  width: 100%;
+}
+
+#title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.5rem; /* Increase the size */
+  font-weight: bold;
+  color: #134B70;
+  flex: 1;
+}
+
+
+
+#nav {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Center vertically with the title */
+}
+
+#capstone-app > img {
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.button-link {
+  display: inline-block;
+  padding: 8px 12px; /* Increase padding for better appearance */
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.button-link:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.button-link:active {
+  background-color: #00408d;
+  border-color: #00408d;
 }
 </style>

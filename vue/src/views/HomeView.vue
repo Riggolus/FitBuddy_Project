@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <div id="homeNav">
+  <div id="homeNav">
       <!-- Existing buttons -->
       <button id="accountProfile" class="button-link" @click="toAccount">
         <i class="fas fa-user"></i> Profile
@@ -21,6 +20,8 @@
         <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
       </button>
     </div>
+  <div class="container">
+    
 
     <div class="home">
       <h1>Welcome {{ user.username }}</h1>
