@@ -30,7 +30,7 @@ public class JdbcClassScheduleDao implements ClassScheduleDao {
         String sql = "SELECT\n" +
                 "class_name, (a.first_name || ' ' || a.last_name) AS instructor_name,\n" +
                 "start_time, end_time, description, is_monday, is_tuesday, is_wednesday ,is_thursday,\n" +
-                "is_friday, is_saturday, is_sunday, recurrence_end, created_by, cs.created_at\n" +
+                "is_friday, is_saturday, is_sunday, recurrence_end, created_by, cs.created_at, cs.class_id\n" +
                 "FROM class_schedule cs\n" +
                 "JOIN account a ON cs.instructor_id = a.user_id;";
         try {
