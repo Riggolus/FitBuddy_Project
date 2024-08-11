@@ -3,8 +3,12 @@
     <div class="title-nav">
       <h1 id="title">Workout Companion</h1>
         <div id="nav">
-          <router-link v-bind:to="{ name: 'home' }" class="button-link">Home</router-link>&nbsp; &nbsp;
-          <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">Logout</router-link>
+          <router-link v-bind:to="{ name: 'home' }" class="button-link">
+          <i class="fas fa-home"></i> Home
+        </router-link>&nbsp; &nbsp;
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </router-link>
         </div>
     </div>
     <div class="container-login100">
