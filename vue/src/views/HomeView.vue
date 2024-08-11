@@ -23,6 +23,9 @@
         </transition>
       </div>
     </div>
+    <div>
+      <!-- <class-registration/> -->
+    </div>
   </div>
 </template>
 
@@ -31,6 +34,7 @@
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
 import ClassSchedule from '../components/ClassSchedule.vue';
 import CreateClass from '../components/CreateClass.vue';
+
 
 export default {
   components: {

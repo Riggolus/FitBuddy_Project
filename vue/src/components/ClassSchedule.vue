@@ -27,9 +27,9 @@
               >
                 <div class="classes">
                   <div
-                    class="class-item"
+                    class="class-item" 
                     v-for="(classItem, classIndex) in getClassesForDate(date)"
-                    :key="classIndex"
+                    :key="classIndex" @click="classDetails(classItem, date)"
                   >
                     {{ classItem.className }} from {{ classItem.startTime }} till {{ classItem.endTime }}
                     
@@ -41,6 +41,14 @@
         </table>
       </div>
     </div>
+    <div>
+      <h2>Class Title here</h2>
+      <h3>Instructor: </h3>
+      <p>Description Here</p>
+      <p>current capacity / total capacity</p>
+      <button>Register</button> 
+      <button>Cancel</button>
+    </div>
   </template>
   
   <script>
@@ -50,7 +58,8 @@
     data() {
       return {
         classes: [], // This will hold your classes
-        currentDate: new Date(), // Holds the current date
+        currentDate: new Date(), // Holds the current date,
+        
       };
     },
     computed: {
@@ -116,6 +125,20 @@
         const dayOfMonth = date.getDate();
         return `${dayOfWeek} ${dayOfMonth}`;
       },
+      // I'll use this to format the date for the server
+      formatDateForServer(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      },
+
+      classDetails(classItem, date){
+        
+        console.log("Class Details: " + classItem.className);
+        console.log("Date: " + this.formatDateForServer(date));
+
+      }
     },
   };
   </script>
