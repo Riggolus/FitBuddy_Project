@@ -14,10 +14,12 @@
         <i class="fas fa-sign-out-alt"></i> Check Out
       </button>   
       <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">
-        Add Employee</router-link></button>
+        <i class="fas fa-user-plus"></i> Add Employee</router-link></button>
       <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">
         <i class="fa-solid fa-address-book"></i> Members</router-link></button>
-      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">Equipment</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">
+        <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
+      </button>
     </div>
 
     <div class="home">
