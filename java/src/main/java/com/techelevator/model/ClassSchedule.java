@@ -30,10 +30,11 @@ public class ClassSchedule {
     private Date recurrenceEnd;
     private int createdBy;
     private Date createdAt;
+    private int classId;
 
     public ClassSchedule(String className, String instructorName, LocalTime startTime, LocalTime endTime, String description, boolean isMonday, boolean isTuesday,
                          boolean isWednesday, boolean isFriday, boolean isThursday, boolean isSaturday, boolean isSunday,
-                         Date recurrenceEnd, int createdBy, Date createdAt) {
+                         Date recurrenceEnd, int createdBy, Date createdAt, int classId) {
         this.className = className;
         this.instructorName = instructorName;
         this.startTime = startTime;
@@ -49,10 +50,19 @@ public class ClassSchedule {
         this.recurrenceEnd = recurrenceEnd;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
+        this.classId = classId;
     }
 
     public ClassSchedule() {
 
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public String getClassName() {

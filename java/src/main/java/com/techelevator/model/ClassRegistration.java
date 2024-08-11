@@ -1,10 +1,12 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.security.Timestamp;
 import java.util.Date;
 
 public class ClassRegistration {
-
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date sessionDate;
     private int totalCapacity;
     private int currentCapacity;

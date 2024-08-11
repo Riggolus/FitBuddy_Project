@@ -108,6 +108,7 @@ public class JdbcClassScheduleDao implements ClassScheduleDao {
         classSchedule.setRecurrenceEnd(rs.getDate("recurrence_end"));
         classSchedule.setCreatedBy(rs.getInt("created_by"));
         classSchedule.setCreatedAt(rs.getDate("created_at"));
+        classSchedule.setClassId(rs.getInt("class_id"));
         return classSchedule;
     }
 

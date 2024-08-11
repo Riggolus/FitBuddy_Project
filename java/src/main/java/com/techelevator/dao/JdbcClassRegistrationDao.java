@@ -73,7 +73,7 @@ public class JdbcClassRegistrationDao implements ClassRegistrationDao{
                 "VALUES (?,  ?, ?, ?);\n";
         String sql2= "\n" +
                 "INSERT INTO class_registration(user_id, occupancy_id)\n" +
-                "VALUES (?, (SELECT occupancy_id FROM occupancy ORDER BY occupancy_id LIMIT 1)); ";
+                "VALUES (?, (SELECT occupancy_id FROM occupancy ORDER BY occupancy_id DESC LIMIT 1)); ";
         try{
             jdbcTemplate.update(sql1, classRegistration.getClassId(), classRegistration.getSessionDate(), classRegistration.getTotalCapacity(), classRegistration.getCurrentCapacity());
             jdbcTemplate.update(sql2, currentUser.getId());
@@ -93,6 +93,7 @@ public class JdbcClassRegistrationDao implements ClassRegistrationDao{
         classRegistration.setDescription(rs.getString("description"));
         classRegistration.setRegistrationDate(rs.getDate("registration_date"));
         classRegistration.setInstructorName(rs.getString("instructor_name"));
+        classRegistration.setClassId(rs.getInt("class_id"));
         return classRegistration;
     }
 }
