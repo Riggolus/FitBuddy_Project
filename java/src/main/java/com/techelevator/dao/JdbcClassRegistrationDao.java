@@ -30,12 +30,27 @@ public class JdbcClassRegistrationDao implements ClassRegistrationDao{
     @Override
     public ClassRegistration displayRegistration (Date date, String className){
             ClassRegistration classregistration = new ClassRegistration();
-            String sql = "SELECT o.session_date, o.total_capacity, o.current_capacity, cs.class_name, cs.description, cs.class_id, cr.registration_date, (a.first_name || ' ' || a.last_name) AS instructor_name\n" +
-                    "FROM occupancy o\n" +
-                    "JOIN class_schedule cs ON o.class_id = cs.class_id\n" +
-                    "JOIN class_registration cr ON o.occupancy_id = cr.occupancy_id\n" +
-                    "JOIN account a on cs.instructor_id = a.user_id\n" +
-                    "WHERE cs.class_name = ?; AND session_date = ?";
+            String sql = "SELECT \n" +
+                    "    o.session_date, \n" +
+                    "    o.total_capacity, \n" +
+                    "    COUNT(cr.registration_id) AS current_registration_count, \n" +
+                    "    cs.class_name, \n" +
+                    "    cs.description, \n" +
+                    "    cs.class_id, \n" +
+                    "    (a.first_name || ' ' || a.last_name) AS instructor_name\n" +
+                    "FROM \n" +
+                    "    occupancy o\n" +
+                    "JOIN \n" +
+                    "    class_schedule cs ON o.class_id = cs.class_id\n" +
+                    "LEFT JOIN \n" +
+                    "    class_registration cr ON o.occupancy_id = cr.occupancy_id \n" +
+                    "JOIN \n" +
+                    "    account a ON cs.instructor_id = a.user_id\n" +
+                    "WHERE \n" +
+                    "    cs.class_name = ? \n" +
+                    "    AND o.session_date = ?\n" +
+                    "GROUP BY \n" +
+                    "    o.session_date, o.total_capacity, cs.class_name, cs.description, cs.class_id, a.first_name, a.last_name;";
             try{
                 SqlRowSet results = jdbcTemplate.queryForRowSet(sql, className, date);
                 if(results.next()){
