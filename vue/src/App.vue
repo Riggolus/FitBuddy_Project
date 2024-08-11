@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="title-nav">
-      <h1 id="title">Workout Companion</h1>
+      <h1 id="title">FitBuddy</h1>
         <div id="nav">
           <router-link v-bind:to="{ name: 'home' }" class="button-link">
           <i class="fas fa-home"></i> Home
@@ -9,6 +9,7 @@
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">
           <i class="fas fa-sign-out-alt"></i> Logout
         </router-link>
+        
         </div>
     </div>
     <div class="container-login100">
