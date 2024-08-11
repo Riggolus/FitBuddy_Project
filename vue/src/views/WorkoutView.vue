@@ -1,30 +1,18 @@
 <template>
     <h2>Workout</h2>
     <current-workout :stats-on="statsOn" id="current-workout"/>
-    <div>
-        <table id="exercises">
-            <thead>
-                <tr>
-                    Exercise
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="text" id="exerciseName" v-model="exerciseName">
-                    </td>
-                </tr>
-                <tr v-for="exercise in filteredExercises" :key="exercise.exerciseId">
-                    <td>{{exercise.exerciseName}}</td>
-                    <td>
-                        <button v-on:click="selectExercise(exercise.exerciseId)" class="button-link">View Exercise</button>
-                    </td>
-                        
-                    
-                </tr>
-            </tbody>
-        </table>
+    <div id="exercise-container">
+    <div class="input-container">
+        <label for="exerciseName">Search: </label>
+        <input type="text" id="exerciseName" v-model="exerciseName" placeholder="Enter exercise name">
     </div>
+    <div class="exercise-list">
+        <div v-for="exercise in filteredExercises" :key="exercise.exerciseId" class="exercise-item">
+            <span>{{ exercise.exerciseName }}</span>
+            <button v-on:click="selectExercise(exercise.exerciseId)" class="button-link">View Exercise</button>
+        </div>
+    </div>
+</div>
     <button id="check-out" v-on:click="checkOut" class="button-link">Complete Workout/check-out</button>
     
 </template>
@@ -100,6 +88,9 @@ export default {
     border-radius: 10px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #134B70;
+    display: flex;
+    flex-flow: column wrap;
+    height: 100 vh;
 }
 
 h2 {
@@ -129,5 +120,50 @@ h2 {
 .button-link:active {
     background-color: #00408d;
     border-color: #00408d;
+}
+
+#exercise-container {
+    display: flex;
+    flex-direction: column; /* Stack input field and list vertically */
+    gap: 10px; /* Space between input field and list */
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px; /* Space below the input field */
+}
+
+.exercise-list {
+    display: flex;
+    flex-wrap: wrap; /* Wrap items into columns */
+    gap: 10px; /* Space between items */
+}
+
+.exercise-item {
+    flex: 1 1 calc(50% - 10px); /* Two columns layout with spacing */
+    box-sizing: border-box; /* Include padding and border in total width and height */
+    border: 1px solid #ddd; /* Border around each item */
+    padding: 10px; /* Padding inside each item */
+    background-color: #f9f9f9; /* Background color for items */
+    display: flex; /* Use flexbox inside each item */
+    justify-content: space-between; /* Space between content and button */
+    align-items: center; /* Center items vertically */
+}
+
+.button-link {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove button border */
+    padding: 8px 16px; /* Space inside button */
+    text-align: center; /* Center button text */
+    text-decoration: none; /* Remove underline from button text */
+    display: inline-block; /* Ensure the button behaves like an inline block element */
+    border-radius: 4px; /* Rounded corners for button */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.button-link:hover {
+    background-color: #0056b3; /* Darker button color on hover */
 }
 </style>
