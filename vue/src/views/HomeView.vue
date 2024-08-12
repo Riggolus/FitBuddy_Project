@@ -10,7 +10,7 @@
     <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">
       <i class="fas fa-dumbbell"></i> Check In</button>
     <button id="back-to-workout" class="button-link" @click="backToTraining" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
-      Continue Training</button>
+      <i class="fa-solid fa-people-pulling"></i> Continue Training</button>
     <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
       <i class="fas fa-sign-out-alt"></i> Check Out
     </button>   
@@ -26,13 +26,12 @@
   <div class="container">
     <div class="home">
       <h1>Welcome {{ user.username }}</h1>
+      
       <div class="content">
+        <current-workout/>
+          <achievements/>
         <div class="calendar-container">
           <class-schedule/>
-        </div>
-        <div class="side-content">
-          <current-workout/>
-          <achievements/>
         </div>
       </div>
 
