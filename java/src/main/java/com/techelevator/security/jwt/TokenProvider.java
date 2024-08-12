@@ -58,19 +58,19 @@ public class TokenProvider implements InitializingBean {
 
 
         //Code Snippet for setting expiry
-        long now = (new Date()).getTime();
-        Date validity;
-        if (rememberMe) {
-            validity = new Date(now + this.tokenValidityInMillisecondsForRememberMe);
-        } else {
-            validity = new Date(now + this.tokenValidityInMilliseconds);
-        }
+//        long now = (new Date()).getTime();
+//        Date validity;
+//        if (rememberMe) {
+//            validity = new Date(now + this.tokenValidityInMillisecondsForRememberMe);
+//        } else {
+//            validity = new Date(now + this.tokenValidityInMilliseconds);
+//        }
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(validity)
+//                .setExpiration(validity)
                 .compact();
     }
 
