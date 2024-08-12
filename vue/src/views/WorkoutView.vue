@@ -1,7 +1,7 @@
 <template>
-    <h2>Workout</h2>
     <current-workout :stats-on="statsOn" id="current-workout"/>
     <div id="exercise-container">
+        <h2>Select an Exercise</h2>
     <div class="input-container">
         <label for="exerciseName">Search: </label>
         <input type="text" id="exerciseName" v-model="exerciseName" placeholder="Enter exercise name">

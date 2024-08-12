@@ -1,5 +1,6 @@
 <template> 
-    <div class="workout-container">
+    <div class="workout-container" v-if="workouts.length !== 0">
+      <h2>Your Current Session</h2>
       <table id="currentWorkout">
         <thead>
           <tr>

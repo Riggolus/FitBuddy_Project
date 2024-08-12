@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="calendar">
+      <!-- Calendar Header -->
       <div class="heading">
         <div class="month">{{ currentMonth }}</div>
         <div class="btns">
@@ -9,6 +10,8 @@
           <div class="btn next-btn" @click="nextWeek">Next</div>
         </div>
       </div>
+
+      <!-- Calendar Table -->
       <table>
         <thead class="weekdays">
           <tr>
@@ -40,17 +43,20 @@
         </tbody>
       </table>
     </div>
-    <div class="registration" v-if="isRegistrationVisible">
-      <h2>{{ this.currentClass.className }}</h2>
-      <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
-      <p>{{ this.currentClass.description }}</p>
-      <p>{{ this.currentClass.currentCapacity }} / 20</p>
-      <button @click="registerForThisClass">Register</button> 
-      <button @click="cancelRegistration">Cancel</button>
-    </div>
+
+    <!-- Registration Panel with Transition -->
+    <transition name="slide-fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+      <div class="registration" v-if="isRegistrationVisible">
+        <h2>{{ this.currentClass.className }}</h2>
+        <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
+        <p>{{ this.currentClass.description }}</p>
+        <p>{{ this.currentClass.currentCapacity }} / 20</p>
+        <button @click="registerForThisClass">Register</button> 
+        <button @click="cancelRegistration">Cancel</button>
+      </div>
+    </transition>
   </div>
 </template>
-
 
   
 <script>
@@ -326,12 +332,24 @@ th, td {
 }
 
 /* Registration form */
+/* Transition effects for registration panel */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
 .registration {
+  position: absolute; /* Ensure it pops up relative to the container */
+  top: 0;
+  right: 0;
   width: 300px;
   padding: 20px;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Make sure it is above other content */
 }
 
 .registration h2, .registration h3, .registration p {
@@ -345,4 +363,9 @@ th, td {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.registration button:hover {
+  opacity: 0.8;
+}
+
 </style>
