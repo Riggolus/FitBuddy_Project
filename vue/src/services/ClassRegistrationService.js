@@ -22,7 +22,10 @@ http.interceptors.request.use(config => {
     },
     registerForClass(classRegistration){
         return http.post('/class/register', classRegistration)
-    }
+    },
+    getRegisteredClasses(){
+        return http.get('/class/register/myclasses')
+    },
 
 
   }

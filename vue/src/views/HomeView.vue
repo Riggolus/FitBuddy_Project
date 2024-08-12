@@ -29,6 +29,7 @@
       <div class="content">
         <div class="calendar-container">
           <class-schedule />
+          <user-upcoming-class />
         </div>
         <div class="workout-achievements">
           <div class="current-workout">
@@ -37,10 +38,6 @@
           <div class="achievements">
             <achievements />
           </div>
-        </div>
-        <div class="side-content">
-          <current-workout/>
-          <achievements/>
         </div>
       </div>
 
@@ -60,13 +57,15 @@ import ClassSchedule from '../components/ClassSchedule.vue';
 import CreateClass from '../components/CreateClass.vue';
 import CurrentWorkout from '../components/CurrentWorkout.vue';
 import Achievements from '../components/Achievements.vue';
+import UserUpcomingClass from '../components/UserUpcomingClass.vue';
 
 export default {
   components: {
     ClassSchedule,
     CreateClass,
     CurrentWorkout,
-    Achievements
+    Achievements,
+    UserUpcomingClass
   },
   data() {
     return {
