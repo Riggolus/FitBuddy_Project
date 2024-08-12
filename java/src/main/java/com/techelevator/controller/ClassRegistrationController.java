@@ -34,4 +34,9 @@ public class ClassRegistrationController {
         classRegistrationDao.registerForClass(classRegistration, principal);
     }
 
+    @GetMapping("/myclasses")
+    public List<ClassRegistration> myClasses(Principal principal){
+        return classRegistrationDao.myClasses(principal);
+    }
+
 }
