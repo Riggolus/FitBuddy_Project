@@ -12,8 +12,9 @@
           <div class="profileDetails">
             <p class="name">{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
             <p class="email">Email: {{ userAccount.email }}</p>
-            <p>{{ userAccount.profile }}</p>
           </div>
+          <div id="profile"><p>{{ userAccount.profile }}</p></div>
+
         </div>
       </div>
       <div id="profileNav">
@@ -113,12 +114,14 @@ h1 {
 
 .profileContent {
     display: flex;
-    align-items: center; /* Align items vertically centered */
-    gap: 1.5rem; /* Adjust gap between picture and details */
+    align-items: flex-start; /* Align items to the start of the flex container */
+    gap: 2rem; /* Adjust gap between profile picture and details */
+    justify-content: center; /* Center content horizontally */
 }
 
+/* Styling for the profile picture container */
 .profilePictureContainer {
-    width: 160px; /* Slightly larger than the profile picture */
+    width: 160px;
     height: 160px;
     border-radius: 50%;
     border: 5px solid #007bff; /* Circular border */
@@ -130,31 +133,47 @@ h1 {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Styling for the profile picture itself */
 #pfp {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    object-fit: cover; /* Ensures the image covers the circle */
+    object-fit: cover;
 }
 
+/* Container for profile details */
 .profileDetails {
+    /* flex: 1; Allows the profile details to take up remaining space */
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align text to the left */
+    align-items: flex-start;
+    /* background-color: #fff; */
+    /* border: 1px solid #ddd; */
+    /* border-radius: 8px; */
+    /* padding: 1rem; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .name {
     font-size: 1.25rem; /* Larger font size for name */
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .email {
     color: #134B70; /* Match color with the title */
+    margin-bottom: 1rem;
 }
 
-p {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0.25rem 0; /* Add vertical spacing between paragraphs */
+/* Container for the profile box */
+#profile {
+    flex: 1; /* Allows the profile box to take up remaining space */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
 }
 
 #profileNav {
