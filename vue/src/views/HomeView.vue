@@ -22,17 +22,25 @@
       <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
     </button>
   </div>
+  
   <div class="container">
     <div class="home">
       <h1>Welcome {{ user.username }}</h1>
-      <div class="calendar-container">
-        <class-schedule/>
-        <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
-          {{ showForm ? 'Cancel' : 'Add New Class' }}
-        </button>
-        <div :class="['create-class', showForm ? 'show' : 'hide']">
-          <create-class @classCreated="addClass" />
+      <div class="content">
+        <div class="calendar-container">
+          <class-schedule/>
         </div>
+        <div class="side-content">
+          <current-workout/>
+          <achievements/>
+        </div>
+      </div>
+
+      <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
+        {{ showForm ? 'Cancel' : 'Add New Class' }}
+      </button>
+      <div :class="['create-class', showForm ? 'show' : 'hide']">
+        <create-class @classCreated="addClass" />
       </div>
     </div>
   </div>
@@ -42,11 +50,15 @@
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
 import ClassSchedule from '../components/ClassSchedule.vue';
 import CreateClass from '../components/CreateClass.vue';
+import CurrentWorkout from '../components/CurrentWorkout.vue';
+import Achievements from '../components/Achievements.vue';
 
 export default {
   components: {
     ClassSchedule,
-    CreateClass
+    CreateClass,
+    CurrentWorkout,
+    Achievements
   },
   data() {
     return {

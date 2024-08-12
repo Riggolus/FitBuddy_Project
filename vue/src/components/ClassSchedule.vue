@@ -46,17 +46,18 @@
 
     <!-- Registration Panel with Transition -->
     <transition name="slide-fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-      <div class="registration" v-if="isRegistrationVisible">
-        <h2>{{ this.currentClass.className }}</h2>
-        <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
-        <p>{{ this.currentClass.description }}</p>
-        <p>{{ this.currentClass.currentCapacity }} / 20</p>
+      <div class="registration" v-show="isRegistrationVisible">
+        <h2>{{ currentClass.className }}</h2>
+        <h3>Instructor: {{ currentClass.instructorName }}</h3>
+        <p>{{ currentClass.description }}</p>
+        <p>{{ currentClass.currentCapacity }} / 20</p>
         <button @click="registerForThisClass">Register</button> 
         <button @click="cancelRegistration">Cancel</button>
       </div>
     </transition>
   </div>
 </template>
+
 
   
 <script>
@@ -170,6 +171,7 @@ export default {
     registerForThisClass(){
       ClassRegistrationService.registerForClass(this.currentClass)
         .then(() => {
+          alert("Registered for " + this.selectedClass.className);
           console.log("Registered for class");
           this.isRegistrationVisible = false; // Hide registration panel after registering
         })
@@ -179,7 +181,25 @@ export default {
     },
     cancelRegistration() {
       this.isRegistrationVisible = false; // Hide registration panel on cancel
-    }
+    },
+    beforeEnter(el) {
+    el.style.transform = 'translateX(100%)';
+    el.style.opacity = 0;
+  },
+  enter(el, done) {
+    el.offsetWidth; // trigger reflow
+    el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+    el.style.transform = 'translateX(0)';
+    el.style.opacity = 1;
+    done();
+  },
+  leave(el, done) {
+    el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+    el.style.transform = 'translateX(100%)';
+    el.style.opacity = 0;
+    done();
+  }
+
   },
 };
 </script>
@@ -331,15 +351,16 @@ th, td {
   transform: translateX(100%); /* Ends outside the view */
 }
 
-/* Registration form */
-/* Transition effects for registration panel */
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease;
+/* Transition effects for sliding registration panel */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(100%);
   opacity: 0;
 }
 
+/* Registration form */
 .registration {
   position: absolute; /* Ensure it pops up relative to the container */
   top: 0;
@@ -351,21 +372,4 @@ th, td {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 10; /* Make sure it is above other content */
 }
-
-.registration h2, .registration h3, .registration p {
-  margin-bottom: 10px;
-}
-
-.registration button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.registration button:hover {
-  opacity: 0.8;
-}
-
 </style>
