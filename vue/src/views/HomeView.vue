@@ -28,10 +28,16 @@
       <h1>Welcome {{ user.username }}</h1>
       
       <div class="content">
-        <current-workout/>
-          <achievements/>
         <div class="calendar-container">
-          <class-schedule/>
+          <class-schedule />
+        </div>
+        <div class="workout-achievements">
+          <div class="current-workout">
+            <current-workout />
+          </div>
+          <div class="achievements">
+            <achievements />
+          </div>
         </div>
       </div>
 
@@ -138,8 +144,30 @@ export default {
 }
 </script>
 
-
 <style scoped>
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px; /* Adjust max-width as needed */
+  margin: 0 auto;
+}
+
+.current-workout,
+.achievements {
+  width: 100%;
+  padding: 10px;
+  background-color: #f0f4f8;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-container {
+  grid-column: span 2;
+  width: 100%;
+  margin-top: 20px;
+}
 .container {
   display: grid;
   grid-template-areas: 
@@ -148,10 +176,8 @@ export default {
   grid-template-columns: 50% 50%;
   width: 1170px;
   background: #B9D7EA;
-  border: #D6E6F2 solid 5px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
 #homeNav {
@@ -262,3 +288,4 @@ export default {
   background-color: darkred;
 }
 </style>
+
