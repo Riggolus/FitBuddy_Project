@@ -10,7 +10,7 @@
     <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">
       <i class="fas fa-dumbbell"></i> Check In</button>
     <button id="back-to-workout" class="button-link" @click="backToTraining" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
-      Continue Training</button>
+      <i class="fa-solid fa-people-pulling"></i> Continue Training</button>
     <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
       <i class="fas fa-sign-out-alt"></i> Check Out
     </button>   
@@ -25,23 +25,20 @@
   
   <div class="container">
     <div class="home">
-      <h1>Welcome {{ user.username }}</h1>
+      <h1 class="welcome">Welcome {{ user.username }}</h1>
       <div class="content">
         <div class="calendar-container">
           <class-schedule />
         </div>
-        <div class="workout-achievements">
+        <div class="upcoming-class-container">
+          <user-upcoming-class />
+        </div>
           <div class="current-workout">
             <current-workout />
           </div>
           <div class="achievements">
             <achievements />
           </div>
-        </div>
-        <div class="side-content">
-          <current-workout/>
-          <achievements/>
-        </div>
       </div>
 
       <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
@@ -60,13 +57,15 @@ import ClassSchedule from '../components/ClassSchedule.vue';
 import CreateClass from '../components/CreateClass.vue';
 import CurrentWorkout from '../components/CurrentWorkout.vue';
 import Achievements from '../components/Achievements.vue';
+import UserUpcomingClass from '../components/UserUpcomingClass.vue';
 
 export default {
   components: {
     ClassSchedule,
     CreateClass,
     CurrentWorkout,
-    Achievements
+    Achievements,
+    UserUpcomingClass
   },
   data() {
     return {
@@ -150,6 +149,8 @@ export default {
 <style scoped>
 .content {
   display: grid;
+  grid-template-areas: "calendar-container upcoming-class-container",
+                       "achievements workout-details";
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 100%;
@@ -167,9 +168,11 @@ export default {
 }
 
 .calendar-container {
+  grid-area: calendar-container;
   grid-column: span 2;
   width: 100%;
   margin-top: 20px;
+  display: flex;
 }
 .container {
   display: grid;
