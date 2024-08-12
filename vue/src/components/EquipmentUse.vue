@@ -3,21 +3,24 @@
         <option value="current">Current Month</option>
         <option v-for="month in months" :key="month.value" :value="month.value">{{ month.name }}</option>        
     </select>
-    <table>
-        <thead>
-            <tr>
-                <th>Kettlebell Weight</th>
-                <th>Usage</th>        
-            </tr>
-        </thead>
-        <tbody>
-            <tr  v-for="item in reducedEquipment" :key="item.equipmentName">
-                <td>{{ item.weight }}</td>
-                <td>{{ item.usageCount }}</td>
+    <div id="table-container">
+        <table id="equipment-usage">
+            <thead>
+                <tr>
+                    <th>Kettlebell Weight</th>
+                    <th>Usage</th>        
+                </tr>
+            </thead>
+            <tbody>
+                <tr  v-for="item in reducedEquipment" :key="item.equipmentName">
+                    <td id="weight">{{ item.weight }}</td>
+                    <td id="count">{{ item.usageCount }}</td>
                             
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
 </template>
 <script>
     import EquipmentUsageService from '../services/EquipmentUsageService';
@@ -91,3 +94,70 @@
         }
     }
 </script>
+
+<style scoped>
+
+/* Basic styling for the container */
+template {
+    display: block;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* Style for the select dropdown */
+select {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Style for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Style for table headers */
+th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Style for table cells */
+#count {
+    padding: 10px;
+    text-align: center;
+}
+
+#weight {
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Alternate row colors for better readability */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* tbody tr:hover {
+    background-color: #f1f1f1;
+} */
+
+/* Additional styling for table rows */
+tbody tr {
+    transition: background-color 0.3s;
+}
+
+
+</style>
