@@ -1,25 +1,37 @@
 <template>
     <div class="profile" v-if="isAuthenticated">
-        <h1>Profile</h1>
-        <div class="profileInfo" v-if="userAccount">
-            <img :src="userAccount.profilePicture" alt="Profile Picture" />
-            <p>{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
-            <p>Email: {{ userAccount.email }}</p>
+      <h1>Profile</h1>
+      <div class="profileInfo" v-if="userAccount">
+        <!-- Flex container to position profile picture and text side by side -->
+        <div class="profileContent">
+          <!-- Container for the circular profile picture -->
+          <div class="profilePictureContainer">
+            <img :src="userAccount.profilePicture" alt="Profile Picture" id="pfp" />
+          </div>
+          <!-- Profile details to the right of the picture -->
+          <div class="profileDetails">
+            <p class="name">{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
+            <p class="email">Email: {{ userAccount.email }}</p>
             <p>{{ userAccount.profile }}</p>
             <p>Goals: {{ userAccount.goals }}</p>
+          </div>
         </div>
-        <div id="profileNav">
-            <button id="editAccount" v-on:click="toAccount">Edit Account</button>
-        </div>
-        <div class="metrics-achievements">
-            <average-visit-metrics />
-            <achievements />
-        </div>
+      </div>
+      <div id="profileNav">
+        <button id="editAccount" v-on:click="toAccount">
+            <i class="fa-solid fa-cog"></i> Edit Account</button>
+      </div>
+      <div class="metrics-achievements">
+        <average-visit-metrics />
+        <achievements />
+      </div>
     </div>
     <div v-else>
-        <p>You must be authenticated to see this</p>
+      <p>You must be authenticated to see this</p>
     </div>
-</template>
+  </template>
+  
+  
 
 <script>
 import AccountService from '../services/AccountService';
@@ -97,19 +109,53 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 2rem; /* Add space below the profile info */
+}
+
+.profileContent {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    gap: 1.5rem; /* Adjust gap between picture and details */
+}
+
+.profilePictureContainer {
+    width: 160px; /* Slightly larger than the profile picture */
+    height: 160px;
+    border-radius: 50%;
+    border: 5px solid #007bff; /* Circular border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #fff; /* Optional background color */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 #pfp {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    object-fit: cover; /* Ensures the image covers the circle */
+}
+
+.profileDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+}
+
+.name {
+    font-size: 1.25rem; /* Larger font size for name */
+    font-weight: bold;
+}
+
+.email {
+    color: #134B70; /* Match color with the title */
 }
 
 p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0.25rem 0; /* Add vertical spacing between paragraphs */
 }
 
 #profileNav {
@@ -119,7 +165,7 @@ p {
 }
 
 #editAccount {
-    padding: 5px;
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     text-decoration: none;

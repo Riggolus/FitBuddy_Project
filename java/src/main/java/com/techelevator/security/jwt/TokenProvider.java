@@ -56,6 +56,8 @@ public class TokenProvider implements InitializingBean {
 
         String authorities = String.join(",", authoritiesList);
 
+
+        //Code Snippet for setting expiry
         long now = (new Date()).getTime();
         Date validity;
         if (rememberMe) {
