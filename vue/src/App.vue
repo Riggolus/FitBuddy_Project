@@ -32,9 +32,8 @@
   align-items: center;
   padding: 15px;
   background-color: #F7FBFC;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
-
 
 .title-nav {
   display: flex;
