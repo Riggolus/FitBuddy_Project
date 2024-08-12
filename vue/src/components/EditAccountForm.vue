@@ -28,9 +28,9 @@
         </div>
         <div>
             <!-- Potentially add a list of goals the user can check off as completed  -->
-            <label for="goal">Goals</label>
+            <!-- <label for="goal">Goals</label>
             <textarea type="textbox" id="goal" v-model="editAccount.goals">
-            </textarea>
+            </textarea> -->
         </div>
 
         <button type="submit" class="button-link">Save Changes</button>

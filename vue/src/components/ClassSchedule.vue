@@ -314,5 +314,13 @@ th, td {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   font-size: 14px;
   text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.class-item:hover {
+  transform: scale(1.1); /* Slightly enlarges the item */
+  z-index: 10; /* Ensures the hovered item stays above others */
+  background-color: #e0e0e0; /* Optional: Change background color on hover */
+  cursor: pointer;
 }
 </style>
