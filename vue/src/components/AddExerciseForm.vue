@@ -6,8 +6,8 @@
         <input type="number" id="reps" v-model="editWorkout.reps">
         <label for="weight">Weight</label>
         <input type="number" id="weight" v-model="editWorkout.weight">
-        <label for="duration">Duration</label>
-        <input type="number" id="duration" v-model="editWorkout.duration">
+        <!-- <label for="duration">Duration</label> -->
+        <!-- <input type="number" id="duration" v-model="editWorkout.duration"> -->
         <button type="submit" class="button-link">Add Exercise</button>
         <button type="reset" v-on:click="cancelExercise" class="button-link">Back to Exercise Selection</button>
     </form>
@@ -26,10 +26,10 @@ export default {
         return {
             editWorkout: {
                 exerciseId: this.$route.params.id,
-                sets: 0,
-                reps: 0,
-                weight: 0,
-                duration: 0
+                sets: null,
+                reps: null,
+                weight: null,
+                duration: null
             }
         };
     },
@@ -74,7 +74,7 @@ form {
     text-align: center; 
     text-decoration: none;
     border-radius: 5px; 
-    /* border: 1px solid #007bff;  */
+    border: 1px solid #007bff; 
     /* font-size: 16px;  */
     /* font-weight: bold; */
     transition: background-color 0.3s, border-color 0.3s;
