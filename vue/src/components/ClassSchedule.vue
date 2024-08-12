@@ -50,7 +50,7 @@
         <h2>{{ currentClass.className }}</h2>
         <h3>Instructor: {{ currentClass.instructorName }}</h3>
         <p>{{ currentClass.description }}</p>
-        <p>{{ currentClass.currentCapacity }} / 20</p>
+        
         <button @click="registerForThisClass">Register</button> 
         <button @click="cancelRegistration">Cancel</button>
       </div>
@@ -205,7 +205,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 /* Global styles */
 * {
   margin: 0;
