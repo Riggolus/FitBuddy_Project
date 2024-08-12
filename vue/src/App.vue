@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="title-nav">
-      <img src="public\favicon-32x32.png" alt="logo" id="logo">
+      <img src="image1.png" alt="logo" id="logo">
       <h1 id="title">FitBuddy</h1>
         <div id="nav">
           <router-link v-bind:to="{ name: 'home' }" class="button-link">
@@ -106,6 +106,7 @@
   overflow-x: hidden;
 }
 
+
 .title-nav {
   display: flex;
   position: relative;
@@ -158,5 +159,10 @@
 .button-link:active {
   background-color: #00408d;
   border-color: #00408d;
+}
+
+#logo {
+  width: 100px;
+  height: 100px;
 }
 </style>

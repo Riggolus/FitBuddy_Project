@@ -1,191 +1,189 @@
 <template>
-    <div class="container">
-      <div class="calendar">
-        <div class="heading">
-          <div class="month">{{ currentMonth }}</div>
-          <div class="btns">
-            <div class="btn today-btn" @click="goToToday">Today</div>
-            <div class="btn prev-btn" @click="prevWeek">Last</div>
-            <div class="btn next-btn" @click="nextWeek">Next</div>
-          </div>
+  <div class="container">
+    <div class="calendar">
+      <!-- Calendar Header -->
+      <div class="heading">
+        <div class="month">{{ currentMonth }}</div>
+        <div class="btns">
+          <div class="btn today-btn" @click="goToToday">Today</div>
+          <div class="btn prev-btn" @click="prevWeek">Last</div>
+          <div class="btn next-btn" @click="nextWeek">Next</div>
         </div>
-        <table>
-          <thead class="weekdays">
-            <tr>
-              <th class="day" v-for="(date, index) in weekDates" :key="index">
-                {{ formatDate(date) }}
-              </th>
-            </tr>
-          </thead>
-          <tbody class="days">
-            <tr>
-              <td
-                v-for="(date, index) in weekDates"
-                :key="index"
-                :data-date="date"
-                :class="{ today: isToday(date) }"
-              >
-                <div class="classes">
-                  <div
-                    class="class-item" 
-                    v-for="(classItem, classIndex) in getClassesForDate(date)"
-                    :key="classIndex" @click="classDetails(classItem, date)"
-                  >
-                    {{ classItem.className }} from {{ classItem.startTime }} till {{ classItem.endTime }}
-                    
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+
+      <!-- Calendar Table -->
+      <table>
+        <thead class="weekdays">
+          <tr>
+            <th class="day" v-for="(date, index) in weekDates" :key="index">
+              {{ formatDate(date) }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="days">
+          <tr>
+            <td
+              v-for="(date, index) in weekDates"
+              :key="index"
+              :data-date="date"
+              :class="{ today: isToday(date) }"
+            >
+              <div class="classes">
+                <div
+                  class="class-item" 
+                  v-for="(classItem, classIndex) in getClassesForDate(date)"
+                  :key="classIndex" 
+                  @click="classDetails(classItem, date)"
+                >
+                  {{ classItem.className }} from {{ classItem.startTime }} till {{ classItem.endTime }}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div>
-      <h2>{{ this.currentClass.className }}</h2>
-      <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
-      <p>{{ this.currentClass.description }}</p>
-      <p> {{ this.currentClass.currentCapacity }} / 20</p>
-      <button @click="registerForThisClass">Register</button> 
-      <button>Cancel</button>
-    </div>
-  </template>
+
+    <!-- Registration Panel with Transition -->
+    <transition name="slide-fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+      <div class="registration" v-if="isRegistrationVisible">
+        <h2>{{ this.currentClass.className }}</h2>
+        <h3>Instructor: {{ this.currentClass.instructorName }}</h3>
+        <p>{{ this.currentClass.description }}</p>
+        <p>{{ this.currentClass.currentCapacity }} / 20</p>
+        <button @click="registerForThisClass">Register</button> 
+        <button @click="cancelRegistration">Cancel</button>
+      </div>
+    </transition>
+  </div>
+</template>
+
   
-  <script>
-  import ClassScheduleService from '../services/ClassScheduleService';
-  import ClassRegistrationService from '../services/ClassRegistrationService';
+<script>
+import ClassScheduleService from '../services/ClassScheduleService';
+import ClassRegistrationService from '../services/ClassRegistrationService';
   
-  export default {
-    data() {
-      return {
-        classes: [], // This will hold your classes
-        currentDate: new Date(), // Holds the current date,
-        selectedClass: {
-          className: '',
-          sessionDate: ''
-        },
-        currentClass: {
-          classId: 0,
-          className: '',
-          instructorName: '',
-          description: '',
-          totalCapacity: 0,
-          currentCapacity: 0,
-          sessionDate: '',
-        },
-        
-      };
-    },
-    computed: {
-      currentMonth() {
-        return this.currentDate.toLocaleString('default', { month: 'long' });
+
+export default {
+  data() {
+    return {
+      classes: [],
+      currentDate: new Date(),
+      selectedClass: {
+        className: '',
+        sessionDate: ''
       },
-      weekDates() {
-        const startOfWeek = this.getStartOfWeek(this.currentDate);
-        return Array.from({ length: 7 }, (_, i) => {
-          const date = new Date(startOfWeek);
-          date.setDate(startOfWeek.getDate() + i);
-          return date;
+      currentClass: {
+        classId: 0,
+        className: '',
+        instructorName: '',
+        description: '',
+        totalCapacity: 0,
+        currentCapacity: 0,
+        sessionDate: '',
+      },
+      isRegistrationVisible: false, // Control visibility of registration
+    };
+  },
+  computed: {
+    currentMonth() {
+      return this.currentDate.toLocaleString('default', { month: 'long' });
+    },
+    weekDates() {
+      const startOfWeek = this.getStartOfWeek(this.currentDate);
+      return Array.from({ length: 7 }, (_, i) => {
+        const date = new Date(startOfWeek);
+        date.setDate(startOfWeek.getDate() + i);
+        return date;
+      });
+    },
+  },
+  mounted() {
+    this.fetchClasses();
+  },
+  methods: {
+    fetchClasses() {
+      ClassScheduleService.getClassSchedule()
+        .then((response) => {
+          this.classes = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
         });
-      },
     },
-    mounted() {
-      this.fetchClasses();
+    getStartOfWeek(date) {
+      const day = date.getDay();
+      const diff = date.getDate() - day;
+      return new Date(date.setDate(diff));
     },
-    methods: {
-      fetchClasses() {
-        ClassScheduleService.getClassSchedule()
-          .then((response) => {
-            this.classes = response.data;
-            console.log(this.classes);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      },
-      getStartOfWeek(date) {
-        const day = date.getDay();
-        const diff = date.getDate() - day;
-        return new Date(date.setDate(diff));
-      },
-      isToday(date) {
-        const today = new Date();
-        return (
-          today.getFullYear() === date.getFullYear() &&
-          today.getMonth() === date.getMonth() &&
-          today.getDate() === date.getDate()
-        );
-      },
-      getClassesForDate(date) {
-        const dayOfWeek = date.getDay(); // 0 (Sunday) - 6 (Saturday)
-        const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        const dayKey = dayKeys[dayOfWeek];
+    isToday(date) {
+      const today = new Date();
+      return (
+        today.getFullYear() === date.getFullYear() &&
+        today.getMonth() === date.getMonth() &&
+        today.getDate() === date.getDate()
+      );
+    },
+    getClassesForDate(date) {
+      const dayOfWeek = date.getDay();
+      const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      const dayKey = dayKeys[dayOfWeek];
   
-        return this.classes.filter(classItem => classItem[dayKey]);
-      },
-      prevWeek() {
-        this.currentDate.setDate(this.currentDate.getDate() - 7);
-        this.currentDate = new Date(this.currentDate); // Force reactivity
-      },
-      nextWeek() {
-        this.currentDate.setDate(this.currentDate.getDate() + 7);
-        this.currentDate = new Date(this.currentDate); // Force reactivity
-      },
-      goToToday() {
-        this.currentDate = new Date(); // Reset to today
-      },
-      formatDate(date) {
-        const dayOfWeek = date.toLocaleDateString('default', { weekday: 'short' });
-        const dayOfMonth = date.getDate();
-        return `${dayOfWeek} ${dayOfMonth}`;
-      },
-      // I'll use this to format the date for the server
-      formatDateForServer(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-      },
-
-      classDetails(classItem, date){
-        // console.log("Class Details: " + classItem.className);
-        // console.log("Date: " + this.formatDateForServer(date));
-
-        this.currentClass = {
-          classId: classItem.classId,
-          className: classItem.className,
-          instructorName: classItem.instructorName,
-          description: classItem.description,
-          sessionDate: this.formatDateForServer(date)
-        };
-
-
-        this.selectedClass = {
+      return this.classes.filter(classItem => classItem[dayKey]);
+    },
+    prevWeek() {
+      this.currentDate.setDate(this.currentDate.getDate() - 7);
+      this.currentDate = new Date(this.currentDate);
+    },
+    nextWeek() {
+      this.currentDate.setDate(this.currentDate.getDate() + 7);
+      this.currentDate = new Date(this.currentDate);
+    },
+    goToToday() {
+      this.currentDate = new Date();
+    },
+    formatDate(date) {
+      const dayOfWeek = date.toLocaleDateString('default', { weekday: 'short' });
+      const dayOfMonth = date.getDate();
+      return `${dayOfWeek} ${dayOfMonth}`;
+    },
+    formatDateForServer(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
+    classDetails(classItem, date){
+      this.currentClass = {
+        classId: classItem.classId,
+        className: classItem.className,
+        instructorName: classItem.instructorName,
+        description: classItem.description,
+        sessionDate: this.formatDateForServer(date)
+      };
+      this.selectedClass = {
         className: classItem.className,
         sessionDate: this.formatDateForServer(date)
-        };
-        console.log(this.selectedClass);
-        // ClassRegistrationService.registrationDetails(this.selectedClass.sessionDate, this.selectedClass.className)
-        // .then((response) => {
-        //   this.currentClass = response.data;
-        // })
-      },
-      registerForThisClass(){
-        // console.log("Registering for class: " + this.currentClass.className);
-        // console.log("Date: " + this.currentClass.sessionDate);
-        console.log(this.currentClass.sessionDate);
-        console.log(this.currentClass.classId);
-        ClassRegistrationService.registerForClass(this.currentClass)
+      };
+      this.isRegistrationVisible = true; // Show registration panel
+    },
+    registerForThisClass(){
+      ClassRegistrationService.registerForClass(this.currentClass)
         .then(() => {
           console.log("Registered for class");
+          this.isRegistrationVisible = false; // Hide registration panel after registering
         })
         .catch((error) => {
           console.log(error);
         });
-      }
     },
-  };
-  </script>
+    cancelRegistration() {
+      this.isRegistrationVisible = false; // Hide registration panel on cancel
+    }
+  },
+};
+</script>
+
 
 <style>
 /* Global styles */
@@ -323,4 +321,51 @@ th, td {
   background-color: #e0e0e0; /* Optional: Change background color on hover */
   cursor: pointer;
 }
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s ease;
+}
+.slide-enter {
+  transform: translateX(100%); /* Starts outside the view */
+}
+.slide-leave-to {
+  transform: translateX(100%); /* Ends outside the view */
+}
+
+/* Registration form */
+/* Transition effects for registration panel */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
+.registration {
+  position: absolute; /* Ensure it pops up relative to the container */
+  top: 0;
+  right: 0;
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Make sure it is above other content */
+}
+
+.registration h2, .registration h3, .registration p {
+  margin-bottom: 10px;
+}
+
+.registration button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.registration button:hover {
+  opacity: 0.8;
+}
+
 </style>

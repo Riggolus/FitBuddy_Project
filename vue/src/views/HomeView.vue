@@ -1,52 +1,47 @@
 <template>
   <div id="homeNav">
-      <!-- Existing buttons -->
-      <button id="accountProfile" class="button-link" @click="toAccount">
-        <i class="fas fa-user"></i> Profile
-      </button>      
-      <button id="analytics" class="button-link" @click="toAnalytics">
-        <i class="fas fa-chart-line"></i> Analytics/History
-      </button>
-      <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">
-        <i class="fas fa-dumbbell"></i> Check In</button>
-      <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
-        <i class="fas fa-sign-out-alt"></i> Check Out
-      </button>   
-      <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">
-        <i class="fas fa-user-plus"></i> Add Employee</router-link></button>
-      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">
-        <i class="fa-solid fa-address-book"></i> Members</router-link></button>
-      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">
-        <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
-      </button>
-    </div>
+    <!-- Existing buttons -->
+    <button id="accountProfile" class="button-link" @click="toAccount">
+      <i class="fas fa-user"></i> Profile
+    </button>      
+    <button id="analytics" class="button-link" @click="toAnalytics">
+      <i class="fas fa-chart-line"></i> Analytics/History
+    </button>
+    <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">
+      <i class="fas fa-dumbbell"></i> Check In</button>
+    <button id="back-to-workout" class="button-link" @click="backToTraining" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
+      Continue Training</button>
+    <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
+      <i class="fas fa-sign-out-alt"></i> Check Out
+    </button>   
+    <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">
+      <i class="fas fa-user-plus"></i> Add Employee</router-link></button>
+    <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">
+      <i class="fa-solid fa-address-book"></i> Members</router-link></button>
+    <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">
+      <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
+    </button>
+  </div>
   <div class="container">
-    
-
     <div class="home">
       <h1>Welcome {{ user.username }}</h1>
       <div class="calendar-container">
         <class-schedule/>
-        <button v-if="isAdminOrEmployee" class="toggle-form-btn" @click="toggleForm">
+        <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
           {{ showForm ? 'Cancel' : 'Add New Class' }}
         </button>
-        <transition name="slide">
-          <create-class v-if="showForm" @classCreated="addClass" />
-        </transition>
+        <div :class="['create-class', showForm ? 'show' : 'hide']">
+          <create-class @classCreated="addClass" />
+        </div>
       </div>
-    </div>
-    <div>
-      <!-- <class-registration/> -->
     </div>
   </div>
 </template>
-
 
 <script>
 import CheckInCheckOutService from '../services/CheckInCheckOutService';
 import ClassSchedule from '../components/ClassSchedule.vue';
 import CreateClass from '../components/CreateClass.vue';
-
 
 export default {
   components: {
@@ -89,6 +84,9 @@ export default {
           console.log(error);
         });
     },
+    backToTraining() {
+      this.$router.push({ name: 'workout', params: { username: this.user.username } });
+    },
     checkUserOut() {
       CheckInCheckOutService.checkOut()
         .then(() => {
@@ -129,6 +127,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .container {
   display: grid;
@@ -160,7 +159,7 @@ export default {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0rem 2rem;
   color: #134B70;
-  position: relative; /* Ensure the button positioning is relative to this container */
+  position: relative;
 }
 
 .home > h1 {
@@ -197,7 +196,34 @@ export default {
 }
 
 .calendar-container {
-  position: relative; /* Container for positioning the button and form */
+  position: relative;
+}
+
+/* Create Class Form Styling */
+.create-class {
+  position: absolute;
+  top: 20px; /* Adjust based on the placement you need */
+  right: -320px; /* Position it off-screen initially */
+  width: 300px; /* Adjust width as needed */
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Ensure it appears above other elements */
+  transition: right 0.3s ease, opacity 0.3s ease;
+  opacity: 0; /* Start as invisible */
+}
+
+/* Show the form */
+.create-class.show {
+  right: 20px; /* Move to visible position */
+  opacity: 1; /* Make visible */
+}
+
+/* Hide the form */
+.create-class.hide {
+  right: -320px; /* Move off-screen */
+  opacity: 0; /* Make invisible */
 }
 
 .toggle-form-btn {
@@ -223,28 +249,5 @@ export default {
 
 .toggle-form-btn.cancel:hover {
   background-color: darkred;
-}
-
-/* Sliding effect for the form */
-.slide-enter-active, .slide-leave-active {
-  transition: transform 0.3s ease;
-}
-
-.slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
-  transform: translateX(100%);
-}
-
-/* Create Class Form Styling */
-.create-class {
-  position: absolute;
-  top: 20px; /* Adjust based on the placement you need */
-  right: 20px; /* Position it to the right side of the calendar */
-  width: 300px; /* Adjust width as needed */
-  background: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* Ensure it appears above other elements */
-  transform: translateX(100%); /* Start off-screen */
 }
 </style>
