@@ -13,7 +13,6 @@
             <p class="name">{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
             <p class="email">Email: {{ userAccount.email }}</p>
             <p>{{ userAccount.profile }}</p>
-            <p>Goals: {{ userAccount.goals }}</p>
           </div>
         </div>
       </div>
