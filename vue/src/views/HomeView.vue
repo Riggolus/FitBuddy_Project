@@ -29,12 +29,11 @@
       <div class="content">
         <div class="calendar-container">
           <class-schedule/>
-          <div class="side-content">
+        </div>
+        <div class="side-content">
           <current-workout/>
           <achievements/>
         </div>
-        </div>
-      
       </div>
 
       <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
@@ -209,9 +208,7 @@ export default {
 }
 
 .calendar-container {
-  display: flex;
-  justify-content: stretch;
-
+  position: relative;
 }
 
 /* Create Class Form Styling */
