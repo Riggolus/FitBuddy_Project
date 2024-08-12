@@ -1,5 +1,6 @@
 <template>
     <div>
+      <canvas id="line=chart"></canvas>
       <line-chart :data="chartData" :options="chartOptions" />
     </div>
   </template>
