@@ -32,6 +32,24 @@
                   Complete
                 </button>
                 <span v-else class="completed-label">Completed</span>
+                <div class="remove-button-container">
+                  <div 
+                    class="remove-button-circle" 
+                    @click="toggleRemove(achievement.goalId)"
+                  >
+                    &times;
+                  </div>
+                  <transition name="expand">
+                    <div v-if="expandedGoal === achievement.goalId" class="remove-confirm">
+                      <button 
+                        @click="removeGoal(achievement.goalId)" 
+                        class="confirm-remove-button"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </transition>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -71,7 +89,8 @@
           completed: false
         },
         goalDescription: '',
-        completed: ''
+        completed: '',
+        expandedGoal: null
       };
     },
     computed: {
@@ -122,6 +141,19 @@
             console.log(error);
           });
       },
+      toggleRemove(goalId) {
+        this.expandedGoal = this.expandedGoal === goalId ? null : goalId;
+      },
+      removeGoal(goalId) {
+        AchievementsService.deleteAchievement(goalId)
+          .then(() => {
+            console.log("Achievement Removed");
+            this.getAchievements();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
       showConfetti() {
         confetti({
           particleCount: 150,
@@ -135,6 +167,7 @@
     }
   };
   </script>
+  
   
   <style scoped>
   .achievements-container {
@@ -237,5 +270,61 @@
   .submit-button:hover {
     background-color: #0e3a57;
   }
+
+  .remove-button-container {
+  display: inline-block;
+  position: relative;
+  margin-left: 10px;
+}
+
+.remove-button-circle {
+  width: 24px;
+  height: 24px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.remove-button-circle:hover {
+  background-color: darkred;
+}
+
+.expand-enter-active, .expand-leave-active {
+  transition: all 0.3s ease;
+}
+
+.expand-enter, .expand-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.remove-confirm {
+  position: absolute;
+  top: 30px;
+  left: -10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.confirm-remove-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-remove-button:hover {
+  background-color: darkred;
+}
   </style>
   
