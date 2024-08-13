@@ -7,7 +7,7 @@
         <table id="equipment-usage">
             <thead>
                 <tr>
-                    <th>Kettlebell Weight</th>
+                    <th>Kettlebell Weights</th>
                     <th>Usage</th>        
                 </tr>
             </thead>
