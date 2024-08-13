@@ -117,7 +117,7 @@ select {
 
 /* Style for the table */
 table {
-    width: 100%;
+    width: 33vw;
     border-collapse: collapse;
     margin-top: 20px;
 }
