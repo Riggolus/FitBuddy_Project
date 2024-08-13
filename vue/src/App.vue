@@ -10,7 +10,7 @@
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">
           <i class="fas fa-sign-out-alt"></i> Logout
         </router-link>
-        
+       
         </div>
     </div>
     <div class="container-login100">
@@ -18,35 +18,50 @@
           <router-view />
       </div>
     </div>
-    
+    <footer>
+      <p>Developed By Miles Nowicki, Nikolas Knappen, Tim Malloy, Zakk Bonham</p>
+    </footer>
   </main>
 </template>
 
+
 <style scoped>
-.container-login100 {
-  width: 100%;
+html, body {
   height: 100%;
+  margin: 0;
+}
+
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of the viewport */
+}
+
+
+.container-login100 {
+  flex: 1; /* Allow the content to grow and push the footer down */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 15px;
   background-color: #F7FBFC;
-  /* overflow-x: hidden; */
 }
+
 
 .title-nav {
   display: flex;
-  position: relative;
   align-items: center;
   background-color: #F7FBFC;
   padding: 1rem;
   width: 100%;
 }
 
+
 #title {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 2.5rem; /* Increase the size */
+  font-size: 2.5rem;
   font-weight: bold;
   color: #134B70;
   flex: 1;
@@ -55,11 +70,12 @@
 
 #nav {
   display: flex;
-  justify-content: center; /* Center buttons horizontally */
+  justify-content: center;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%); /* Center vertically with the title */
+  transform: translateX(-50%);
 }
+
 
 #capstone-app > img {
   display: flex;
@@ -67,9 +83,10 @@
   border-radius: 10px;
 }
 
+
 .button-link {
   display: inline-block;
-  padding: 8px 12px; /* Increase padding for better appearance */
+  padding: 8px 12px;
   background-color: #007bff;
   color: white;
   text-align: center;
@@ -79,18 +96,37 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+
 .button-link:hover {
   background-color: #0056b3;
   border-color: #0056b3;
 }
+
 
 .button-link:active {
   background-color: #00408d;
   border-color: #00408d;
 }
 
+
 #logo {
   width: 100px;
   height: 100px;
+}
+
+
+footer {
+  background-color: #134B70;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+
+footer p {
+  margin: 0;
 }
 </style>
