@@ -135,19 +135,9 @@ footer p {
 }
 @media (max-width: 600px) {
   .title-nav {
-    display: grid;
-    grid-template-areas: "logo"
-                         "nav"; 
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-flow: column-reverse nowrap;
   }
-  #logo {
-    grid-area: logo;
-    margin: auto;
-  }
-  #nav {
-    grid-area: nav;
-    margin: auto;
-  }
-  
+
 }
 </style>
