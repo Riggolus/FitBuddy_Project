@@ -1,6 +1,6 @@
 <template>
   <div id="register" class="text-center">
-    <img src="src\assets\imgs\istockphoto-1448303096-612x612.jpg" alt="workout"/>
+    <img src="src\assets\imgs\register.jpg" alt="workout"/>
     <form v-on:submit.prevent="register" class="register100-form">
       <h1>Register</h1>
       <div role="alert" v-if="registrationErrors">
@@ -124,7 +124,8 @@ p {
     margin: auto;
     border-radius: 10px;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-
+    width: 480px;
+    height: 360px;
 }
 
 .button-link {

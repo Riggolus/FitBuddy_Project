@@ -174,6 +174,10 @@ h1 {
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 1rem;
+    max-width: 400px; /* Set a maximum width */
+    width: 100%; /* Ensure the profile box takes full width within its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    word-wrap: break-word; /* Wrap long words if necessary */
 }
 
 #profileNav {
