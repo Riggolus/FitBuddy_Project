@@ -147,15 +147,27 @@ export default {
 </script>
 
 <style scoped>
-.content {
-  display: grid;
-  grid-template-areas: "calendar-container upcoming-class-container",
-                       "achievements workout-details";
-  grid-template-columns: repeat(2, 1fr);
+/* .content {
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   width: 100%;
-  max-width: 1000px; /* Adjust max-width as needed */
+  max-width: 1000px; 
   margin: 0 auto;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.calendar-container {
+  flex: 0 1 50%; 
+  margin-top: 0;
+  
+}
+
+.upcoming-class-container,
+.current-workout,
+.achievements {
+  flex: 1 1 calc(50% - 20px); 
 }
 
 .current-workout,
@@ -167,34 +179,17 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.calendar-container {
-  grid-area: calendar-container;
-  grid-column: span 2;
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
-}
 .container {
-  display: grid;
-  grid-template-areas: 
-      "homeNav homeNav"
-      "home home";
-  grid-template-columns: 50% 50%;
-  width: 1170px;
-  background: #B9D7EA;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-#homeNav {
-  grid-area: homeNav;
   display: flex;
-  justify-content: space-evenly;
-  padding: 1rem;
+  flex-direction: column;
+  background: #B9D7EA;
+  overflow: hidden;
+  width: 1170px;
+  margin: 0 auto;
+  justify-content: flex-start;
 }
 
 .home {
-  grid-area: home;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -203,6 +198,56 @@ export default {
   padding: 0rem 2rem;
   color: #134B70;
   position: relative;
+  flex: 1;
+} */
+ 
+
+ .container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #134B70;
+  background: #B9D7EA;
+ }
+
+ 
+ .content {
+  display:grid;
+  grid-template-areas:  ". welcome ."
+                        "calendar-container  calendar-container upcoming-class-container" 
+                        "current-workout achievements upcoming-class-container";
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 10px;
+  gap: 10px;
+ }
+ .welcome {
+  grid-area: welcome;
+  text-align: center;
+  font-size: 3rem;
+  margin: 10px;
+}
+
+.calendar-container {
+  grid-area: calendar-container;
+}
+
+.upcoming-class-container {
+  grid-area: upcoming-class-container;
+}
+
+.current-workout {
+  grid-area: current-workout;
+}
+
+.achievements {
+  grid-area: achievements;
+}
+
+
+
+#homeNav {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+  background: #B9D7EA;
 }
 
 .home > h1 {
@@ -238,11 +283,6 @@ export default {
   border-color: #00408d;
 }
 
-.calendar-container {
-  position: relative;
-}
-
-/* Create Class Form Styling */
 .create-class {
   position: absolute;
   top: 20px; /* Adjust based on the placement you need */
@@ -257,22 +297,17 @@ export default {
   opacity: 0; /* Start as invisible */
 }
 
-/* Show the form */
 .create-class.show {
   right: 20px; /* Move to visible position */
   opacity: 1; /* Make visible */
 }
 
-/* Hide the form */
 .create-class.hide {
   right: -320px; /* Move off-screen */
   opacity: 0; /* Make invisible */
 }
 
 .toggle-form-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   background-color: green;
   color: white;
   border: none;
@@ -293,5 +328,6 @@ export default {
 .toggle-form-btn.cancel:hover {
   background-color: darkred;
 }
+
 </style>
 

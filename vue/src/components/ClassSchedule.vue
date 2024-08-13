@@ -46,15 +46,16 @@
 
     <!-- Registration Panel with Transition -->
     <transition name="slide-fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-      <div class="registration" v-show="isRegistrationVisible">
-        <h2>{{ currentClass.className }}</h2>
-        <h3>Instructor: {{ currentClass.instructorName }}</h3>
-        <p>{{ currentClass.description }}</p>
-        
-        <button @click="registerForThisClass">Register</button> 
-        <button @click="cancelRegistration">Cancel</button>
-      </div>
-    </transition>
+  <div class="registration" :class="{ show: isRegistrationVisible }">
+    <h2>{{ currentClass.className }}</h2>
+    <h3>Instructor: {{ currentClass.instructorName }}</h3>
+    <p>{{ currentClass.description }}</p>
+    
+    <button class="register-btn" @click="registerForThisClass">Register</button>
+    <button class="cancel-btn" @click="cancelRegistration">Cancel</button>
+  </div>
+</transition>
+
   </div>
 </template>
 
@@ -112,6 +113,11 @@ export default {
           console.log(e);
         });
     },
+    hasClassPassed(date) {
+      const now = new Date();
+      return new Date(date) < now; // Checks if the class date is before the current date
+    },
+    
     getStartOfWeek(date) {
       const day = date.getDay();
       const diff = date.getDate() - day;
@@ -233,6 +239,7 @@ body {
   padding: 30px 20px;
   border-radius: 10px;
   background-color: white;
+  
 }
 
 /* Calendar Heading */
@@ -361,15 +368,66 @@ th, td {
 }
 
 /* Registration form */
+/* Registration form */
 .registration {
-  position: absolute; /* Ensure it pops up relative to the container */
-  top: 0;
-  right: 0;
+  position: fixed; /* Make sure it overlays everything */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the form */
   width: 300px;
   padding: 20px;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* Make sure it is above other content */
+  z-index: 1000; /* Make sure it is above the calendar and other content */
+  display: none; /* Initially hidden */
 }
+
+/* Show the registration form when isRegistrationVisible is true */
+.registration.show {
+  display: block; /* Show the registration form */
+}
+
+/* Transition effects for sliding registration panel */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+/* Buttons */
+button {
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  margin-right: 10px; /* Space between buttons */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.9; /* Slightly transparent on hover */
+}
+
+/* Register Button */
+button.register-btn {
+  background-color: #28a745; /* Green */
+}
+
+button.register-btn:hover {
+  background-color: #218838; /* Darker green */
+}
+
+/* Cancel Button */
+button.cancel-btn {
+  background-color: #dc3545; /* Red */
+}
+
+button.cancel-btn:hover {
+  background-color: #c82333; /* Darker red */
+}
+
 </style>
