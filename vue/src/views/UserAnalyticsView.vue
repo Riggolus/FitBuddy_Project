@@ -1,26 +1,29 @@
 <template>
-    <div>
-        <h2> Metrics</h2>
-        <h3>Workout History</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date of Workout</th>
-                    <th>Calories</th>
-                    <th>Duration</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(metric, index) in groupedMetrics" :key="index" @click="selectMetric(metric)">
-                    <td>{{ metric.date }} </td>
-                    <td>{{ calsPerWorkout(metric.date) }}cals</td>
-                    <td>{{ formatDuration(metric.durationInMinutes) }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div v-show="showWorkout">
+    <div class="container">
+        <div class="table-container">
+            <h2>Metrics</h2>
+            <h3>Workout History</h3>
             <table>
+                <thead>
+                    <tr>
+                        <th>Date of Workout</th>
+                        <th>Calories</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(metric, index) in groupedMetrics" :key="index" @click="selectMetric(metric)">
+                        <td>{{ metric.date }}</td>
+                        <td>{{ calsPerWorkout(metric.date) }}cals</td>
+                        <td>{{ formatDuration(metric.durationInMinutes) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div v-show="showWorkout" class="table-container">
+            <h3>Workout Details</h3>
+            <table class="workout-table">
                 <thead>
                     <tr>
                         <th>Exercise</th>
@@ -32,16 +35,17 @@
                 </thead>
                 <tbody>
                     <tr v-for="workout in workouts" :key="workout.exerciseName">
-                        <td>{{workout.exerciseName }}</td>
-                        <td>{{workout.sets}}</td>
-                        <td>{{workout.reps}}</td>
-                        <td>{{workout.weight}}</td>
-                        <td>{{workout.duration}}</td>
+                        <td>{{ workout.exerciseName }}</td>
+                        <td>{{ workout.sets }}</td>
+                        <td>{{ workout.reps }}</td>
+                        <td>{{ workout.weight }}</td>
+                        <td>{{ workout.duration }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div>
+
+        <div class="table-container">
             <h3>Stats</h3>
             <table>
                 <thead>
@@ -60,9 +64,9 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </template>
+
 
 <script>
 import WorkoutMetricsService from '../services/WorkoutMetricsService';
@@ -193,3 +197,91 @@ export default {
 }
 
 </script>
+<style>
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background-color: lightgray;
+}
+
+.container {
+  width: 100%;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 900px;
+  padding: 30px 20px;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+h2, h3 {
+  color: black;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+thead th {
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+tbody tr {
+  transition: all 0.2s ease-in-out;
+}
+
+tbody td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+tbody tr:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.table-container .workout-table th, .table-container .workout-table td {
+  text-align: center;
+}
+
+.table-container .workout-table .exercise-item {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.table-container .workout-table .exercise-item:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+</style>

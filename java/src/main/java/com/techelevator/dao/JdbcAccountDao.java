@@ -33,12 +33,12 @@ public class JdbcAccountDao implements AccountDao{
 //       LocalDateTime date = LocalDateTime.now();
 
         String sql = "INSERT INTO account (user_id, username, email, first_name, last_name, " +
-                "profile_picture, profile, goals) " +
-                " values (?,?,?,?,?,?,?,?)";
+                "profile_picture, profile) " +
+                " values (?,?,?,?,?,?,?)";
         try {
              jdbcTemplate.update(sql, user.getId(), user.getUsername(),
                     accountDto.getEmail(), accountDto.getFirstName(), accountDto.getLastName(),
-                    accountDto.getProfilePicture(), accountDto.getProfile(), accountDto.getGoals());
+                    accountDto.getProfilePicture(), accountDto.getProfile());
 //            if (accountDto != null) {
 //                sql = "INSERT INTO account (accountId) VALUES (?)";
 //                jdbcTemplate.update(sql, newAccountId);
