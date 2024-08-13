@@ -1,5 +1,6 @@
 <template>
-  <div id="homeNav">
+    <div id="border">
+      <div id="homeNav">
     <!-- Existing buttons -->
     <button id="accountProfile" class="button-link" @click="toAccount">
       <i class="fas fa-user"></i> Profile
@@ -23,32 +24,35 @@
     </button>
   </div>
   
-  <div class="container">
-    <div class="home">
-      <h1 class="welcome">Welcome {{ account.firstName }}</h1>
-      <div class="content">
-        <div class="calendar-container">
-          <class-schedule />
-        </div>
-        <div class="upcoming-class-container">
-          <user-upcoming-class />
-        </div>
-          <div class="current-workout">
-            <current-workout />
+    <div class="container">
+      <div class="home">
+        <h1 class="welcome">Welcome {{ account.firstName }}</h1>
+        <div class="content">
+          <div class="calendar-container">
+            <class-schedule />
           </div>
-          <div class="achievements">
-            <achievements />
+          <div class="upcoming-class-container">
+            <user-upcoming-class />
           </div>
-      </div>
+            <div class="current-workout">
+              <current-workout />
+            </div>
+            <div class="achievements">
+              <achievements />
+            </div>
+        </div>
 
-      <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
-        {{ showForm ? 'Cancel' : 'Add New Class' }}
-      </button>
-      <div :class="['create-class', showForm ? 'show' : 'hide']">
-        <create-class @classCreated="addClass" />
+        <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
+          {{ showForm ? 'Cancel' : 'Add New Class' }}
+        </button>
+        <div :class="['create-class', showForm ? 'show' : 'hide']">
+          <create-class @classCreated="addClass" />
+        </div>
       </div>
     </div>
-  </div>
+    </div>
+
+  
 </template>
 
 <script>
@@ -157,10 +161,18 @@ export default {
 
 
 <style scoped>
+#border {
+  border: #D6E6F2 solid 5px;
+  background-color: #B9D7EA;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
  .container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #134B70;
   background: #B9D7EA;
+  
  }
 
  
