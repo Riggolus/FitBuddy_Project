@@ -35,7 +35,7 @@
                   :key="classIndex" 
                   @click="classDetails(classItem, date)"
                 >
-                  {{ classItem.className }} from {{ classItem.startTime }} till {{ classItem.endTime }}
+                  {{ classItem.className }} from {{ formatTime(classItem.startTime) }} till {{ formatTime(classItem.endTime) }}
                 </div>
               </div>
             </td>
@@ -160,6 +160,14 @@ export default {
       const day = String(date.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
     },
+    formatTime(time) {
+      let [hours, minutes] = time.split(':');
+      hours = parseInt(hours);
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      return `${hours}:${minutes} ${ampm}`;
+    },
+    
     classDetails(classItem, date){
       this.currentClass = {
         classId: classItem.classId,

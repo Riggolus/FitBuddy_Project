@@ -32,7 +32,8 @@ public class JdbcClassScheduleDao implements ClassScheduleDao {
                 "start_time, end_time, description, is_monday, is_tuesday, is_wednesday ,is_thursday,\n" +
                 "is_friday, is_saturday, is_sunday, recurrence_end, created_by, cs.created_at, cs.class_id\n" +
                 "FROM class_schedule cs\n" +
-                "JOIN account a ON cs.instructor_id = a.user_id;";
+                "JOIN account a ON cs.instructor_id = a.user_id " +
+                "ORDER BY start_time;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
