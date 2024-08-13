@@ -23,10 +23,10 @@ export default {
             id: this.$route.params.id,
             workout: {
                 exerciseId: this.$route.params.id,
-                sets: 0,
-                reps: 0,
-                weight: 0,
-                duration: 0
+                sets: null,
+                reps: null,
+                weight: null,
+                duration: null
             },
             
         };
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-#details {
+/* #details {
     display: grid;
     grid-template-areas: 
         "h2 exercise-form"
@@ -64,7 +64,7 @@ export default {
     border: #D6E6F2 solid 5px;
     border-radius: 10px;
     overflow: hidden;
-    /* padding: 77px 55px 33px 55px; */
+    padding: 77px 55px 33px 55px;
     padding: 55px;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -90,7 +90,43 @@ p {
 
 exercise-form {
     grid-area: exercise-form;
-    /* display: flex; */
-    /* flex-direction: column; */
+    display: flex;
+    flex-direction: column;
+} */
+#details {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #B9D7EA;
+    border: #D6E6F2 solid 5px;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #134B70;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+img {
+    border-radius: 8px;
+    border: 2px solid #007bff; /* Border color to match the theme */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+    object-fit: cover; /* Ensure image fits within the given dimensions */
+}
+
+p {
+    color: #666;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 1rem 0;
+}
+
+#exercise-form {
+    margin-top: 2rem;
 }
 </style>

@@ -34,7 +34,6 @@ export default{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
 }
 
 #secondary {
@@ -44,7 +43,6 @@ export default{
     border: #D6E6F2 solid 5px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 50%;
 }
 
 /* Styling for the heading */

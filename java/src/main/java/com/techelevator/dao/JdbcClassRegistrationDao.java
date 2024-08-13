@@ -91,6 +91,7 @@ public class JdbcClassRegistrationDao implements ClassRegistrationDao{
                 "                    account a ON cs.instructor_id = a.user_id\n" +
                 "                    WHERE\n" +
                 "\t\t\t\t    cr.user_id = ?\n" +
+                "            AND o.session_date >= CURRENT_TIMESTAMP\n " +
                 "                    GROUP BY\n" +
                 "                    o.session_date, o.total_capacity, cs.class_name, cs.description, cs.class_id, a.first_name, a.last_name, cr.user_id, cr.registration_date;";
         try{
