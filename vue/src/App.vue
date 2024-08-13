@@ -1,21 +1,22 @@
 <template>
   <main>
     <div class="title-nav">
-      <img src="image1.png" alt="logo" id="logo">
-      <h1 id="title">FitBuddy</h1>
-        <div id="nav">
-          <router-link v-bind:to="{ name: 'home' }" class="button-link">
+      <div class="logo">
+        <img src="image1.png" alt="logo" id="logo">
+        <h1 id="title">FitBuddy</h1>
+      </div>
+      <div id="nav">
+        <router-link v-bind:to="{ name: 'home' }" class="button-link">
           <i class="fas fa-home"></i> Home
         </router-link>&nbsp; &nbsp;
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">
           <i class="fas fa-sign-out-alt"></i> Logout
         </router-link>
-       
-        </div>
+      </div>
     </div>
     <div class="container-login100">
       <div id="capstone-app">
-          <router-view />
+        <router-view />
       </div>
     </div>
     <footer>
@@ -24,23 +25,20 @@
   </main>
 </template>
 
-
 <style scoped>
 html, body {
   height: 100%;
   margin: 0;
 }
 
-
 main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Full height of the viewport */
+  min-height: 100vh;
 }
 
-
 .container-login100 {
-  flex: 1; /* Allow the content to grow and push the footer down */
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -49,40 +47,37 @@ main {
   background-color: #F7FBFC;
 }
 
-
 .title-nav {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: #F7FBFC;
   padding: 1rem;
   width: 100%;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+}
 
 #title {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2.5rem;
   font-weight: bold;
   color: #134B70;
-  flex: 1;
 }
-
 
 #nav {
   display: flex;
-  justify-content: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  align-items: center;
 }
-
 
 #capstone-app > img {
   display: flex;
   justify-content: center;
   border-radius: 10px;
 }
-
 
 .button-link {
   display: inline-block;
@@ -96,24 +91,20 @@ main {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
 .button-link:hover {
   background-color: #0056b3;
   border-color: #0056b3;
 }
-
 
 .button-link:active {
   background-color: #00408d;
   border-color: #00408d;
 }
 
-
 #logo {
   width: 100px;
   height: 100px;
 }
-
 
 footer {
   background-color: #134B70;
@@ -122,11 +113,31 @@ footer {
   padding: 1rem;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: auto; /* Push footer to the bottom */
+  margin-top: auto;
 }
-
 
 footer p {
   margin: 0;
+}
+
+@media (max-width: 600px) {
+  .title-nav {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #title {
+    font-size: 1.5rem;
+  }
+
+  #logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  #nav {
+    justify-content: flex-end;
+  }
 }
 </style>
