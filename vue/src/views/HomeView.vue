@@ -146,41 +146,65 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .content {
   display: grid;
-  grid-template-areas: "calendar-container upcoming-class-container",
-                       "achievements workout-details";
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 
+    'calendar-container upcoming-class-container'
+    'workout-details workout-details'
+    'achievements achievements';
+  grid-template-columns: 1fr 1fr; /* Use fractions to make sure it adapts to the page width */
+  grid-template-rows: auto auto auto; /* Auto to adjust row height based on content */
+  max-width: 100vw;
+  max-height: 100vh;
+  /* overflow: hidden; */
   gap: 20px;
-  width: 100%;
-  max-width: 1000px; /* Adjust max-width as needed */
-  margin: 0 auto;
-}
-
-.current-workout,
-.achievements {
-  width: 100%;
-  padding: 10px;
-  background-color: #f0f4f8;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px; /* Optional: add padding to avoid content touching the edges */
 }
 
 .calendar-container {
   grid-area: calendar-container;
-  grid-column: span 2;
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
+  background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.upcoming-class-container {
+  grid-area: upcoming-class-container;
+  background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.current-workout {
+  grid-area: workout-details;
+  background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.achievements {
+  grid-area: achievements;
+  background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjustments to the container layout */
 .container {
   display: grid;
   grid-template-areas: 
-      "homeNav homeNav"
-      "home home";
-  grid-template-columns: 50% 50%;
-  width: 1170px;
+      "homeNav"
+      "home";
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
   background: #B9D7EA;
   border-radius: 10px;
   overflow: hidden;
@@ -238,35 +262,29 @@ export default {
   border-color: #00408d;
 }
 
-.calendar-container {
-  position: relative;
-}
-
 /* Create Class Form Styling */
 .create-class {
   position: absolute;
-  top: 20px; /* Adjust based on the placement you need */
+  top: 20px;
   right: -320px; /* Position it off-screen initially */
-  width: 300px; /* Adjust width as needed */
+  width: 300px;
   background: #fff;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* Ensure it appears above other elements */
+  z-index: 10;
   transition: right 0.3s ease, opacity 0.3s ease;
-  opacity: 0; /* Start as invisible */
+  opacity: 0;
 }
 
-/* Show the form */
 .create-class.show {
-  right: 20px; /* Move to visible position */
-  opacity: 1; /* Make visible */
+  right: 20px;
+  opacity: 1;
 }
 
-/* Hide the form */
 .create-class.hide {
-  right: -320px; /* Move off-screen */
-  opacity: 0; /* Make invisible */
+  right: -320px;
+  opacity: 0;
 }
 
 .toggle-form-btn {
