@@ -146,6 +146,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 /* .content {
   display: flex;
@@ -170,11 +171,18 @@ export default {
   flex: 1 1 calc(50% - 20px); 
 }
 
-.current-workout,
-.achievements {
-  width: 100%;
-  padding: 10px;
+.calendar-container {
+  grid-area: calendar-container;
   background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-class-container {
+  grid-area: upcoming-class-container;
+  background-color: #f0f4f8;
+  padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -285,26 +293,26 @@ export default {
 
 .create-class {
   position: absolute;
-  top: 20px; /* Adjust based on the placement you need */
+  top: 20px;
   right: -320px; /* Position it off-screen initially */
-  width: 300px; /* Adjust width as needed */
+  width: 300px;
   background: #fff;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* Ensure it appears above other elements */
+  z-index: 10;
   transition: right 0.3s ease, opacity 0.3s ease;
-  opacity: 0; /* Start as invisible */
+  opacity: 0;
 }
 
 .create-class.show {
-  right: 20px; /* Move to visible position */
-  opacity: 1; /* Make visible */
+  right: 20px;
+  opacity: 1;
 }
 
 .create-class.hide {
-  right: -320px; /* Move off-screen */
-  opacity: 0; /* Make invisible */
+  right: -320px;
+  opacity: 0;
 }
 
 .toggle-form-btn {
