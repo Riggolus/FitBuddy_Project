@@ -221,4 +221,59 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
+@media (max-width: 768px) {
+    .profileContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profilePictureContainer {
+        width: 120px;
+        height: 120px;
+    }
+
+    #pfp {
+        width: 110px;
+        height: 110px;
+    }
+
+    .metrics-achievements {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .metrics-achievements > * {
+        width: 100%; /* Full width for each component */
+    }
+}
+
+@media (max-width: 480px) {
+    .profile {
+        padding: 1rem; /* Reduce padding on very small screens */
+    }
+
+    .profileContent {
+        gap: 1rem; /* Reduce gap between profile picture and details */
+    }
+
+    .profilePictureContainer {
+        width: 100px;
+        height: 100px;
+    }
+
+    #pfp {
+        width: 90px;
+        height: 90px;
+    }
+
+    #profile {
+        padding: 0.5rem;
+        max-width: 100%; /* Ensure it fits within the viewport */
+    }
+
+    #editAccount {
+        padding: 8px 16px;
+    }
+}
 </style>
