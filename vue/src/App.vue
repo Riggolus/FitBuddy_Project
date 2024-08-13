@@ -5,8 +5,8 @@
         <img src="image1.png" alt="logo" id="logo">
         <!-- <h1 id="title">FitBuddy</h1> -->
       </div>
-        <div id="nav">
-          <router-link v-bind:to="{ name: 'home' }" class="button-link">
+        <div v-if="hideHomeButton" id="nav">
+          <router-link  v-bind:to="{ name: 'home' }" class="button-link">
           <i class="fas fa-home"></i> Home
         </router-link>&nbsp; &nbsp;
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">
@@ -26,6 +26,18 @@
   </main>
 </template>
 
+<script>
+
+export default{
+  computed: {
+    hideHomeButton(){
+      return this.$route.name !== 'createAccount';
+    }
+  }
+}
+
+
+</script>
 
 <style scoped>
 html, body {
