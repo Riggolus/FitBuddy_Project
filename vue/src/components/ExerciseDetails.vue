@@ -1,16 +1,18 @@
 <template>
     <div id="details">
         <h2>{{exercise.exerciseName}}</h2>
-        <img :src="getGifSrc(id)" alt="exercise.exerciseName" width="200" height="200"> 
-        <p>{{exercise.exerciseDescription}}</p> 
+        <img :src="getGifSrc(id)" alt="exercise.exerciseName" width="200" height="200">
+        <p>{{exercise.exerciseDescription}}</p>
+
 
         <add-exercise-form v-bind:workout="workout" id="exercise-form"/>
     </div>
-    
+   
 </template>
 <script>
 import AddExerciseForm from '../components/AddExerciseForm.vue';
 import ExerciseServices from '../services/ExerciseServices';
+
 
 export default {
     components: {
@@ -28,7 +30,7 @@ export default {
                 weight: null,
                 duration: null
             },
-            
+           
         };
     },
     methods: {
@@ -51,11 +53,12 @@ export default {
 }
 </script>
 
+
 <style scoped>
 /* #details {
     display: grid;
-    grid-template-areas: 
-        "h2 exercise-form"
+    grid-template-areas:
+        "h2 exercise-form"git 
         "img exercise-form"
         "p exercise-form";
     grid-template-columns: 50% 50%;
@@ -71,10 +74,12 @@ export default {
     color: #134B70;
 }
 
+
 h2 {
     grid-area: h2;
     text-align: center;
 }
+
 
 img {
     grid-area: img;
@@ -83,10 +88,12 @@ img {
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
+
 p {
     grid-area: p;
     text-align: center;
 }
+
 
 exercise-form {
     grid-area: exercise-form;
@@ -104,6 +111,7 @@ exercise-form {
     text-align: center;
 }
 
+
 h2 {
     color: #134B70;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -111,13 +119,23 @@ h2 {
     font-size: 2rem;
 }
 
+
 img {
     border-radius: 8px;
     border: 2px solid #007bff; /* Border color to match the theme */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     margin-bottom: 1rem;
     object-fit: cover; /* Ensure image fits within the given dimensions */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+
+
 }
+img:hover {
+    transform: scale(1.1); /* Slightly enlarge the image */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Increase the shadow for a popping effect */
+    z-index: 20; /* Make sure the image pops out above other elements */
+}
+
 
 p {
     color: #666;
@@ -126,7 +144,9 @@ p {
     margin: 1rem 0;
 }
 
+
 #exercise-form {
     margin-top: 2rem;
 }
 </style>
+
