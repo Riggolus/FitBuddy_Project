@@ -1,4 +1,5 @@
 <template>
+    <button id="check-out" v-on:click="checkOut" class="button-link">Complete Workout/check-out</button>
     <current-workout :stats-on="statsOn" id="current-workout"/>
     <div id="exercise-container">
         <h2>Select an Exercise</h2>
@@ -13,7 +14,7 @@
         </div>
     </div>
 </div>
-    <button id="check-out" v-on:click="checkOut" class="button-link">Complete Workout/check-out</button>
+    
     
 </template>
 <script>
@@ -127,6 +128,14 @@ h2 {
     flex-direction: column; /* Stack input field and list vertically */
     gap: 10px; /* Space between input field and list */
 }
+#check-out {
+    margin: 10px;
+    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
 
 .input-container {
     display: flex;
@@ -166,4 +175,6 @@ h2 {
 .button-link:hover {
     background-color: #0056b3; /* Darker button color on hover */
 }
+
+
 </style>

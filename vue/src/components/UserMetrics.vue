@@ -35,7 +35,6 @@
               <th>Sets</th>
               <th>Reps</th>
               <th>Weight</th>
-              <th>Duration</th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +47,7 @@
               <td>{{ workout.sets }}</td>
               <td>{{ workout.reps }}</td>
               <td>{{ workout.weight }} lbs</td>
-              <td>{{ formatDuration(workout.duration) }}</td>
+              
             </tr>
           </tbody>
         </table>

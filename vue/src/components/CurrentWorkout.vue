@@ -8,7 +8,7 @@
             <th class="sets" id="e-sets">Sets</th>
             <th class="reps" id="e-reps">Reps</th>
             <th class="weight" id="e-weight">Weight</th>
-            <th class="time" id="e-time">Duration</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
             <td class="sets">{{ workout.sets }}</td>
             <td class="reps">{{ workout.reps }}</td>
             <td class="weight">{{ workout.weight }}</td>
-            <td class="time">{{ workout.duration }}</td>
+    
           </tr>
         </tbody>
       </table>
