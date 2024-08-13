@@ -25,7 +25,7 @@
   
   <div class="container">
     <div class="home">
-      <h1 class="welcome">Welcome {{ user.username }}</h1>
+      <h1 class="welcome">Welcome {{ account.firstName }}</h1>
       <div class="content">
         <div class="calendar-container">
           <class-schedule />
@@ -58,6 +58,7 @@ import CreateClass from '../components/CreateClass.vue';
 import CurrentWorkout from '../components/CurrentWorkout.vue';
 import Achievements from '../components/Achievements.vue';
 import UserUpcomingClass from '../components/UserUpcomingClass.vue';
+import AccountService from '../services/AccountService';
 
 export default {
   components: {
@@ -74,7 +75,8 @@ export default {
         checkInTime: '',
         checkOutTime: ''
       },
-      showForm: false // State for toggling the CreateClass form
+      showForm: false, // State for toggling the CreateClass form,
+      account : {}
     }
   },
   computed: {
@@ -138,10 +140,17 @@ export default {
     addClass(newClass) {
       // Add the new class to your schedule or wherever necessary
       this.showForm = false; // Hide the form after adding a class
+    }, 
+    getUserFirstName() {
+      AccountService.getMyAccount()
+      .then((response) => {
+        this.account = response.data;
+      })
     }
   },
   created() {
     this.checkStatus();
+    this.getUserFirstName();
   }
 }
 </script>

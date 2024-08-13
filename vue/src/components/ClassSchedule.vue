@@ -179,6 +179,7 @@ export default {
         .then(() => {
           alert("Registered for " + this.selectedClass.className);
           console.log("Registered for class");
+          window.location.reload();
           this.isRegistrationVisible = false; // Hide registration panel after registering
         })
         .catch((error) => {
