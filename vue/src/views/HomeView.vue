@@ -157,68 +157,6 @@ export default {
 
 
 <style scoped>
-/* .content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  width: 100%;
-  max-width: 1000px; 
-  margin: 0 auto;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.calendar-container {
-  flex: 0 1 50%; 
-  margin-top: 0;
-  
-}
-
-.upcoming-class-container,
-.current-workout,
-.achievements {
-  flex: 1 1 calc(50% - 20px); 
-}
-
-.calendar-container {
-  grid-area: calendar-container;
-  background-color: #f0f4f8;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.upcoming-class-container {
-  grid-area: upcoming-class-container;
-  background-color: #f0f4f8;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  background: #B9D7EA;
-  overflow: hidden;
-  width: 1170px;
-  margin: 0 auto;
-  justify-content: flex-start;
-}
-
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0rem 2rem;
-  color: #134B70;
-  position: relative;
-  flex: 1;
-} */
- 
-
  .container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #134B70;
@@ -344,6 +282,60 @@ export default {
 
 .toggle-form-btn.cancel:hover {
   background-color: darkred;
+}
+
+@media (max-width: 768px) {
+  .content {
+    display: grid;
+    grid-template-areas: 
+      "welcome"
+      "calendar-container" 
+      "upcoming-class-container"
+      "current-workout"
+      "achievements";
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .welcome {
+    font-size: 2rem;
+    margin: 5px;
+  }
+
+  .calendar-container,
+  .upcoming-class-container,
+  .current-workout,
+  .achievements {
+    grid-area: auto;
+    margin: 5px 0;
+  }
+
+  #homeNav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button-link {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .create-class {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    box-shadow: none;
+    padding: 10px;
+  }
+
+  .toggle-form-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
 }
 
 </style>
