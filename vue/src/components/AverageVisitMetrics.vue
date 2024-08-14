@@ -4,20 +4,24 @@
         <h3>Average Time Per Workout: {{ formatDuration(this.averageTotalMinutesSpent) }}</h3>
       </div>
       <div class="table-container">
-        <table>
+        <table> 
           <thead>
             <tr>
               <th>Date of Workout</th>
               <th>Duration</th>
             </tr>
           </thead>
+        </table>
+        <div class="scrollable-container">  
+        <table>
           <tbody>
             <tr v-for="(metric, index) in metrics" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
               <td>{{ metric.dateVisitedGym }}</td>
               <td>{{ formatDuration(metric.totalMinutes) }}</td>
-            </tr>
+            </tr>  
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   </template>
@@ -61,9 +65,9 @@
           this.getMetrics();
       }
   }
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
   .metrics-container {
     max-width: 800px;
     margin: 0 auto;
@@ -104,5 +108,25 @@
   .odd-row {
     background-color: #f0f0f0;
   }
-  </style>
+  .scrollable-container {
+  height: 200px; 
+  overflow-y: auto;
+  border: 1px solid #ccc; 
+}
+
+.scrollable-container ul {
+  list-style-type: none; 
+  padding: 0;
+  margin: 0;
+}
+
+.scrollable-container li {
+  padding: 8px; 
+  border-bottom: 1px solid #eee; 
+}
+
+.scrollable-container li:last-child {
+  border-bottom: none; 
+}
+</style>
   
