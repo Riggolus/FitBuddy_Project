@@ -27,5 +27,8 @@ export default {
     // },
     getWorkoutByDate(date) {
         return http.get(`/workout/date/${date}`)
+    },
+    getUserWorkoutByDate(date, userId){
+      return http.get(`/workout/date/${date}/${userId}`)
     }
 }

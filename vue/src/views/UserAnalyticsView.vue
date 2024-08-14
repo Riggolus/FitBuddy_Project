@@ -127,7 +127,7 @@ export default {
                 });
         },
         selectMetric(metric) {
-            WorkoutService.getWorkoutByDate(metric.date)
+            WorkoutService.getUserWorkoutByDate(metric.date, this.userId)
                 .then((response) => {
                     this.workouts = response.data;
                     console.log(this.workouts);

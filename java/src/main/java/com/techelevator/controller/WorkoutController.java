@@ -43,6 +43,7 @@ public class WorkoutController {
         return workoutDao.getWorkoutByDate(date, principal);
     }
     @GetMapping("/date/{date}/{userId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public List<WorkoutDto>  getUserWorkoutByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("userId") int userId) {
         return workoutDao.getUserWorkoutByDate(date, userId);
     }
