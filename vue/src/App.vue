@@ -2,7 +2,7 @@
   <main>
     <div class="title-nav">
       <div class="logo">
-        <img src="image1.png" alt="logo" id="logo">
+        <img src="\public\image1.png" alt="logo" id="logo">
         <!-- <h1 id="title">FitBuddy</h1> -->
       </div>
         <div v-if="hideHomeButton" id="nav">
