@@ -4,8 +4,11 @@
         <input type="number" id="sets" v-model="editWorkout.sets">
         <label for="reps">Reps</label>
         <input type="number" id="reps" v-model="editWorkout.reps">
-        <label for="weight">Weight</label>
-        <input type="number" id="weight" v-model="editWorkout.weight">
+        <label for="weight">Weight (lbs)</label>
+        
+        <select type="number" id="weight" v-model="editWorkout.weight">
+            <option v-for="weight in weightRange" :key="weight">{{ weight }}</option>
+        </select>
         <!-- <label for="duration">Duration</label> -->
         <!-- <input type="number" id="duration" v-model="editWorkout.duration"> -->
         <button type="submit" class="button-link">Add Exercise</button>
@@ -48,7 +51,16 @@ export default {
                 });
 
         }
-    }, 
+    },
+    computed: {
+        weightRange() {
+            let weightRange = [];
+            for (let i = 5; i <= 200; i+= 5) {
+                weightRange.push(i);
+            }
+            return weightRange;
+        }
+    } 
 }
 </script>
 
