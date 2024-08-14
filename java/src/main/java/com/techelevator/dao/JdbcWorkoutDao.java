@@ -29,8 +29,6 @@ public class JdbcWorkoutDao implements WorkoutDao {
 
     @Override
     public void addWorkout(WorkoutDto workoutDto, Principal principal) {
-//        String exerciseByIdSql = "SELECT exercise_id FROM exercise WHERE exercise_name = ?";
-//        Integer exerciseId = jdbcTemplate.queryForObject(exerciseByIdSql, Integer.class, exercise.getExerciseName());
         User username = userDao.getUserByUsername(principal.getName());
         String sql = "INSERT INTO workout (user_id, exercise_id, sets, reps, weight, duration, date_of_workout) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Date date = new Date();

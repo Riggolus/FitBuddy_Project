@@ -25,13 +25,7 @@ public class JdbcWorkoutMetricDao implements WorkoutMetricDao{
         this.jdbcTemplate = jdbcTemplate;
         this.userdao = userdao;
     }
-// "WITH unique_check_in_out AS (SELECT user_id, date_trunc('day', check_in_time) AS workout_date, " +
-    //                "MIN(check_in_time) as first_check_in_time, MAX(check_out_time) AS last_check_out_time FROM check_in_check_out " +
-//                "GROUP BY user_id, date_trunc('day, check_in_time)) " +
-//                "SELECT w.user_id, e.exercise_name, w.sets, w.reps, w.weight, w.date_of_workout, (uci.late_check_out_time - uci.first_check_in_time) AS time_spent " +
-//                "FROM workout w JOIN exercise e ON w.exercise_id = e.exercise_id " +
-//                "JOIN unique_check_in_check_out uci ON w.user_id = uci_user_id AND w.date_of_workout = uci.workout_date " +
-//                "WHERE w.user_id = ? ORDER BY w.date_of_workout ASC;";
+
     @Override
     public List<WorkoutMetrics> myMetrics(Principal principal){
         User currentUser = userdao.getUserByUsername(principal.getName());

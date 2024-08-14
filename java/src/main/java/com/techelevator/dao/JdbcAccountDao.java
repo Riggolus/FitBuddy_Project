@@ -30,7 +30,6 @@ public class JdbcAccountDao implements AccountDao{
     public Account createAccount(AccountDto accountDto, Principal principal){
 
         User user = jdbcUserDao.getUserByUsername(principal.getName());
-//       LocalDateTime date = LocalDateTime.now();
 
         String sql = "INSERT INTO account (user_id, username, email, first_name, last_name, " +
                 "profile_picture, profile) " +
@@ -39,9 +38,6 @@ public class JdbcAccountDao implements AccountDao{
              jdbcTemplate.update(sql, user.getId(), user.getUsername(),
                     accountDto.getEmail(), accountDto.getFirstName(), accountDto.getLastName(),
                     accountDto.getProfilePicture(), accountDto.getProfile());
-//            if (accountDto != null) {
-//                sql = "INSERT INTO account (accountId) VALUES (?)";
-//                jdbcTemplate.update(sql, newAccountId);
 
         }catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to database", e);

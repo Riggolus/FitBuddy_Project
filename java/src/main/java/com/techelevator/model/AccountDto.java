@@ -102,14 +102,6 @@ public class AccountDto {
         this.goals = goals;
     }
 
-//    public Date getCreatedAt() {
-//        return createdAt;
-//    }
-//
-//    public void setCreatedAt(Date createdAt) {
-//        this.createdAt = createdAt;
-//    }
-
 
 
 
