@@ -1,29 +1,33 @@
 <template>
-    <div id="border">
-      <div id="homeNav">
-    <!-- Existing buttons -->
-    <button id="accountProfile" class="button-link" @click="toAccount">
-      <i class="fas fa-user"></i> Profile
-    </button>      
-    <button id="analytics" class="button-link" @click="toAnalytics">
-      <i class="fas fa-chart-line"></i> Analytics/History
-    </button>
-    <button id="check-in" class="button-link" @click="checkUserIn" v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">
-      <i class="fas fa-dumbbell"></i> Check In</button>
-    <button id="back-to-workout" class="button-link" @click="backToTraining" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
-      <i class="fa-solid fa-people-pulling"></i> Continue Training</button>
-    <button id="check-out" class="button-link" @click="checkUserOut" v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
-      <i class="fas fa-sign-out-alt"></i> Check Out
-    </button>   
-    <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">
-      <i class="fas fa-user-plus"></i> Add Employee</router-link></button>
-    <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }" class="router">
-      <i class="fa-solid fa-address-book"></i> Members</router-link></button>
-    <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">
-      <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
-    </button>
-  </div>
-  
+  <div id="border">
+
+    <div id="homeNav">
+      <button id="accountProfile" class="button-link" @click="toAccount">
+        <i class="fas fa-user"></i> Profile
+      </button>
+      <button id="analytics" class="button-link" @click="toAnalytics">
+        <i class="fas fa-chart-line"></i> Analytics/History
+      </button>
+      <button id="check-in" class="button-link" @click="checkUserIn"
+        v-if="userStatus.checkOutTime !== null || userStatus.checkInTime === null">
+        <i class="fas fa-dumbbell"></i> Check In</button>
+      <button id="back-to-workout" class="button-link" @click="backToTraining"
+        v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
+        <i class="fa-solid fa-people-pulling"></i> Continue Training</button>
+      <button id="check-out" class="button-link" @click="checkUserOut"
+        v-if="userStatus.checkInTime && userStatus.checkOutTime === null">
+        <i class="fas fa-sign-out-alt"></i> Check Out
+      </button>
+      <button v-if="isAdmin" class="button-link"><router-link :to="{ name: 'userRole' }" class="router">
+          <i class="fas fa-user-plus"></i> Add Employee</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'checkInCheckOut' }"
+          class="router">
+          <i class="fa-solid fa-address-book"></i> Members</router-link></button>
+      <button v-if="isAdminOrEmployee" class="button-link"><router-link :to="{ name: 'equipmentUsage' }" class="router">
+          <i class="fa-solid fa-weight-hanging"></i> Equipment</router-link>
+      </button>
+    </div>
+
     <div class="container">
       <div class="home">
         <h1 class="welcome">Welcome {{ account.firstName }}</h1>
@@ -34,12 +38,12 @@
           <div class="upcoming-class-container">
             <user-upcoming-class />
           </div>
-            <div class="current-workout">
-              <current-workout />
-            </div>
-            <div class="achievements">
-              <achievements />
-            </div>
+          <div class="current-workout">
+            <current-workout />
+          </div>
+          <div class="achievements">
+            <achievements />
+          </div>
         </div>
 
         <button v-if="isAdminOrEmployee" :class="['toggle-form-btn', showForm ? 'cancel' : '']" @click="toggleForm">
@@ -50,9 +54,9 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
 
-  
+
 </template>
 
 <script>
@@ -79,8 +83,8 @@ export default {
         checkInTime: '',
         checkOutTime: ''
       },
-      showForm: false, // State for toggling the CreateClass form,
-      account : {}
+      showForm: false,
+      account: {}
     }
   },
   computed: {
@@ -142,14 +146,13 @@ export default {
       this.showForm = !this.showForm;
     },
     addClass(newClass) {
-      // Add the new class to your schedule or wherever necessary
-      this.showForm = false; // Hide the form after adding a class
-    }, 
+      this.showForm = false;
+    },
     getUserFirstName() {
       AccountService.getMyAccount()
-      .then((response) => {
-        this.account = response.data;
-      })
+        .then((response) => {
+          this.account = response.data;
+        })
     }
   },
   created() {
@@ -168,24 +171,25 @@ export default {
   padding: 1rem;
 }
 
- .container {
+.container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #134B70;
   background: #B9D7EA;
-  
- }
 
- 
- .content {
-  display:grid;
-  grid-template-areas:  ". welcome ."
-                        "calendar-container  calendar-container upcoming-class-container" 
-                        "current-workout achievements upcoming-class-container";
+}
+
+
+.content {
+  display: grid;
+  grid-template-areas: ". welcome ."
+    "calendar-container  calendar-container upcoming-class-container"
+    "current-workout achievements upcoming-class-container";
   grid-template-columns: 1fr 1fr 1fr;
   margin: 10px;
   gap: 10px;
- }
- .welcome {
+}
+
+.welcome {
   grid-area: welcome;
   text-align: center;
   font-size: 3rem;
@@ -217,7 +221,7 @@ export default {
   background: #B9D7EA;
 }
 
-.home > h1 {
+.home>h1 {
   text-align: start;
 }
 
@@ -253,7 +257,7 @@ export default {
 .create-class {
   position: absolute;
   top: 20px;
-  right: -320px; /* Position it off-screen initially */
+  right: -320px;
   width: 300px;
   background: #fff;
   padding: 20px;
@@ -299,9 +303,9 @@ export default {
 @media (max-width: 768px) {
   .content {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
       "welcome"
-      "calendar-container" 
+      "calendar-container"
       "upcoming-class-container"
       "current-workout"
       "achievements";
@@ -349,6 +353,4 @@ export default {
     font-size: 1rem;
   }
 }
-
 </style>
-

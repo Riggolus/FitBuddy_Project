@@ -18,20 +18,20 @@
                 </td>
                 <td>
                     <select id="role" v-model="role">
-                        <option value>All</option>   
+                        <option value>All</option>
                         <option value="ROLE_USER">Member</option>
                         <option value="ROLE_EMPLOYEE">Employee</option>
                     </select>
-                </td>      
-                
+                </td>
+
             </tr>
             <tr v-for="user in filteredUsers" :key="user.userId">
-                <td>{{user.username}}</td>
-                <td>{{user.userId}}</td>
-                <td>{{user.role}}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.userId }}</td>
+                <td>{{ user.role }}</td>
                 <td>
-            <button class="btnActivateDeactivate" v-on:click="updateUserRole(user)">Switch Role</button>
-          </td>
+                    <button class="btnActivateDeactivate" v-on:click="updateUserRole(user)">Switch Role</button>
+                </td>
             </tr>
         </tbody>
 
@@ -40,29 +40,29 @@
 <script>
 import UserService from '../services/UserService';
 
-export default{
-    data(){
-        return{
+export default {
+    data() {
+        return {
             users: [],
             username: '',
             userId: '',
             role: ''
-            };        
+        };
     },
     computed: {
         filteredUsers() {
             let filteredUsers = this.users;
             if (this.username) {
                 filteredUsers = filteredUsers.filter((user) => user.username
-                .toLowerCase()
-                .includes(this.username));
+                    .toLowerCase()
+                    .includes(this.username));
             }
-           if (this.userId){
-            filteredUsers = filteredUsers.filter((user)=> user.userId === this.userId);
-           }
-           if (this.role){
-            filteredUsers = filteredUsers.filter((user)=> user.role.toUpperCase().includes(this.role));
-           }
+            if (this.userId) {
+                filteredUsers = filteredUsers.filter((user) => user.userId === this.userId);
+            }
+            if (this.role) {
+                filteredUsers = filteredUsers.filter((user) => user.role.toUpperCase().includes(this.role));
+            }
             return filteredUsers;
         }
     },
@@ -76,15 +76,15 @@ export default{
                     console.log(error);
                 });
         },
-        updateUserRole(user){
+        updateUserRole(user) {
             UserService.updateUser(user)
-            .then((response) => {
-                this.getUsers();
-                console.log("Did this work? " + user);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((response) => {
+                    this.getUsers();
+                    console.log("Did this work? " + user);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     },
 
@@ -95,15 +95,6 @@ export default{
 </script>
 
 <style scoped>
-/* #users {
-    background: #B9D7EA;
-    border: #D6E6F2 solid 5px;
-    border-radius: 10px;
-    padding: 10px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #134B70;
-} */
-
 #users {
     width: 100%;
     border-collapse: collapse;
@@ -113,7 +104,6 @@ export default{
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling for table headers */
 #users thead th {
     background-color: #007BFF;
     color: #fff;
@@ -123,13 +113,11 @@ export default{
     border-bottom: 2px solid #0056b3;
 }
 
-/* Styling for table cells */
 #users td {
     padding: 10px 15px;
     border-bottom: 1px solid #ddd;
 }
 
-/* Alternating row colors for better readability */
 #users tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
@@ -138,7 +126,6 @@ export default{
     background-color: #f1f1f1;
 }
 
-/* Styling for input fields and selects */
 #users input[type="text"],
 #users input[type="number"],
 #users select {
@@ -149,7 +136,6 @@ export default{
     font-size: 14px;
 }
 
-/* Styling for buttons */
 .btnActivateDeactivate {
     padding: 8px 12px;
     border: none;
@@ -158,12 +144,11 @@ export default{
     font-size: 14px;
     cursor: pointer;
     margin: 2px;
-    background-color: #007BFF; /* Blue for Switch Role */
+    background-color: #007BFF;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btnActivateDeactivate:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
-
 </style>

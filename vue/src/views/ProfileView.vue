@@ -1,37 +1,39 @@
 <template>
     <div class="profile" v-if="isAuthenticated">
-      <h1>Profile</h1>
-      <div class="profileInfo" v-if="userAccount">
-        <!-- Flex container to position profile picture and text side by side -->
-        <div class="profileContent">
-          <!-- Container for the circular profile picture -->
-          <div class="profilePictureContainer">
-            <img :src="userAccount.profilePicture" alt="Profile Picture" id="pfp" />
-          </div>
-          <!-- Profile details to the right of the picture -->
-          <div class="profileDetails">
-            <p class="name">{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
-            <p class="email">Email: {{ userAccount.email }}</p>
-          </div>
-          <div id="profile"><p>{{ userAccount.profile }}</p></div>
+        <h1>Profile</h1>
+        <div class="profileInfo" v-if="userAccount">
+            <!-- Flex container to position profile picture and text side by side -->
+            <div class="profileContent">
+                <!-- Container for the circular profile picture -->
+                <div class="profilePictureContainer">
+                    <img :src="userAccount.profilePicture" alt="Profile Picture" id="pfp" />
+                </div>
+                <!-- Profile details to the right of the picture -->
+                <div class="profileDetails">
+                    <p class="name">{{ userAccount.firstName }} {{ userAccount.lastName }}</p>
+                    <p class="email">Email: {{ userAccount.email }}</p>
+                </div>
+                <div id="profile">
+                    <p>{{ userAccount.profile }}</p>
+                </div>
 
+            </div>
         </div>
-      </div>
-      <div id="profileNav">
-        <button id="editAccount" v-on:click="toAccount">
-            <i class="fa-solid fa-cog"></i> Edit Account</button>
-      </div>
-      <div class="metrics-achievements">
-        <average-visit-metrics />
-        <achievements />
-      </div>
+        <div id="profileNav">
+            <button id="editAccount" v-on:click="toAccount">
+                <i class="fa-solid fa-cog"></i> Edit Account</button>
+        </div>
+        <div class="metrics-achievements">
+            <average-visit-metrics />
+            <achievements />
+        </div>
     </div>
     <div v-else>
-      <p>You must be authenticated to see this</p>
+        <p>You must be authenticated to see this</p>
     </div>
-  </template>
-  
-  
+</template>
+
+
 
 <script>
 import AccountService from '../services/AccountService';
@@ -54,7 +56,7 @@ export default {
                 goals: ''
             },
             isAuthenticated: false,
-            
+
         };
     },
     methods: {
@@ -73,8 +75,8 @@ export default {
     },
     created() {
 
-         this.isAuthenticated = !!localStorage.getItem('token'); // Check if the user is authenticated
-         if (this.isAuthenticated) {
+        this.isAuthenticated = !!localStorage.getItem('token');
+        if (this.isAuthenticated) {
             AccountService.getMyAccount()
                 .then((response) => {
                     this.userAccount = response.data;
@@ -109,31 +111,29 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem; /* Add space below the profile info */
+    margin-bottom: 2rem;
 }
 
 .profileContent {
     display: flex;
-    align-items: flex-start; /* Align items to the start of the flex container */
-    gap: 2rem; /* Adjust gap between profile picture and details */
-    justify-content: center; /* Center content horizontally */
+    align-items: flex-start;
+    gap: 2rem;
+    justify-content: center;
 }
 
-/* Styling for the profile picture container */
 .profilePictureContainer {
     width: 160px;
     height: 160px;
     border-radius: 50%;
-    border: 5px solid #007bff; /* Circular border */
+    border: 5px solid #007bff;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background-color: #fff; /* Optional background color */
+    background-color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Styling for the profile picture itself */
 #pfp {
     width: 150px;
     height: 150px;
@@ -141,43 +141,35 @@ h1 {
     object-fit: cover;
 }
 
-/* Container for profile details */
 .profileDetails {
-    /* flex: 1; Allows the profile details to take up remaining space */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* background-color: #fff; */
-    /* border: 1px solid #ddd; */
-    /* border-radius: 8px; */
-    /* padding: 1rem; */
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .name {
-    font-size: 1.25rem; /* Larger font size for name */
+    font-size: 1.25rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
 
 .email {
-    color: #134B70; /* Match color with the title */
+    color: #134B70;
     margin-bottom: 1rem;
 }
 
-/* Container for the profile box */
 #profile {
-    flex: 1; /* Allows the profile box to take up remaining space */
+    flex: 1;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 1rem;
-    max-width: 400px; /* Set a maximum width */
-    width: 100%; /* Ensure the profile box takes full width within its container */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    word-wrap: break-word; /* Wrap long words if necessary */
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
 }
 
 #profileNav {
@@ -210,13 +202,13 @@ h1 {
 .metrics-achievements {
     display: flex;
     justify-content: space-between;
-    gap: 2rem; /* Adjust the gap between components */
+    gap: 2rem;
     margin-top: 2rem;
 }
 
-.metrics-achievements > * {
-    flex: 1; /* Allow both components to take up equal width */
-    background-color: #fff; /* Add a background to separate components visually */
+.metrics-achievements>* {
+    flex: 1;
+    background-color: #fff;
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -243,18 +235,18 @@ h1 {
         gap: 1rem;
     }
 
-    .metrics-achievements > * {
-        width: 100%; /* Full width for each component */
+    .metrics-achievements>* {
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .profile {
-        padding: 1rem; /* Reduce padding on very small screens */
+        padding: 1rem;
     }
 
     .profileContent {
-        gap: 1rem; /* Reduce gap between profile picture and details */
+        gap: 1rem;
     }
 
     .profilePictureContainer {
@@ -269,7 +261,7 @@ h1 {
 
     #profile {
         padding: 0.5rem;
-        max-width: 100%; /* Ensure it fits within the viewport */
+        max-width: 100%;
     }
 
     #editAccount {

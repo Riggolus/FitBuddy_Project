@@ -19,8 +19,6 @@ export default {
                 profile: '',
                 goal: ''
             }
-            // registrationErrors: false,
-            // registrationErrorMsg: 'There were problems submitting the info.'
         };
     },
 }
@@ -34,7 +32,7 @@ export default {
     overflow: hidden;
     padding: 33px 55px 33px 55px;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #134B70;
 }
 </style>

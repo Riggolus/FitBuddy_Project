@@ -3,21 +3,20 @@
     <div class="title-nav">
       <div class="logo">
         <img src="\public\image1.png" alt="logo" id="logo">
-        <!-- <h1 id="title">FitBuddy</h1> -->
       </div>
-        <div v-if="hideHomeButton" id="nav">
-          <router-link  v-bind:to="{ name: 'home' }" class="button-link">
+      <div v-if="hideHomeButton" id="nav">
+        <router-link v-bind:to="{ name: 'home' }" class="button-link">
           <i class="fas fa-home"></i> Home
         </router-link>&nbsp; &nbsp;
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="button-link">
           <i class="fas fa-sign-out-alt"></i> Logout
         </router-link>
-       
-        </div>
+
+      </div>
     </div>
     <div class="container-login100">
       <div id="capstone-app">
-          <router-view />
+        <router-view />
       </div>
     </div>
     <footer>
@@ -28,9 +27,9 @@
 
 <script>
 
-export default{
+export default {
   computed: {
-    hideHomeButton(){
+    hideHomeButton() {
       return this.$route.name !== 'createAccount';
     }
   }
@@ -40,7 +39,8 @@ export default{
 </script>
 
 <style scoped>
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -49,12 +49,12 @@ html, body {
 main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Full height of the viewport */
+  min-height: 100vh;
 }
 
 
 .container-login100 {
-  flex: 1; /* Allow the content to grow and push the footer down */
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -91,7 +91,7 @@ main {
 }
 
 
-#capstone-app > img {
+#capstone-app>img {
   display: flex;
   justify-content: center;
   border-radius: 10px;
@@ -124,8 +124,6 @@ main {
 
 
 #logo {
-  /* width: 100px;
-  height: 100px; */
   width: 250px;
   height: 250px;
 }
@@ -138,13 +136,14 @@ footer {
   padding: 1rem;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: auto; /* Push footer to the bottom */
+  margin-top: auto;
 }
 
 
 footer p {
   margin: 0;
 }
+
 @media (max-width: 600px) {
   .title-nav {
     display: flex;
