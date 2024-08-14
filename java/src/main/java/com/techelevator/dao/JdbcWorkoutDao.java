@@ -90,6 +90,35 @@ public class JdbcWorkoutDao implements WorkoutDao {
     }
 
     @Override
+    public List<WorkoutDto> getUserWorkoutByDate(Date dateOfWorkout, int userId) {
+        List<WorkoutDto> workouts = new ArrayList<>();
+
+        String sql = "SELECT w.user_id, e.exercise_id, sets, reps, weight, duration, date_of_workout, exercise_name FROM workout w JOIN exercise e ON w.exercise_id = e.exercise_id WHERE date_of_workout::date = ? AND user_id = ?";
+
+        try {
+            SqlRowSet results =  jdbcTemplate.queryForRowSet(sql, dateOfWorkout, userId);
+            while (results.next()) {
+                WorkoutDto workout = new WorkoutDto();
+                workout.setUserId(results.getInt("user_id"));
+                workout.setExerciseId(results.getInt("exercise_id"));
+                workout.setSets(results.getInt("sets"));
+                workout.setReps(results.getInt("reps"));
+                workout.setWeight(results.getInt("weight"));
+                workout.setDuration(results.getInt("duration"));
+                workout.setDateOfWorkout(results.getDate("date_of_workout"));
+                workout.setExerciseName(results.getString("exercise_name"));
+                workouts.add(workout);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation", e);
+        }
+        return workouts;
+
+    }
+
+    @Override
     public List<Workout> getAllWorkouts(int userId) {
         List<Workout> workouts = new ArrayList<>();
         String sql = "SELECT * FROM workout WHERE user_id = ? ORDER BY workout_id";

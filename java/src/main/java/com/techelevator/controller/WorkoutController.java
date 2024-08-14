@@ -42,6 +42,10 @@ public class WorkoutController {
     public List<WorkoutDto>  getWorkoutByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, Principal principal) {
         return workoutDao.getWorkoutByDate(date, principal);
     }
+    @GetMapping("/date/{date}/{userId}")
+    public List<WorkoutDto>  getUserWorkoutByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("userId") int userId) {
+        return workoutDao.getUserWorkoutByDate(date, userId);
+    }
 
     @GetMapping("/history/{userId}")
     public List<Workout> getAllWorkouts(@PathVariable int userId) {
