@@ -73,9 +73,9 @@ import WorkoutMetricsService from '../services/WorkoutMetricsService';
 import WorkoutService from '../services/WorkoutService';
 
 export default {
-    data(){
-        return{
-            
+    data() {
+        return {
+
             userId: this.$route.params.id,
             metrics: [
 
@@ -101,24 +101,24 @@ export default {
                 exerciseName: ''
             },
             showWorkout: false
-            
+
         };
     },
     methods: {
         calsPerWorkout(date) {
-           
-           let firstWorkout = date;
-           let calsBurned = 0;
-           for (let i = 0; i < this.metrics.length; i++){
-                   if (this.metrics[i].date === firstWorkout)
-                   calsBurned += Math.round((4.25 * 3.5 * (this.metrics[i].weight * 0.453592) / 200) * (this.metrics[i].sets * this.metrics[i].reps))
-                   
-                }
-               return calsBurned;
-           
-       },
-        getMetrics(){
-            WorkoutMetricsService. getMemberMetrics(this.$route.params.id)
+
+            let firstWorkout = date;
+            let calsBurned = 0;
+            for (let i = 0; i < this.metrics.length; i++) {
+                if (this.metrics[i].date === firstWorkout)
+                    calsBurned += Math.round((4.25 * 3.5 * (this.metrics[i].weight * 0.453592) / 200) * (this.metrics[i].sets * this.metrics[i].reps))
+
+            }
+            return calsBurned;
+
+        },
+        getMetrics() {
+            WorkoutMetricsService.getMemberMetrics(this.$route.params.id)
                 .then((response) => {
                     this.metrics = response.data;
                 })
@@ -139,12 +139,12 @@ export default {
                 });
             console.log(metric.date);
         },
-        formatDuration(durationInMinutes){
+        formatDuration(durationInMinutes) {
             let hours = Math.floor(durationInMinutes / 60);
             let minutes = durationInMinutes % 60;
             return `${hours}h ${minutes}m`;
         }
-    
+
     },
     computed: {
         totalCalsExpended() {
@@ -171,15 +171,15 @@ export default {
                     totalDuration += this.metrics[i].durationInMinutes;
                     previousDate = this.metrics[i].date;
                 }
-        }
+            }
 
-        return totalDuration;
+            return totalDuration;
         },
         groupedMetrics() {
             const uniqueDates = {};
 
             this.metrics.forEach(metric => {
-                
+
                 if (!uniqueDates[metric.date]) {
                     uniqueDates[metric.date] = metric;
                 }
@@ -187,9 +187,9 @@ export default {
 
             return Object.values(uniqueDates);
         }
-    
-    }, 
-    created(){
+
+    },
+    created() {
         this.getMetrics();
         console.log(this.$route.params.id);
         console.log(this.metrics);
@@ -197,91 +197,92 @@ export default {
 }
 
 </script>
+
 <style>
-/* Global styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
-  background-color: lightgray;
+    background-color: lightgray;
 }
 
 .container {
-  width: 100%;
-  min-height: 75vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .table-container {
-  width: 100%;
-  max-width: 900px;
-  padding: 30px 20px;
-  border-radius: 10px;
-  background-color: white;
-  margin-bottom: 20px;
+    width: 100%;
+    max-width: 900px;
+    padding: 30px 20px;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 20px;
 }
 
-h2, h3 {
-  color: black;
-  margin-bottom: 20px;
-  font-weight: 600;
+h2,
+h3 {
+    color: black;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 thead {
-  background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
 
 thead th {
-  text-align: left;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 10px;
-  border-bottom: 2px solid #ccc;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
 }
 
 tbody tr {
-  transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 tbody td {
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
 }
 
 tbody tr:hover {
-  background-color: #e0e0e0;
-  cursor: pointer;
+    background-color: #e0e0e0;
+    cursor: pointer;
 }
 
-.table-container .workout-table th, .table-container .workout-table td {
-  text-align: center;
+.table-container .workout-table th,
+.table-container .workout-table td {
+    text-align: center;
 }
 
 .table-container .workout-table .exercise-item {
-  background-color: #f8f8f8;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-in-out;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
 }
 
 .table-container .workout-table .exercise-item:hover {
-  background-color: #e0e0e0;
-  transform: scale(1.05);
+    background-color: #e0e0e0;
+    transform: scale(1.05);
 }
-
 </style>

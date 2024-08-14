@@ -2,25 +2,25 @@
     <div id="main">
         <div id="secondary">
             <h2>Equipment Usage</h2>
-            <equipment-use/>
+            <equipment-use />
         </div>
     </div>
-    
+
 </template>
 <script>
 import EquipmentUse from '../components/EquipmentUse.vue';
 
-export default{
+export default {
     components: {
         EquipmentUse
     },
     data() {
         return {
-            equipment: 
-                {
-                    equipmentName: 'Kettlebell',
-                    usage: 0
-                },
+            equipment:
+            {
+                equipmentName: 'Kettlebell',
+                usage: 0
+            },
         }
     }
 }
@@ -28,8 +28,6 @@ export default{
 </script>
 
 <style scoped>
-/* Styling for the main container */
-
 #main {
     display: flex;
     justify-content: center;
@@ -45,7 +43,6 @@ export default{
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling for the heading */
 h2 {
     display: flex;
     justify-content: center;

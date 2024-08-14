@@ -3,12 +3,12 @@
         <h2>Your last workout:</h2>
     </div>
     <div>
-        <current-workout/>
+        <current-workout />
     </div>
     <div>
-        <user-metrics/>
+        <user-metrics />
     </div>
-    
+
 
 </template>
 <script>
@@ -16,7 +16,7 @@ import CurrentWorkout from '../components/CurrentWorkout.vue';
 import UserMetrics from '../components/UserMetrics.vue';
 
 export default {
-       components: {
+    components: {
         CurrentWorkout,
         UserMetrics
     },
