@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="calendar">
-      <!-- Calendar Header -->
       <div class="heading">
         <div class="month">{{ currentMonth }}</div>
         <div class="btns">
@@ -10,8 +9,6 @@
           <div class="btn next-btn" @click="nextWeek">Next</div>
         </div>
       </div>
-
-      <!-- Calendar Table -->
       <table>
         <thead class="weekdays">
           <tr>
@@ -43,29 +40,22 @@
         </tbody>
       </table>
     </div>
-
-    <!-- Registration Panel with Transition -->
     <transition name="slide-fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-  <div class="registration" :class="{ show: isRegistrationVisible }">
-    <h2>{{ currentClass.className }}</h2>
-    <h3>Instructor: {{ currentClass.instructorName }}</h3>
-    <p>{{ currentClass.description }}</p>
-    
-    <button class="register-btn" @click="registerForThisClass">Register</button>
-    <button class="cancel-btn" @click="cancelRegistration">Cancel</button>
-  </div>
-</transition>
-
+      <div class="registration" :class="{ show: isRegistrationVisible }">
+        <h2>{{ currentClass.className }}</h2>
+        <h3>Instructor: {{ currentClass.instructorName }}</h3>
+        <p>{{ currentClass.description }}</p>
+        <button class="register-btn" @click="registerForThisClass">Register</button>
+        <button class="cancel-btn" @click="cancelRegistration">Cancel</button>
+      </div>
+    </transition>
   </div>
 </template>
 
-
-  
 <script>
 import ClassScheduleService from '../services/ClassScheduleService';
 import ClassRegistrationService from '../services/ClassRegistrationService';
   
-
 export default {
   data() {
     return {
@@ -84,7 +74,7 @@ export default {
         currentCapacity: 0,
         sessionDate: '',
       },
-      isRegistrationVisible: false, // Control visibility of registration
+      isRegistrationVisible: false,
     };
   },
   computed: {
@@ -115,7 +105,7 @@ export default {
     },
     hasClassPassed(date) {
       const now = new Date();
-      return new Date(date) < now; // Checks if the class date is before the current date
+      return new Date(date) < now; 
     },
     
     getStartOfWeek(date) {
@@ -135,7 +125,6 @@ export default {
       const dayOfWeek = date.getDay();
       const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
       const dayKey = dayKeys[dayOfWeek];
-  
       return this.classes.filter(classItem => classItem[dayKey]);
     },
     prevWeek() {
@@ -180,29 +169,30 @@ export default {
         className: classItem.className,
         sessionDate: this.formatDateForServer(date)
       };
-      this.isRegistrationVisible = true; // Show registration panel
+      this.isRegistrationVisible = true;
     },
     registerForThisClass(){
       ClassRegistrationService.registerForClass(this.currentClass)
         .then(() => {
           alert("Registered for " + this.selectedClass.className);
           console.log("Registered for class");
-          window.location.reload();
-          this.isRegistrationVisible = false; // Hide registration panel after registering
+          console.log(this.currentClass.sessionDate);
+          
+          this.isRegistrationVisible = false;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     cancelRegistration() {
-      this.isRegistrationVisible = false; // Hide registration panel on cancel
+      this.isRegistrationVisible = false; 
     },
     beforeEnter(el) {
     el.style.transform = 'translateX(100%)';
     el.style.opacity = 0;
   },
   enter(el, done) {
-    el.offsetWidth; // trigger reflow
+    el.offsetWidth;
     el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
     el.style.transform = 'translateX(0)';
     el.style.opacity = 1;
@@ -219,9 +209,7 @@ export default {
 };
 </script>
 
-
 <style scoped>
-/* Global styles */
 * {
   margin: 0;
   padding: 0;
@@ -233,7 +221,6 @@ body {
   background-color: lightgray;
 }
 
-/* Container and Calendar */
 .container {
   width: 100%;
   min-height: 75vh;
@@ -251,7 +238,6 @@ body {
   
 }
 
-/* Calendar Heading */
 .calendar .heading {
   display: flex;
   justify-content: space-between;
@@ -289,11 +275,10 @@ body {
   transform: scale(1.25);
 }
 
-/* Table and Table Headers */
 table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* Ensures columns are evenly spaced */
+  table-layout: fixed;
 }
 
 thead .weekdays {
@@ -329,12 +314,10 @@ tbody .days .day:hover {
   transform: scale(1.05);
 }
 
-/* Adjusts spacing for table columns */
 th, td {
-  width: 14.28%; /* Spreads columns evenly across the table */
+  width: 14.28%; 
 }
 
-/* Class items inside table cells */
 .classes {
   display: flex;
   flex-direction: column;
@@ -352,22 +335,21 @@ th, td {
 }
 
 .class-item:hover {
-  transform: scale(1.1); /* Slightly enlarges the item */
-  z-index: 10; /* Ensures the hovered item stays above others */
-  background-color: #e0e0e0; /* Optional: Change background color on hover */
+  transform: scale(1.1); 
+  z-index: 10; 
+  background-color: #e0e0e0;
   cursor: pointer;
 }
 .slide-enter-active, .slide-leave-active {
   transition: transform 0.5s ease;
 }
 .slide-enter {
-  transform: translateX(100%); /* Starts outside the view */
+  transform: translateX(100%);
 }
 .slide-leave-to {
-  transform: translateX(100%); /* Ends outside the view */
+  transform: translateX(100%);
 }
 
-/* Transition effects for sliding registration panel */
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
@@ -376,28 +358,24 @@ th, td {
   opacity: 0;
 }
 
-/* Registration form */
-/* Registration form */
 .registration {
-  position: fixed; /* Make sure it overlays everything */
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center the form */
+  transform: translate(-50%, -50%);
   width: 300px;
   padding: 20px;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000; /* Make sure it is above the calendar and other content */
-  display: none; /* Initially hidden */
+  z-index: 1000; 
+  display: none; 
 }
 
-/* Show the registration form when isRegistrationVisible is true */
 .registration.show {
-  display: block; /* Show the registration form */
+  display: block;
 }
 
-/* Transition effects for sliding registration panel */
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
@@ -405,7 +383,7 @@ th, td {
   transform: translateX(100%);
   opacity: 0;
 }
-/* Buttons */
+
 button {
   border: none;
   padding: 10px 15px;
@@ -413,30 +391,28 @@ button {
   border-radius: 5px;
   cursor: pointer;
   color: white;
-  margin-right: 10px; /* Space between buttons */
+  margin-right: 10px;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  opacity: 0.9; /* Slightly transparent on hover */
+  opacity: 0.9; 
 }
 
-/* Register Button */
 button.register-btn {
-  background-color: #28a745; /* Green */
+  background-color: #28a745; 
 }
 
 button.register-btn:hover {
-  background-color: #218838; /* Darker green */
+  background-color: #218838;
 }
 
-/* Cancel Button */
+
 button.cancel-btn {
-  background-color: #dc3545; /* Red */
+  background-color: #dc3545; 
 }
 
 button.cancel-btn:hover {
-  background-color: #c82333; /* Darker red */
+  background-color: #c82333;
 }
-
 </style>

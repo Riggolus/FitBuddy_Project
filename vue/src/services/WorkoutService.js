@@ -1,34 +1,29 @@
 import axios from 'axios';
-import store from '../store';
 
 const http = axios.create({
-    baseURL: import.meta.env.VITE_REMOTE_API
-  });
+  baseURL: import.meta.env.VITE_REMOTE_API
+});
 
 // Set default Authorization header for all requests
 http.interceptors.request.use(config => {
-    const token = localStorage.getItem('token');
-    //const token = store.getters.authToken; // Get the token from Vuex store
-    console.log(`Token being used in request: ${token}`); // Log the token
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  }, error => {
-    return Promise.reject(error);
-  });
+  const token = localStorage.getItem('token');
+  console.log(`Token being used in request: ${token}`);
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
 
 export default {
-    createWorkout(workout){
-        return http.post('/workout/create', workout)
-    },
-    // getWorkoutById(id) {
-    //     return http.get(`/workout/${id}`)
-    // },
-    getWorkoutByDate(date) {
-        return http.get(`/workout/date/${date}`)
-    },
-    getUserWorkoutByDate(date, userId){
-      return http.get(`/workout/date/${date}/${userId}`)
-    }
+  createWorkout(workout) {
+    return http.post('/workout/create', workout)
+  },
+  getWorkoutByDate(date) {
+    return http.get(`/workout/date/${date}`)
+  },
+  getUserWorkoutByDate(date, userId) {
+    return http.get(`/workout/date/${date}/${userId}`)
+  }
 }

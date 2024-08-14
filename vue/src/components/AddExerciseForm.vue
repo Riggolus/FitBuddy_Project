@@ -9,8 +9,6 @@
         <select type="number" id="weight" v-model="editWorkout.weight">
             <option v-for="weight in weightRange" :key="weight">{{ weight }}</option>
         </select>
-        <!-- <label for="duration">Duration</label> -->
-        <!-- <input type="number" id="duration" v-model="editWorkout.duration"> -->
         <button type="submit" class="button-link">Add Exercise</button>
         <button type="reset" v-on:click="cancelExercise" class="button-link">Back to Exercise Selection</button>
     </form>
@@ -71,9 +69,6 @@ form {
     grid-gap: 10px;
     margin: 10px;
     padding: 10px;
-    /* border: 1px solid black; */
-    /* border-radius: 5px; */
-    /* background-color: #; */
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
@@ -87,8 +82,6 @@ form {
     text-decoration: none;
     border-radius: 5px; 
     border: 1px solid #007bff; 
-    /* font-size: 16px;  */
-    /* font-weight: bold; */
     transition: background-color 0.3s, border-color 0.3s;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 

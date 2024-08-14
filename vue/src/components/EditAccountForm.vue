@@ -17,10 +17,6 @@
             <label for="profile">Profile</label>
             <textarea id="profile" v-model="editAccount.profile"></textarea>
 
-            <!-- Uncomment if you add goals feature -->
-            <!-- <label for="goals">Goals</label>
-            <textarea id="goals" v-model="editAccount.goals"></textarea> -->
-
             <div class="button-group">
                 <button type="submit" class="button-link">Save Changes</button>
                 <button type="reset" v-on:click="cancelForm" class="button-link">Cancel</button>
@@ -39,7 +35,6 @@ export default {
             required: true
         }
     },
-
     data() {
         return {
             editAccount: {
@@ -48,13 +43,12 @@ export default {
                 lastName: this.account.lastName,
                 profilePicture: this.account.profilePicture,
                 profile: this.account.profile,
-                goals: this.account.goals // Include this if you have a goals feature
+                goals: this.account.goals
             },
             registrationErrors: false,
             registrationErrorMsg: 'There were problems submitting the info.'
         };
     },
-
     methods: {
         cancelForm() {
             this.$router.push({ name: 'home' });
@@ -85,7 +79,7 @@ export default {
     },
 
     created() {
-        this.isAuthenticated = !!localStorage.getItem('token'); // Check if the user is authenticated
+        this.isAuthenticated = !!localStorage.getItem('token');
         if (this.isAuthenticated) {
             AccountService.getMyAccount()
                 .then((response) => {

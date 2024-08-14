@@ -35,7 +35,6 @@
             required: true
         }
     },
-
     data() {
         return {
             editAccount: {
@@ -50,20 +49,12 @@
         };
     },
     methods: {
-        
         cancelForm() {
             this.$router.push({ name: 'home' });
         },
         submitForm() {
-            console.log("Button works");
-            console.log(this.editAccount);
-            console.log(this.editAccount.profilePicture);
-            console.log(localStorage.getItem('token')); 
-
             AccountService.createAccount(this.editAccount)
                 .then(() => {
-                    console.log("Account Created");
-                    console.log("after account services" + this.editAccount.profilePicture);
                     this.$router.push({ name: 'home' });
                 })
                 .catch((error) => {
@@ -77,11 +68,10 @@
                 this.registrationErrorMsg = 'There were problems submitting the info.';
             } else {
                 this.registrationErrorMsg = 'There was a problem with the server.';
-            }
-        
+            }      
         }
     }
-    }
+}
 </script>
 
 <style scoped>

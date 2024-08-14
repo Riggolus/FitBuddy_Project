@@ -8,7 +8,6 @@
             <th class="sets" id="e-sets">Sets</th>
             <th class="reps" id="e-reps">Reps</th>
             <th class="weight" id="e-weight">Weight</th>
-            
           </tr>
         </thead>
         <tbody>
@@ -16,17 +15,14 @@
             v-for="(workout, index) in workouts" 
             :key="workout.exerciseName" 
             id="workoutData" 
-            :class="{ 'odd-row': index % 2 !== 0 }"
-          >
+            :class="{ 'odd-row': index % 2 !== 0 }"         >
             <td class="name">{{ workout.exerciseName }}</td>
             <td class="sets">{{ workout.sets }}</td>
             <td class="reps">{{ workout.reps }}</td>
             <td class="weight">{{ workout.weight }}</td>
-    
           </tr>
         </tbody>
       </table>
-  
       <table v-show="statsOn" class="stats-table">
         <thead>
           <tr>

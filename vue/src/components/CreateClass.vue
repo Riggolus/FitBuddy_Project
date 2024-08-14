@@ -67,8 +67,6 @@
         // Convert startTime and endTime to military time
         const formattedStartTime = formatTime(new Date(`1970-01-01T${this.startTime}`));
         const formattedEndTime = formatTime(new Date(`1970-01-01T${this.endTime}`));
-        
-        // Convert recurrenceEnd to yyyy-mm-dd
         const formattedRecurrenceEnd = formatDate(new Date(this.recurrenceEnd));
         
         const newClass = {
@@ -96,8 +94,6 @@
             console.log(e);
             alert('An error occurred while creating the class. ' + newClass.recurrenceEnd);
           });
-        
-        // Reset form fields
         this.resetForm();
       },
       resetForm() {
